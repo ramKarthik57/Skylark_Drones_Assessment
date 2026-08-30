@@ -1,7 +1,7 @@
 {
   "version": 2,
   "buildCommand": "cd frontend && npm install && npm run build",
-  "outputDirectory": "frontend/dist",
+  "outputDirectory": "public",
   "routes": [
     {
       "src": "/api/(.*)",
@@ -9,11 +9,11 @@
     },
     {
       "src": "/assets/(.*)",
-      "dest": "/frontend/dist/assets/$1"
+      "dest": "/assets/$1"
     },
     {
       "src": "/(.*)",
-      "dest": "/frontend/dist/index.html"
+      "dest": "/index.html"
     }
   ]
 }
