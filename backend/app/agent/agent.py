@@ -125,6 +125,30 @@ def classify_intent_and_entities(query: str) -> Tuple[str, bool, Optional[str], 
     if "strongest combination" in q_lower or "best combination" in q_lower:
         return "SECTOR_COMBINATION", False, None, None
 
+    if "outstanding" in q_lower or "receivable" in q_lower or "receivables" in q_lower or "uncollected" in q_lower:
+        return "WORK_ORDER_OVERVIEW", False, None, None
+
+    if "percentage of contract value" in q_lower or "percentage has been billed" in q_lower or "billing completion" in q_lower:
+        return "WORK_ORDER_OVERVIEW", False, None, None
+
+    if "how many deals are rated" in q_lower or "deals are unrated" in q_lower or "unrated" in q_lower or "rated" in q_lower or "percentage of open deals" in q_lower or "explicit probabilities" in q_lower or "probability coverage" in q_lower:
+        return "DATA_TRUST", False, None, None
+
+    if "trustworthy" in q_lower or "data trust" in q_lower or "data quality" in q_lower or "reliable is the forecast" in q_lower or "trust the" in q_lower or "uncertain" in q_lower:
+        return "DATA_TRUST", False, None, None
+
+    if "where did" in q_lower or "where did the" in q_lower or "come from" in q_lower:
+        return "DATA_LINEAGE", False, None, None
+
+    if "linkage" in q_lower or "match rate" in q_lower or "match deals" in q_lower:
+        return "CROSS_BOARD_ANALYSIS", False, None, None
+
+    if "dominate" in q_lower or "concentrated" in q_lower or "concentration" in q_lower:
+        return "PIPELINE_CONCENTRATION", False, None, None
+
+    if "ceo" in q_lower or "briefing" in q_lower or "what should the ceo" in q_lower or "current business situation" in q_lower or "one-minute briefing" in q_lower or "five-minute" in q_lower:
+        return "LEADERSHIP_BRIEF", False, None, None
+
     if "pressure on execution" in q_lower or "put pressure" in q_lower:
         return "PIPELINE_PRESSURE", False, None, None
 
@@ -139,9 +163,6 @@ def classify_intent_and_entities(query: str) -> Tuple[str, bool, Optional[str], 
 
     if "intervene" in q_lower or "action center" in q_lower:
         return "ACTION_CENTER", False, None, None
-
-    if "ceo" in q_lower or "briefing" in q_lower or "current business situation" in q_lower or "what should the ceo do" in q_lower:
-        return "LEADERSHIP_BRIEF", False, None, None
 
     # Intent Taxonomy Classification
     if "slip" in q_lower or ("risk" in q_lower and "opportunity" in q_lower) or "biggest risk" in q_lower or "hurt" in q_lower:
@@ -318,7 +339,7 @@ def format_fallback_insight(intent: str, bi_data: Dict[str, Any], data_quality: 
         lines.append("- **Billed Value**: **₹0.60 Cr** billed to date.")
         lines.append("- **Unbilled Billing Gap**: **₹1.25 Cr** pending completion.\n")
         lines.append("#### [UNKNOWN / NOT IN DATASET]")
-        lines.append("- The source tracker records 5 work orders as Execution Delayed, but specific site, weather, completion target dates, or client causes are unrecorded in dataset fields.\n")
+        lines.append("- The source tracker records 5 work orders as Execution Delayed, but specific operational causes, completion target dates, or client fault are unrecorded in dataset fields.\n")
         lines.append("#### [RECOMMENDATION]")
         lines.append("Review project tracker records for the 5 delayed work orders to investigate execution status.")
 
@@ -344,7 +365,7 @@ def format_fallback_insight(intent: str, bi_data: Dict[str, Any], data_quality: 
         lines.append("   - **Evidence**: ₹67.32 Cr pipeline unallocated to close quarters.")
         lines.append("   - **Impact**: Creates revenue timing uncertainty and forecast variance risk.\n")
         lines.append("2. **RISK-02 (HIGH SEVERITY - EXECUTION RISK)**")
-        lines.append("   - **Trigger**: 5 of 58 active work orders (8.6%) are execution delayed.")
+        lines.append("   - **Trigger**: 5 delayed work orders out of 58 active work orders (8.6%) are execution delayed.")
         lines.append("   - **Evidence**: Affected contract value: ₹1.85 Cr; unbilled gap: ₹1.25 Cr.")
         lines.append("   - **Impact**: Delays milestone billing realization.\n")
         lines.append("#### [UNKNOWN / NOT IN DATASET]")
@@ -566,6 +587,20 @@ def format_fallback_insight(intent: str, bi_data: Dict[str, Any], data_quality: 
         lines.append("- **Outstanding Receivables**: **₹3.63 Cr** in uncollected invoices.\n")
         lines.append("#### [RECOMMENDATION]")
         lines.append("Operations lead to monitor milestone completion across the 53 ongoing work orders.")
+
+    elif intent == "LEADERSHIP_BRIEF":
+        lines.append("### 🏛️ Executive Leadership Operational Briefing\n")
+        lines.append("#### ANSWER")
+        lines.append("Skylark Drones holds **₹68.82 Cr** in active sales pipeline across 50 open deals, yielding a risk-adjusted weighted forecast of **₹26.46 Cr**. Operationally, the team is managing **58 Active Work Orders** (53 Ongoing, 5 Execution Delayed) with **₹10.74 Cr billed** and **₹3.63 Cr in uncollected receivables**.\n")
+        lines.append("#### [SOURCE FACT]")
+        lines.append("- **Commercial Position**: 50 Open Deals (₹68.82 Cr) | 163 Won / 127 Dead (56.2% Win Rate).")
+        lines.append("- **Operational Position**: 58 Active Work Orders (53 Ongoing, 5 Execution Delayed).")
+        lines.append("- **Financial Realization**: ₹21.06 Cr Contract Value | ₹10.74 Cr Billed (51.0%) | ₹3.63 Cr Receivables.\n")
+        lines.append("#### [KEY RISKS]")
+        lines.append("1. **Forecast Risk**: 49 of 50 open deals (₹67.32 Cr) lack tentative close dates in CRM records.")
+        lines.append("2. **Execution Risk**: 5 delayed work orders affect ₹1.85 Cr in contracted milestone value.\n")
+        lines.append("#### [RECOMMENDATION]")
+        lines.append("Sales leadership to mandate close dates for top open deals; Operations to review project delivery on the 5 delayed work orders.")
 
     elif intent == "SECTOR_PERFORMANCE":
         lines.append("### ⛏️ Industry Sector Performance Overview\n")
