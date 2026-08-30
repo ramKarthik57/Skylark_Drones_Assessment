@@ -4,7 +4,7 @@ from app.analytics.risk_engine import calculate_risk_radar
 def test_risk_radar_execution_risk():
     sample_bi = {
         "deals_summary": {
-            "open_deals_missing_prob": 0,
+            "open_deals_missing_close": 0,
             "open_deal_count": 10,
             "open_pipeline_value": 1000000.0,
             "weighted_pipeline_value": 800000.0,
@@ -25,12 +25,12 @@ def test_risk_radar_execution_risk():
     assert len(risks) >= 1
     exec_risk = next(r for r in risks if r["category"] == "Execution Risk")
     assert exec_risk["severity"] == "HIGH"
-    assert "3 Work Orders Execution Delayed" in exec_risk["title"]
+    assert "3 Work Orders Flagged Execution Delayed" in exec_risk["title"]
 
 def test_risk_radar_forecast_risk():
     sample_bi = {
         "deals_summary": {
-            "open_deals_missing_prob": 5,
+            "open_deals_missing_close": 5,
             "open_deal_count": 10,
             "open_pipeline_value": 2000000.0,
             "weighted_pipeline_value": 1000000.0,
@@ -51,4 +51,4 @@ def test_risk_radar_forecast_risk():
     assert len(risks) >= 1
     forecast_risk = next(r for r in risks if r["category"] == "Forecast Risk")
     assert forecast_risk["severity"] == "HIGH"
-    assert "5 Open Deals Lack Probability Ratings" in forecast_risk["title"]
+    assert "5 Open Deals Missing Tentative Close Dates" in forecast_risk["title"]

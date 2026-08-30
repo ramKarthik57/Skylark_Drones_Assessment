@@ -42,7 +42,9 @@ def test_issue_2_delay_causes_unsupported_not_invented():
     res = process_agent_query("What is causing our delayed work orders?")
     assert "heavy monsoon weather" not in res.text.lower()
     assert "site access restrictions" not in res.text.lower()
-    assert "does not record specific" in res.text.lower() or "unrecorded" in res.text.lower()
+    assert "bottleneck" not in res.text.lower()
+    assert "sla" not in res.text.lower()
+    assert "unrecorded" in res.text.lower() or "not recorded" in res.text.lower()
 
 def test_issue_3_q28_single_work_order_exposure():
     res = process_agent_query("Which delayed work order has the largest financial exposure?")
@@ -76,8 +78,8 @@ def test_issue_7_q33_opportunity_capacity_alignment():
 
 def test_issue_8_q40_owner_role_suggestions():
     res = process_agent_query("Where should management intervene immediately?")
-    assert "Suggested Owner Role" in res.text or "Owner Suggestion" in res.text
-    assert "no assigned individual" in res.text.lower() or "suggested" in res.text.lower()
+    assert "Suggested Role" in res.text or "modeling suggestion" in res.text
+    assert "no individual owner is recorded" in res.text.lower() or "suggested" in res.text.lower()
 
 def test_issue_9_q48_scenario_semantics_distinction():
     res = process_agent_query("Which scenario gives us the largest improvement in weighted pipeline?")
@@ -85,8 +87,13 @@ def test_issue_9_q48_scenario_semantics_distinction():
     assert "+20% Probability Uplift" in res.text
     assert "realized revenue" in res.text.lower() or "weighted forecast" in res.text.lower()
 
+def test_baseline_30_percent_labeled_as_modeling_assumption():
+    res = process_agent_query("How was the weighted forecast calculated?")
+    assert "30% application modeling baseline assumption" in res.text or "modeling baseline" in res.text.lower()
+
 def test_no_ai_invented_facts_in_responses():
     res = process_agent_query("What are the biggest risks to converting our current pipeline into revenue?")
     assert "procurement committees" not in res.text.lower()
     assert "by friday" not in res.text.lower()
     assert "heavy monsoon weather" not in res.text.lower()
+    assert "sla breach" not in res.text.lower()
