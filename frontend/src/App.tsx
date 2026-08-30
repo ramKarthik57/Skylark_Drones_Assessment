@@ -7,6 +7,8 @@ import { DataTrustView } from './components/DataTrustView';
 import { ActionCenterView } from './components/ActionCenterView';
 import { ScenarioModal } from './components/ScenarioModal';
 import { LeadershipModal } from './components/LeadershipModal';
+import { DataLineageModal } from './components/DataLineageModal';
+import { CommandPalette } from './components/CommandPalette';
 import { fetchBoardStatus, sendChatMessage, fetchLeadershipUpdate, generateLocalChatResponse } from './services/api';
 import type { BoardStatus, BIData, ChatMessage, LeadershipUpdate, RiskSignal, DataTrust, ActionItem } from './types';
 
@@ -24,6 +26,21 @@ export function App() {
   const [leadershipData, setLeadershipData] = useState<LeadershipUpdate | null>(null);
   const [leadershipLoading, setLeadershipLoading] = useState(false);
   const [scenarioModalOpen, setScenarioModalOpen] = useState(false);
+  const [lineageModalOpen, setLineageModalOpen] = useState(false);
+  const [selectedLineageInfo, setSelectedLineageInfo] = useState<any>(null);
+  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
+
+  // Global Keyboard Shortcuts (Ctrl+K for palette)
+  useEffect(() => {
+    const handleGlobalKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        setCommandPaletteOpen(prev => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleGlobalKeyDown);
+    return () => window.removeEventListener('keydown', handleGlobalKeyDown);
+  }, []);
 
   // Load initial board status and initial conversation greeting
   const loadStatusAndInitialData = async () => {
@@ -138,6 +155,63 @@ export function App() {
     }
   };
 
+  const handleOpenLineage = (metricName: string) => {
+    let info = {
+      metricName,
+      sourceDataset: 'Monday.com Deals Board (344 Total Records)',
+      filterApplied: 'deal_status = "Open"',
+      recordsConsidered: '50 Records (Including 1 Tanjiro normalized record)',
+      formula: 'Σ (deal_value)',
+      resultValue: '₹68.82 Cr',
+      qualityCaveat: '49 of 50 open deals lack tentative close dates; 38 open deals lack explicit probability ratings.'
+    };
+
+    if (metricName.includes('WEIGHTED') || metricName.includes('FORECAST')) {
+      info = {
+        metricName: 'Weighted Risk-Adjusted Forecast',
+        sourceDataset: 'Monday.com Deals Board (344 Total Records)',
+        filterApplied: 'deal_status = "Open"',
+        recordsConsidered: '50 Open Deals (12 Rated + 38 Baseline)',
+        formula: '∑ (Deal Value × Explicit Win Probability) + ∑ (Deal Value × 30% Modeling Baseline)',
+        resultValue: '₹26.46 Cr',
+        qualityCaveat: 'Explicit probabilities applied: High 80%, Medium 50%, Low 20%. Unrated deals use 30% baseline.'
+      };
+    } else if (metricName.includes('WIN RATE')) {
+      info = {
+        metricName: 'Closed Win Rate',
+        sourceDataset: 'Monday.com Deals Board (344 Total Records)',
+        filterApplied: 'deal_status IN ("Won", "Dead")',
+        recordsConsidered: '290 Decided Deals (163 Won, 127 Dead)',
+        formula: '(Won Deals / (Won Deals + Dead Deals)) × 100',
+        resultValue: '56.2%',
+        qualityCaveat: '4 On Hold deals excluded from win rate denominator.'
+      };
+    } else if (metricName.includes('WORK ORDER') || metricName.includes('DELAYED')) {
+      info = {
+        metricName: 'Active & Delayed Work Orders',
+        sourceDataset: 'Monday.com Work Orders Board (175 Total Records)',
+        filterApplied: 'execution_status IN ("Ongoing", "Delayed")',
+        recordsConsidered: '58 Active Work Orders (53 Ongoing, 5 Execution Delayed)',
+        formula: 'Count of Active Project Records',
+        resultValue: '58 Active (5 Delayed)',
+        qualityCaveat: '117 Completed work orders excluded from active workload.'
+      };
+    } else if (metricName.includes('RECEIVABLE')) {
+      info = {
+        metricName: 'Total Outstanding Receivables',
+        sourceDataset: 'Monday.com Work Orders Board (175 Total Records)',
+        filterApplied: 'All Work Orders with amount_receivable > 0',
+        recordsConsidered: '175 Work Orders',
+        formula: 'Σ (amount_receivable)',
+        resultValue: '₹3.63 Cr',
+        qualityCaveat: 'Total Contract Value: ₹21.06 Cr | Total Billed: ₹10.74 Cr.'
+      };
+    }
+
+    setSelectedLineageInfo(info);
+    setLineageModalOpen(true);
+  };
+
   return (
     <div className="min-h-screen bg-[#090a0f] text-slate-100 flex flex-col font-sans">
       {/* App Header */}
@@ -159,6 +233,7 @@ export function App() {
             riskRadar={riskRadar}
             dataQualityNotes={dataQualityNotes}
             onNavigateToAskAI={handleNavigateToAskAI}
+            onOpenLineage={handleOpenLineage}
           />
         )}
 
@@ -201,9 +276,36 @@ export function App() {
         loading={leadershipLoading}
       />
 
-      {/* Footer */}
-      <footer className="border-t border-[#1e2333] py-3 text-center text-[11px] text-slate-500">
-        Skylark Executive Intelligence • Engineered by Ram Karthik • Decisions leadership can trust
+      {/* Metric Data Lineage Audit Modal */}
+      <DataLineageModal
+        isOpen={lineageModalOpen}
+        onClose={() => setLineageModalOpen(false)}
+        info={selectedLineageInfo}
+      />
+
+      {/* Keyboard Command Palette (Ctrl+K) */}
+      <CommandPalette
+        isOpen={commandPaletteOpen}
+        onClose={() => setCommandPaletteOpen(false)}
+        onNavigate={(tab) => { setActiveTab(tab); setCommandPaletteOpen(false); }}
+        onOpenLeadership={handleOpenLeadership}
+        onOpenScenario={() => setScenarioModalOpen(true)}
+      />
+
+      {/* Enterprise Status Footer */}
+      <footer className="border-t border-[#1e2333] py-3 px-4 max-w-7xl w-full mx-auto flex flex-col md:flex-row items-center justify-between text-[11px] text-slate-500 gap-2">
+        <div className="flex items-center gap-3">
+          <span>Skylark Executive Intelligence</span>
+          <span>•</span>
+          <span>Data: Monday.com Snapshot</span>
+          <span>•</span>
+          <span>Engineered by Ram Karthik</span>
+        </div>
+        <div className="flex items-center gap-2 font-mono text-[10px]">
+          <span>Press</span>
+          <kbd className="px-1.5 py-0.5 rounded bg-[#141722] border border-[#1e2333] text-slate-400">Ctrl+K</kbd>
+          <span>for Command Palette</span>
+        </div>
       </footer>
     </div>
   );
