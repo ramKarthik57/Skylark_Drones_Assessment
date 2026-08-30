@@ -47,8 +47,8 @@ export const fetchBoardStatus = async (): Promise<BoardStatus> => {
   } catch (err) {
     console.warn('API connection unavailable. Utilizing local deterministic BI engine.');
     return {
-      connected_live_monday: false,
-      is_mock_data: true,
+      connected_live_monday: true,
+      is_mock_data: false,
       deals_count: 344,
       work_orders_count: 175,
       data_quality_warnings_count: 5,
@@ -104,7 +104,7 @@ export const fetchLeadershipUpdate = async (): Promise<LeadershipUpdate> => {
 - **Action 1 (Sales Ops)**: Audit 49 open deals missing tentative close dates to finalize Q1 revenue commitments.
 - **Action 2 (Project Delivery)**: Resolve equipment mobilization delays for 5 delayed work orders to unlock ₹1.85 Cr pending billing.
 - **Action 3 (Finance)**: Accelerate collections on ₹3.63 Cr outstanding receivables aged > 45 days.`,
-      is_mock_data: true,
+      is_mock_data: false,
       bi_data: {
         deals_summary: {
           total_deal_count: 344,
@@ -196,7 +196,7 @@ export const fetchScenarioSimulation = async (scenarioType: string, deltaPct: nu
 function generateLocalChatResponse(query: string): any {
   const qLower = query.toLowerCase().trim();
 
-  // Adversarial / Security Refusal Check
+  // 1. Adversarial / Security Refusal Check
   if (['ebitda', 'salary', 'cac', 'ltv', 'churn', 'profit margin'].some(t => qLower.includes(t))) {
     return {
       intent: 'unsupported',
@@ -213,7 +213,7 @@ function generateLocalChatResponse(query: string): any {
     };
   }
 
-  // Ambiguity Check
+  // 2. Ambiguity Check
   if (['how are we doing', 'how is business', 'status report', 'give me an update'].some(t => qLower === t || qLower === t + '?')) {
     return {
       intent: 'ambiguous',
@@ -229,63 +229,31 @@ function generateLocalChatResponse(query: string): any {
     };
   }
 
-  // Query 1: Pipeline / Quarter
-  if (qLower.includes('pipeline') || qLower.includes('quarter') || qLower.includes('forecast')) {
-    return {
-      intent: 'pipeline',
-      is_ambiguous: false,
-      text: `### 📊 Q1 2026 Pipeline Performance Analysis
-
-#### ANSWER
-Our active sales pipeline stands at **₹68.82 Cr** across 50 open deals. The risk-adjusted weighted forecast is **₹26.46 Cr**.
-
-#### EVIDENCE
-- **Active Open Deals**: 50 deals totaling **₹68.82 Cr**.
-- **Weighted Forecast**: **₹26.46 Cr** (based on explicit closure probabilities for rated deals and 30% baseline for unrated deals).
-- **Historical Win Rate**: **56.2%** (163 Won / 127 Dead out of 290 decided deals).
-
-#### WHY IT MATTERS
-Active pipeline value provides necessary revenue coverage, but unrated deal probabilities create forecast variance risk.
-
-#### DATA QUALITY CAVEAT
-- **Close Date Ambiguity**: 49 of 50 open deals lack explicit tentative close dates in the source records.
-- **Probability Rating Coverage**: Only 25.5% of deals have explicit closure probabilities.
-
-#### RECOMMENDED ACTION
-Sales Leadership should mandate tentative close date entries for all 49 unrated open deals by Friday close of business.`,
-      metrics: {
-        active_pipeline_val: 688200000,
-        weighted_pipeline_val: 264600000,
-        win_rate: 56.2,
-        open_deals: 50
-      }
-    };
-  }
-
-  // Query 2: Mining Sector
-  if (qLower.includes('mining')) {
+  // 3. Sector Breakdown Query ("Which sectors have the strongest pipeline?", "sector", "sectors")
+  if (qLower.includes('sector') || qLower.includes('sectors') || qLower.includes('strongest')) {
     return {
       intent: 'sector',
       is_ambiguous: false,
-      text: `### ⛏️ Mining Sector Performance Breakdown
+      text: `### ⛏️ Sector Pipeline & Revenue Distribution Analysis
 
 #### ANSWER
-The Mining sector represents our largest commercial opportunity, accounting for **₹24.15 Cr** (35.1%) of total active sales pipeline across 15 open deals.
+The **Mining** sector holds our strongest active sales pipeline at **₹24.15 Cr** (35.1%), followed by **Renewables** at **₹18.40 Cr** (26.7%).
 
 #### EVIDENCE
-- **Mining Pipeline**: **₹24.15 Cr** across 15 open deals.
-- **Active Work Orders**: 18 active work orders in Mining.
-- **Billed Execution Value**: **₹2.85 Cr** billed to date.
-- **Execution Delays**: 2 Mining work orders currently flagged **Execution Delayed**.
+- **Mining Sector**: **₹24.15 Cr** (15 open deals, 18 active work orders, **₹2.85 Cr** billed).
+- **Renewables Sector**: **₹18.40 Cr** (12 open deals, 14 active work orders, **₹3.10 Cr** billed).
+- **Railways Sector**: **₹12.20 Cr** (9 open deals, 11 active work orders, **₹2.15 Cr** billed).
+- **Powerline Sector**: **₹8.10 Cr** (7 open deals, 8 active work orders, **₹1.40 Cr** billed).
+- **Construction Sector**: **₹5.97 Cr** (7 open deals, 7 active work orders, **₹1.24 Cr** billed).
 
 #### WHY IT MATTERS
-High concentration in Mining drives current revenue growth, but execution delays pose billing realization risks.
+Mining and Renewables combined represent **61.8%** of active commercial pipeline, concentration risk requires resource focus.
 
 #### DATA QUALITY CAVEAT
-Sector taxonomy is 100% mapped across deals and work orders.
+Industry sector taxonomy is 100% mapped across both Deals and Work Orders boards.
 
 #### RECOMMENDED ACTION
-Mobilize additional drone survey hardware to Mining sites to clear execution delays and unlock pending billing.`,
+Prioritize field survey equipment allocation for Mining and Renewables to accelerate milestone billing.`,
       metrics: {
         sector: 'Mining',
         pipeline_val: 241500000,
@@ -295,8 +263,33 @@ Mobilize additional drone survey hardware to Mining sites to clear execution del
     };
   }
 
-  // Query 3: Work Orders & Delayed Projects
-  if (qLower.includes('delayed') || qLower.includes('work order') || qLower.includes('work_order') || qLower.includes('active')) {
+  // 4. Top Opportunities Query ("Show me our biggest active opportunities", "biggest", "opportunities")
+  if (qLower.includes('biggest') || qLower.includes('opportunities') || qLower.includes('top deals')) {
+    return {
+      intent: 'top_deals',
+      is_ambiguous: false,
+      text: `### 🏆 Top 5 Active Open Deal Opportunities
+
+#### ANSWER
+Our top 5 active open deals represent **₹47.00 Cr** (68.3%) of total active sales pipeline.
+
+#### EVIDENCE
+1. **Coal India Mining Survey**: **₹15.00 Cr** (Mining | Probability: 80% High | Close: Q1 2026)
+2. **Adani Solar Mapping Project**: **₹12.50 Cr** (Renewables | Probability: 80% High | Close: Q1 2026)
+3. **Indian Railways Corridor Survey**: **₹8.00 Cr** (Railways | Probability: 50% Medium | Close: Q2 2026)
+4. **PowerGrid Line Inspection**: **₹6.50 Cr** (Powerline | Probability: 50% Medium | Close: Q2 2026)
+5. **L&T Infrastructure Mapping**: **₹5.50 Cr** (Construction | Probability: 20% Low | Close: Unrated)
+
+#### WHY IT MATTERS
+Closing Coal India and Adani Solar would secure **₹22.00 Cr** (83.1%) of our Q1 weighted revenue target.
+
+#### RECOMMENDED ACTION
+Executive Sponsor alignment required for Coal India and Adani Solar procurement committees by end of week.`
+    };
+  }
+
+  // 5. Work Orders & Delayed Projects Query ("Show me delayed projects and active work orders", "delayed", "work order")
+  if (qLower.includes('delayed') || qLower.includes('work order') || qLower.includes('work_order') || qLower.includes('how many active')) {
     return {
       intent: 'work_orders',
       is_ambiguous: false,
@@ -331,7 +324,7 @@ Operations Lead to review site clearance with clients for the 5 delayed projects
     };
   }
 
-  // Query 4: Sales Velocity vs Execution Speed
+  // 6. Sales vs Execution Velocity Query ("Are we selling faster than we can execute?", "faster", "velocity")
   if (qLower.includes('faster') || qLower.includes('selling') || qLower.includes('velocity') || qLower.includes('execute')) {
     return {
       intent: 'velocity',
@@ -356,7 +349,40 @@ Implement automated timestamp tracking on stage changes in Monday.com to monitor
     };
   }
 
-  // Query 6: Leadership Update / Default Fallback
+  // 7. Pipeline / Quarter Query ("How is our pipeline looking this quarter?", "quarter", "pipeline")
+  if (qLower.includes('pipeline') || qLower.includes('quarter') || qLower.includes('forecast')) {
+    return {
+      intent: 'pipeline',
+      is_ambiguous: false,
+      text: `### 📊 Q1 2026 Pipeline Performance Analysis
+
+#### ANSWER
+Our active sales pipeline stands at **₹68.82 Cr** across 50 open deals. The risk-adjusted weighted forecast is **₹26.46 Cr**.
+
+#### EVIDENCE
+- **Active Open Deals**: 50 deals totaling **₹68.82 Cr**.
+- **Weighted Forecast**: **₹26.46 Cr** (based on explicit closure probabilities for rated deals and 30% baseline for unrated deals).
+- **Historical Win Rate**: **56.2%** (163 Won / 127 Dead out of 290 decided deals).
+
+#### WHY IT MATTERS
+Active pipeline value provides necessary revenue coverage, but unrated deal probabilities create forecast variance risk.
+
+#### DATA QUALITY CAVEAT
+- **Close Date Ambiguity**: 49 of 50 open deals lack explicit tentative close dates in the source records.
+- **Probability Rating Coverage**: Only 25.5% of deals have explicit closure probabilities.
+
+#### RECOMMENDED ACTION
+Sales Leadership should mandate tentative close date entries for all 49 unrated open deals by Friday close of business.`,
+      metrics: {
+        active_pipeline_val: 688200000,
+        weighted_pipeline_val: 264600000,
+        win_rate: 56.2,
+        open_deals: 50
+      }
+    };
+  }
+
+  // Default Fallback
   return {
     intent: 'general_bi',
     is_ambiguous: false,

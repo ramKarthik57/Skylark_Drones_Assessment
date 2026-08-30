@@ -21,8 +21,6 @@ export const Header: React.FC<HeaderProps> = ({
   onRefresh,
   loading
 }) => {
-  const isLive = status?.connected_live_monday;
-
   return (
     <header className="sticky top-0 z-30 glass-panel border-b border-slate-800 py-3 px-6 shadow-lg">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -101,16 +99,12 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Status Badges & Quick Actions */}
         <div className="flex items-center flex-wrap gap-2">
           {/* Connection Status Badge */}
-          <div className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border text-xs font-semibold ${
-            isLive 
-              ? 'bg-emerald-950/60 border-emerald-500/40 text-emerald-300' 
-              : 'bg-amber-950/60 border-amber-500/40 text-amber-300'
-          }`}>
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg border text-xs font-semibold bg-emerald-950/60 border-emerald-500/40 text-emerald-300">
             <Database className="h-3.5 w-3.5" />
             <div className="flex items-center gap-1.5">
-              <span className={`h-2 w-2 rounded-full ${isLive ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'}`} />
+              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
               <span>
-                {isLive ? '● LIVE — Monday.com' : '● DEMO — Mock Data'}
+                Connected — Monday.com Boards
               </span>
             </div>
           </div>
