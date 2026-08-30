@@ -972,7 +972,7 @@ Review project tracker records for the 5 delayed work orders to evaluate executi
           { name: 'Delayed', value: 5, color: '#f59e0b' }
         ]
       },
-      text: `### 🚀 Active Work Orders & Financial Overview`
+      text: `### 🚀 Active Work Orders & Financial Overview
 
 #### ANSWER
 We have **58 Active Work Orders**, representing **₹21.06 Cr** in total contracted value. **₹10.74 Cr** (51.0%) has been billed to date, and **₹3.63 Cr** remains in uncollected receivables.
