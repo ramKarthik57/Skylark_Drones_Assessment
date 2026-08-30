@@ -46,7 +46,7 @@ export function App() {
         {
           id: 'welcome-1',
           sender: 'assistant',
-          text: `Welcome to **Skylark Executive Intelligence**. I am connected to your **Monday.com Deals** & **Work Orders** boards. Ask me any executive question about pipeline health, sector revenue, operational workloads, or delayed projects!`,
+          text: `Welcome to **Skylark Executive Intelligence**. I am connected to your **Monday.com Deals** & **Work Orders** tracker records. Ask me any executive question about pipeline health, sector revenue, operational workloads, or delayed projects.`,
           timestamp: new Date().toLocaleTimeString(),
           biData: initRes.bi_data,
           dataQualityNotes: initRes.data_quality_notes
@@ -139,7 +139,7 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans">
+    <div className="min-h-screen bg-[#090a0f] text-slate-100 flex flex-col font-sans">
       {/* App Header */}
       <Header
         status={boardStatus}
@@ -152,7 +152,7 @@ export function App() {
       />
 
       {/* Main Content Workspace */}
-      <main className="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 space-y-6">
+      <main className="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 space-y-5">
         {activeTab === 'command_center' && (
           <CommandCenterView
             biData={biData}
@@ -202,7 +202,7 @@ export function App() {
       />
 
       {/* Footer */}
-      <footer className="border-t border-slate-900 py-4 text-center text-xs text-slate-500">
+      <footer className="border-t border-[#1e2333] py-3 text-center text-[11px] text-slate-500">
         Skylark Executive Intelligence • Engineered by Ram Karthik • Decisions leadership can trust
       </footer>
     </div>

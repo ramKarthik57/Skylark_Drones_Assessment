@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldAlert, AlertOctagon, Info, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import type { RiskSignal } from '../types';
 
 interface RiskRadarProps {
@@ -9,76 +9,78 @@ interface RiskRadarProps {
 
 export const RiskRadarView: React.FC<RiskRadarProps> = ({ riskRadar, onNavigateToAskAI }) => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       {/* Risk Radar Header */}
-      <div className="glass-panel rounded-2xl p-6 border border-slate-800 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-xl">
-        <div className="flex items-center gap-3">
-          <div className="p-3 rounded-xl bg-rose-500/10 text-rose-400 border border-rose-500/20">
-            <ShieldAlert className="h-6 w-6" />
-          </div>
-          <div>
-            <h2 className="text-base font-bold text-white tracking-tight">Executive Risk Radar</h2>
-            <p className="text-xs text-slate-400">Deterministic risk signals derived from Monday.com operational & commercial data</p>
-          </div>
+      <div className="bg-[#10121a] rounded-lg p-5 border border-[#1e2333] flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
+        <div>
+          <h2 className="text-xs font-semibold text-slate-200 tracking-wider uppercase">
+            Executive Risk Radar
+          </h2>
+          <p className="text-[11px] text-slate-500 mt-0.5">
+            Deterministic risk signals derived from Deals and Work Orders tracker records
+          </p>
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="text-xs px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30 font-medium">
-            {riskRadar.filter(r => r.severity === 'HIGH').length} High Risks
+          <span className="text-[11px] px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-800 font-medium">
+            {riskRadar.filter(r => r.severity === 'HIGH').length} High Severity
           </span>
-          <span className="text-xs px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 font-medium">
-            {riskRadar.filter(r => r.severity === 'MEDIUM').length} Medium Risks
+          <span className="text-[11px] px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700 font-medium">
+            {riskRadar.filter(r => r.severity === 'MEDIUM').length} Medium Severity
           </span>
         </div>
       </div>
 
-      {/* Risk Signal Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {/* Risk Cards Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         {riskRadar.map((risk) => (
           <div
             key={risk.id}
-            className={`glass-card rounded-2xl p-5 border flex flex-col justify-between ${
-              risk.severity === 'HIGH' ? 'border-rose-500/40 bg-rose-950/20' : 'border-amber-500/40 bg-amber-950/20'
+            className={`bg-[#141722] rounded-lg p-5 border flex flex-col justify-between ${
+              risk.severity === 'HIGH' ? 'border-amber-700/40' : 'border-[#1e2333]'
             }`}
           >
             <div>
-              <div className="flex items-center justify-between mb-3">
-                <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full uppercase ${
-                  risk.severity === 'HIGH' ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30' : 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
-                }`}>
-                  {risk.category} • {risk.severity} SEVERITY
+              <div className="flex items-center justify-between mb-2.5">
+                <span className="text-[10px] font-mono text-slate-400 uppercase">
+                  {risk.category}
                 </span>
-                {risk.severity === 'HIGH' ? <AlertOctagon className="h-5 w-5 text-rose-400" /> : <ShieldAlert className="h-5 w-5 text-amber-400" />}
+                <span className={`text-[10px] font-medium px-1.5 py-0.2 rounded ${
+                  risk.severity === 'HIGH' ? 'bg-amber-950 text-amber-300 border border-amber-800' : 'bg-slate-800 text-slate-300'
+                }`}>
+                  {risk.severity} SEVERITY
+                </span>
               </div>
 
-              <h3 className="text-sm font-bold text-white mb-2">{risk.title}</h3>
+              <h3 className="text-sm font-medium text-slate-100 mb-2">{risk.title}</h3>
               
-              <div className="mb-4">
-                <h4 className="text-[11px] font-semibold text-slate-400 uppercase mb-1">Business Impact:</h4>
-                <p className="text-xs text-slate-300 leading-relaxed">{risk.impact}</p>
+              <div className="mb-3">
+                <span className="text-[10px] font-semibold text-slate-400 uppercase">Impact: </span>
+                <span className="text-xs text-slate-300 leading-relaxed">{risk.impact}</span>
               </div>
 
-              <div className="mb-4 bg-slate-900/80 p-3 rounded-xl border border-slate-800 space-y-1">
-                <h4 className="text-[11px] font-semibold text-slate-300 uppercase mb-1 flex items-center gap-1">
-                  <Info className="h-3.5 w-3.5 text-cyan-400" /> Ground-Truth Evidence:
-                </h4>
+              <div className="mb-4 bg-[#090a0f] p-3 rounded text-[11px] border border-[#1e2333] space-y-1">
+                <div className="text-[10px] font-semibold text-slate-400 uppercase">
+                  Ground-Truth Evidence
+                </div>
                 {risk.evidence.map((ev, idx) => (
-                  <p key={idx} className="text-[11px] text-slate-300">• {ev}</p>
+                  <p key={idx} className="text-slate-300">• {ev}</p>
                 ))}
               </div>
             </div>
 
-            <div className="pt-3 border-t border-slate-800 flex items-center justify-between">
+            <div className="pt-3 border-t border-[#1e2333] flex items-center justify-between">
               <div>
-                <span className="text-[10px] font-semibold text-slate-400 uppercase">Recommended Action:</span>
-                <p className="text-xs text-cyan-300 font-medium">{risk.action}</p>
+                <span className="text-[10px] font-semibold text-slate-500 uppercase">Action Directive:</span>
+                <p className="text-xs text-slate-200 mt-0.5">{risk.action}</p>
               </div>
               <button
                 onClick={() => onNavigateToAskAI(`How can we resolve the risk: ${risk.title}?`)}
-                className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-400 transition-colors shrink-0"
+                className="flex items-center gap-1 text-[11px] text-sky-400 hover:text-sky-300 font-medium shrink-0 ml-3 transition-colors"
                 title="Investigate with AI"
               >
-                <ArrowRight className="h-4 w-4" />
+                <span>Investigate</span>
+                <ArrowRight className="h-3 w-3" />
               </button>
             </div>
           </div>

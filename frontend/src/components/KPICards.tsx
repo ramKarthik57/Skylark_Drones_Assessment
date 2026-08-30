@@ -1,5 +1,4 @@
 import React from 'react';
-import { DollarSign, TrendingUp, AlertOctagon, CheckCircle2, PieChart, Briefcase } from 'lucide-react';
 import type { BIData } from '../types';
 
 interface KPICardsProps {
@@ -22,87 +21,79 @@ export const KPICards: React.FC<KPICardsProps> = ({ biData }) => {
 
   const cards = [
     {
-      title: 'Active Sales Pipeline',
+      label: 'ACTIVE PIPELINE',
       value: formatINR(deals_summary.open_pipeline_value),
-      subtitle: `${deals_summary.open_deal_count} active opportunities`,
-      icon: DollarSign,
-      color: 'from-blue-500 to-cyan-500',
-      badge: 'Deals Board'
+      context: `${deals_summary.open_deal_count} open opportunities`,
+      source: 'Deals Board (50 Open)'
     },
     {
-      title: 'Weighted Pipeline',
+      label: 'WEIGHTED FORECAST',
       value: formatINR(deals_summary.weighted_pipeline_value),
-      subtitle: 'Adjusted by win probability',
-      icon: TrendingUp,
-      color: 'from-cyan-500 to-emerald-500',
-      badge: 'Forecast'
+      context: 'Risk-adjusted by win probability',
+      source: '12 rated + 38 baseline'
     },
     {
-      title: 'Closed Win Rate',
+      label: 'WIN RATE',
       value: `${deals_summary.win_rate}%`,
-      subtitle: `${deals_summary.won_deal_count} Won / ${deals_summary.dead_deal_count} Dead`,
-      icon: PieChart,
-      color: 'from-emerald-500 to-teal-500',
-      badge: 'Conversion'
+      context: `${deals_summary.won_deal_count} Won / ${deals_summary.dead_deal_count} Dead`,
+      source: '290 decided deals'
     },
     {
-      title: 'Active Work Orders',
+      label: 'ACTIVE WORK ORDERS',
       value: `${work_orders_summary.active_wo_count}`,
-      subtitle: `${work_orders_summary.ongoing_count} Ongoing projects`,
-      icon: Briefcase,
-      color: 'from-purple-500 to-indigo-500',
-      badge: 'Execution'
+      context: `${work_orders_summary.ongoing_count} ongoing projects`,
+      source: '175 Total Work Orders'
     },
     {
-      title: 'Delayed Work Orders',
+      label: 'DELAYED PROJECTS',
       value: `${work_orders_summary.delayed_count}`,
-      subtitle: 'Execution bottlenecks flagged',
-      icon: AlertOctagon,
-      color: 'from-amber-500 to-rose-500',
-      badge: 'Action Needed',
-      warning: work_orders_summary.delayed_count > 0
+      context: 'Execution delayed in tracker',
+      source: 'Operations Tracker',
+      highlight: work_orders_summary.delayed_count > 0
     },
     {
-      title: 'Total Billed Value',
-      value: formatINR(work_orders_summary.total_billed_value),
-      subtitle: `${work_orders_summary.billing_completion_rate}% contract billed`,
-      icon: CheckCircle2,
-      color: 'from-teal-500 to-cyan-500',
-      badge: 'Finance'
+      label: 'RECEIVABLES',
+      value: formatINR(work_orders_summary.total_receivable_value),
+      context: `Billed: ${formatINR(work_orders_summary.total_billed_value)}`,
+      source: 'Work Orders Tracker'
     }
   ];
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-6">
-      {cards.map((card, idx) => {
-        const Icon = card.icon;
-        return (
-          <div
-            key={idx}
-            className={`glass-card rounded-xl p-3.5 flex flex-col justify-between relative overflow-hidden ${
-              card.warning ? 'border-amber-500/40 bg-amber-950/20' : ''
-            }`}
-          >
-            <div className="flex items-center justify-between gap-2 mb-2">
-              <span className="text-[10px] font-semibold tracking-wider uppercase text-slate-400">
-                {card.title}
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2.5 mb-5">
+      {cards.map((card, idx) => (
+        <div
+          key={idx}
+          className={`bg-[#141722] border rounded-md p-3 flex flex-col justify-between transition-colors ${
+            card.highlight 
+              ? 'border-amber-700/50 bg-[#191820]' 
+              : 'border-[#1e2333] hover:border-[#282f44]'
+          }`}
+        >
+          <div>
+            <div className="flex items-center justify-between mb-1.5">
+              <span className="text-[10px] font-medium tracking-wider text-slate-400">
+                {card.label}
               </span>
-              <div className={`p-1.5 rounded-lg bg-gradient-to-br ${card.color} text-white shadow-sm`}>
-                <Icon className="h-3.5 w-3.5" />
-              </div>
+              {card.highlight && (
+                <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+              )}
             </div>
 
-            <div>
-              <div className="text-lg font-bold text-white tracking-tight leading-tight">
-                {card.value}
-              </div>
-              <p className="text-[11px] text-slate-400 mt-1 truncate">
-                {card.subtitle}
-              </p>
+            <div className="text-lg font-semibold text-slate-100 tracking-tight">
+              {card.value}
+            </div>
+
+            <div className="text-[11px] text-slate-400 mt-1 truncate">
+              {card.context}
             </div>
           </div>
-        );
-      })}
+
+          <div className="text-[10px] text-slate-500 pt-2 mt-2 border-t border-[#1e2333] truncate">
+            {card.source}
+          </div>
+        </div>
+      ))}
     </div>
   );
 };

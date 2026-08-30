@@ -1,5 +1,5 @@
 import React from 'react';
-import { Activity, Database, FileText, RefreshCw, LayoutDashboard, MessageSquare, ShieldAlert, ShieldCheck, Sliders, CheckSquare } from 'lucide-react';
+import { FileText, RefreshCw, LayoutDashboard, MessageSquare, ShieldAlert, ShieldCheck, Sliders, CheckSquare } from 'lucide-react';
 import type { BoardStatus } from '../types';
 
 interface HeaderProps {
@@ -22,30 +22,32 @@ export const Header: React.FC<HeaderProps> = ({
   loading
 }) => {
   return (
-    <header className="sticky top-0 z-30 glass-panel border-b border-slate-800 py-3 px-6 shadow-lg">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <header className="sticky top-0 z-30 bg-[#10121a] border-b border-[#1e2333] py-2.5 px-4 md:px-6">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-3">
         {/* Brand Header */}
         <div className="flex items-center gap-3">
-          <div className="h-10 w-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/20">
-            <Activity className="h-6 w-6 text-white" />
+          <div className="h-8 w-8 rounded bg-[#1e2333] border border-[#282f44] flex items-center justify-center text-sky-400 font-bold text-xs">
+            SK
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="font-bold text-lg text-white tracking-tight">Skylark Executive Intelligence</h1>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 font-semibold border border-cyan-500/20">
-                ENTERPRISE
+              <h1 className="font-semibold text-sm text-slate-100 tracking-tight">Skylark Executive Intelligence</h1>
+              <span className="text-[10px] px-1.5 py-0.2 rounded bg-slate-800 text-slate-400 font-medium border border-slate-700">
+                v3
               </span>
             </div>
-            <p className="text-xs text-slate-400">Engineered by Ram Karthik • Turn messy operational data into decisions leadership can trust</p>
+            <p className="text-[11px] text-slate-500">Decision Intelligence Platform • Engineered by Ram Karthik</p>
           </div>
         </div>
 
         {/* Executive Workspace Navigation Tabs */}
-        <nav className="flex items-center gap-1 bg-slate-900/90 p-1.5 rounded-xl border border-slate-800 text-xs">
+        <nav className="flex items-center gap-1 bg-[#090a0f] p-1 rounded-md border border-[#1e2333] text-xs">
           <button
             onClick={() => onTabChange('command_center')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-medium transition-all ${
-              activeTab === 'command_center' ? 'bg-cyan-500 text-white shadow-md' : 'text-slate-400 hover:text-slate-200'
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded font-medium transition-colors ${
+              activeTab === 'command_center' 
+                ? 'bg-[#1a1e2d] text-slate-100 border border-[#282f44]' 
+                : 'text-slate-400 hover:text-slate-200'
             }`}
           >
             <LayoutDashboard className="h-3.5 w-3.5" />
@@ -54,8 +56,10 @@ export const Header: React.FC<HeaderProps> = ({
 
           <button
             onClick={() => onTabChange('ask_ai')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-medium transition-all ${
-              activeTab === 'ask_ai' ? 'bg-cyan-500 text-white shadow-md' : 'text-slate-400 hover:text-slate-200'
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded font-medium transition-colors ${
+              activeTab === 'ask_ai' 
+                ? 'bg-[#1a1e2d] text-slate-100 border border-[#282f44]' 
+                : 'text-slate-400 hover:text-slate-200'
             }`}
           >
             <MessageSquare className="h-3.5 w-3.5" />
@@ -64,21 +68,25 @@ export const Header: React.FC<HeaderProps> = ({
 
           <button
             onClick={() => onTabChange('risk_radar')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-medium transition-all ${
-              activeTab === 'risk_radar' ? 'bg-cyan-500 text-white shadow-md' : 'text-slate-400 hover:text-slate-200'
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded font-medium transition-colors ${
+              activeTab === 'risk_radar' 
+                ? 'bg-[#1a1e2d] text-slate-100 border border-[#282f44]' 
+                : 'text-slate-400 hover:text-slate-200'
             }`}
           >
             <ShieldAlert className="h-3.5 w-3.5" />
             <span>Risk Radar</span>
             {status && status.risk_radar_count > 0 && (
-              <span className="h-2 w-2 rounded-full bg-rose-400 animate-pulse" />
+              <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
             )}
           </button>
 
           <button
             onClick={() => onTabChange('action_center')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-medium transition-all ${
-              activeTab === 'action_center' ? 'bg-cyan-500 text-white shadow-md' : 'text-slate-400 hover:text-slate-200'
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded font-medium transition-colors ${
+              activeTab === 'action_center' 
+                ? 'bg-[#1a1e2d] text-slate-100 border border-[#282f44]' 
+                : 'text-slate-400 hover:text-slate-200'
             }`}
           >
             <CheckSquare className="h-3.5 w-3.5" />
@@ -87,8 +95,10 @@ export const Header: React.FC<HeaderProps> = ({
 
           <button
             onClick={() => onTabChange('data_trust')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-medium transition-all ${
-              activeTab === 'data_trust' ? 'bg-cyan-500 text-white shadow-md' : 'text-slate-400 hover:text-slate-200'
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded font-medium transition-colors ${
+              activeTab === 'data_trust' 
+                ? 'bg-[#1a1e2d] text-slate-100 border border-[#282f44]' 
+                : 'text-slate-400 hover:text-slate-200'
             }`}
           >
             <ShieldCheck className="h-3.5 w-3.5" />
@@ -96,34 +106,28 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
         </nav>
 
-        {/* Status Badges & Quick Actions */}
+        {/* Status & Quick Action Controls */}
         <div className="flex items-center flex-wrap gap-2">
-          {/* Dynamic Connection Status Badge */}
+          {/* Connection Status Indicator */}
           {status?.connected_live_monday && !status?.is_mock_data ? (
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg border text-xs font-semibold bg-emerald-950/60 border-emerald-500/40 text-emerald-300">
-              <Database className="h-3.5 w-3.5" />
-              <div className="flex items-center gap-1.5">
-                <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span>● LIVE — Monday.com</span>
-              </div>
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded border text-[11px] font-medium bg-emerald-950/30 border-emerald-800/40 text-emerald-300">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+              <span>LIVE Monday.com</span>
             </div>
           ) : (
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg border text-xs font-semibold bg-amber-950/60 border-amber-500/40 text-amber-300">
-              <Database className="h-3.5 w-3.5" />
-              <div className="flex items-center gap-1.5">
-                <span className="h-2 w-2 rounded-full bg-amber-400 animate-pulse" />
-                <span>● DEMO — Cached Snapshot</span>
-              </div>
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded border text-[11px] font-medium bg-slate-900 border-slate-700/60 text-slate-300">
+              <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+              <span>DEMO Assignment Snapshot</span>
             </div>
           )}
 
-          {/* Scenario Modal Trigger Button */}
+          {/* Scenario Trigger */}
           <button
             onClick={onOpenScenarioModal}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-400 font-medium text-xs border border-emerald-500/30 transition-all"
+            className="flex items-center gap-1 px-2.5 py-1 rounded bg-[#141722] hover:bg-[#1a1e2d] text-slate-300 font-medium text-[11px] border border-[#1e2333] transition-colors"
             title="Executive Scenario What-If Simulation"
           >
-            <Sliders className="h-3.5 w-3.5" />
+            <Sliders className="h-3 w-3 text-slate-400" />
             <span>Scenario</span>
           </button>
 
@@ -131,18 +135,18 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             onClick={onRefresh}
             disabled={loading}
-            className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors disabled:opacity-50"
-            title="Refresh Board Data"
+            className="p-1.5 rounded bg-[#141722] hover:bg-[#1a1e2d] text-slate-400 hover:text-slate-200 border border-[#1e2333] transition-colors disabled:opacity-40"
+            title="Refresh Data"
           >
-            <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
+            <RefreshCw className={`h-3.5 w-3.5 ${loading ? 'animate-spin' : ''}`} />
           </button>
 
-          {/* Leadership Update Button */}
+          {/* Leadership Brief Button */}
           <button
             onClick={onOpenLeadershipModal}
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-medium text-xs shadow-md shadow-cyan-500/20 transition-all transform hover:-translate-y-0.5"
+            className="flex items-center gap-1.5 px-3 py-1 rounded bg-sky-700 hover:bg-sky-600 text-white font-medium text-[11px] transition-colors"
           >
-            <FileText className="h-4 w-4" />
+            <FileText className="h-3 w-3" />
             <span>Leadership Brief</span>
           </button>
         </div>

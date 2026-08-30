@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck, CheckCircle2, Info } from 'lucide-react';
+import { ShieldCheck } from 'lucide-react';
 import type { DataTrust } from '../types';
 
 interface DataTrustProps {
@@ -10,72 +10,84 @@ export const DataTrustView: React.FC<DataTrustProps> = ({ dataTrust }) => {
   if (!dataTrust) return null;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       {/* Trust Header */}
-      <div className="glass-panel rounded-2xl p-6 border border-slate-800 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-xl">
+      <div className="bg-[#10121a] rounded-lg p-5 border border-[#1e2333] flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <div className="p-3 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
-            <ShieldCheck className="h-6 w-6" />
+          <div className="p-2 rounded bg-[#141722] text-slate-300 border border-[#1e2333]">
+            <ShieldCheck className="h-5 w-5 text-sky-400" />
           </div>
           <div>
-            <h2 className="text-base font-bold text-white tracking-tight">Data Trust Center</h2>
-            <p className="text-xs text-slate-400">Can leadership trust these metrics? Multi-dimensional dataset evaluation score</p>
+            <h2 className="text-xs font-semibold text-slate-200 tracking-wider uppercase">
+              Data Trust Center
+            </h2>
+            <p className="text-[11px] text-slate-500 mt-0.5">
+              Multi-dimensional evaluation of source data completeness, coverage, and linkage integrity
+            </p>
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
-          <div className="px-4 py-2 rounded-xl bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 text-xs font-bold flex items-center gap-2">
-            <CheckCircle2 className="h-4 w-4 text-cyan-400" />
-            <span>{dataTrust.overall_confidence}</span>
-          </div>
+        <div className="px-3 py-1 rounded bg-[#141722] border border-[#1e2333] text-slate-200 text-xs font-medium">
+          OVERALL: <span className="text-emerald-400 font-semibold">{dataTrust.overall_confidence}</span>
         </div>
       </div>
 
-      {/* Trust Dimension Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {/* Trust Dimension Breakdown */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
         {dataTrust.dimensions.map((dim, idx) => (
-          <div key={idx} className="glass-card rounded-2xl p-5 border border-slate-800 flex flex-col justify-between">
+          <div key={idx} className="bg-[#141722] rounded-lg p-4 border border-[#1e2333] flex flex-col justify-between">
             <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-bold text-slate-300">{dim.name}</span>
-                <span className="text-sm font-extrabold text-cyan-400">{dim.score}%</span>
+              <div className="flex items-center justify-between mb-1.5">
+                <span className="text-xs font-medium text-slate-200">{dim.name}</span>
+                <span className="text-xs font-mono font-bold text-slate-100">{dim.score}%</span>
               </div>
               <p className="text-[11px] text-slate-400 mb-3">{dim.desc}</p>
 
-              {/* Progress Bar */}
-              <div className="w-full bg-slate-900 rounded-full h-2 overflow-hidden border border-slate-800 mb-2">
+              {/* Minimal Progress Bar */}
+              <div className="w-full bg-[#090a0f] rounded h-1.5 overflow-hidden border border-[#1e2333] mb-2">
                 <div
-                  className={`h-full rounded-full ${
-                    dim.score >= 80 ? 'bg-cyan-500' : dim.score >= 50 ? 'bg-amber-500' : 'bg-rose-500'
+                  className={`h-full rounded ${
+                    dim.score >= 80 ? 'bg-sky-600' : dim.score >= 50 ? 'bg-amber-600' : 'bg-rose-600'
                   }`}
                   style={{ width: `${dim.score}%` }}
                 />
               </div>
             </div>
 
-            <div className="text-[10px] text-slate-500 flex items-center justify-between pt-2 border-t border-slate-800/80">
-              <span>Rating: {dim.score >= 80 ? 'High' : dim.score >= 50 ? 'Medium' : 'Low'}</span>
-              <span>Monday.com Real-Time Calculation</span>
+            <div className="text-[10px] text-slate-500 flex items-center justify-between pt-2 border-t border-[#1e2333]">
+              <span>Coverage: {dim.score >= 80 ? 'High' : dim.score >= 50 ? 'Medium' : 'Low'}</span>
+              <span>Deterministic</span>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Transparency Methodology Section */}
-      <div className="glass-panel rounded-2xl p-6 border border-slate-800 text-xs text-slate-300 space-y-3">
-        <h3 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
-          <Info className="h-4 w-4 text-cyan-400" /> Deterministic Trust Methodology
+      {/* Governance & Methodology Explanation */}
+      <div className="bg-[#10121a] rounded-lg p-5 border border-[#1e2333] text-xs text-slate-300 space-y-3">
+        <h3 className="text-xs font-semibold text-slate-200 uppercase tracking-wider">
+          Data Governance Methodology
         </h3>
-        <p className="leading-relaxed text-slate-400">
-          Unlike generic black-box "AI confidence scores", Skylark Executive Intelligence evaluates data trust using 5 mathematical dataset dimensions directly calculated from Monday.com records:
+        <p className="leading-relaxed text-slate-400 text-[11px]">
+          Skylark Executive Intelligence evaluates dataset reliability using 5 deterministic dimensions computed directly from raw board records:
         </p>
-        <ul className="list-disc pl-5 space-y-1.5 text-slate-300">
-          <li><strong>Field Completeness ({dataTrust.completeness_score}%)</strong>: Ratio of fully populated required fields (Deal Name, Status, Value, Client Code).</li>
-          <li><strong>Date Normalized Coverage ({dataTrust.date_coverage_score}%)</strong>: Percentage of records with valid ISO timeline dates for quarterly forecasting.</li>
-          <li><strong>Probability Forecast Coverage ({dataTrust.probability_coverage_score}%)</strong>: Open deals with explicit win probability ratings vs unrated deals using baseline 30%.</li>
-          <li><strong>Sector Taxonomy Mapping ({dataTrust.sector_coverage_score}%)</strong>: Percentage of deals/work orders classified into primary industry sectors.</li>
-          <li><strong>Cross-Board Linkage Confidence ({dataTrust.cross_board_match_score}%)</strong>: Percentage of work order deal names matched 1:1 with Deals board entries (52/58 matched).</li>
-        </ul>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-[11px] text-slate-300">
+          <div className="p-2.5 rounded bg-[#090a0f] border border-[#1e2333]">
+            <span className="font-semibold text-slate-200">Field Completeness ({dataTrust.completeness_score}%)</span>
+            <p className="text-slate-400 mt-0.5">Ratio of required fields populated (Deal Name, Status, Value, Client).</p>
+          </div>
+          <div className="p-2.5 rounded bg-[#090a0f] border border-[#1e2333]">
+            <span className="font-semibold text-slate-200">Date Coverage ({dataTrust.date_coverage_score}%)</span>
+            <p className="text-slate-400 mt-0.5">Records with valid ISO timeline dates for quarterly forecasting.</p>
+          </div>
+          <div className="p-2.5 rounded bg-[#090a0f] border border-[#1e2333]">
+            <span className="font-semibold text-slate-200">Probability Coverage ({dataTrust.probability_coverage_score}%)</span>
+            <p className="text-slate-400 mt-0.5">12 rated open deals vs 38 unrated deals using 30% baseline modeling assumption.</p>
+          </div>
+          <div className="p-2.5 rounded bg-[#090a0f] border border-[#1e2333]">
+            <span className="font-semibold text-slate-200">Sector Taxonomy ({dataTrust.sector_coverage_score}%)</span>
+            <p className="text-slate-400 mt-0.5">Standardized 5-sector taxonomy applied across deals and work orders.</p>
+          </div>
+        </div>
       </div>
     </div>
   );
