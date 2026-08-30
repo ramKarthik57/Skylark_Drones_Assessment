@@ -173,11 +173,24 @@ def classify_intent_and_entities(query: str) -> Tuple[str, bool, Optional[str], 
     if "linkage" in q_lower or "match rate" in q_lower or "match deals" in q_lower or ("snapshot" in q_lower and "sales versus execution" in q_lower):
         return "CROSS_BOARD_ANALYSIS", False, None, None
 
+    # Top opportunity slippage / failure / conversion impact
+    if ("what would happen if" in q_lower or "if our top" in q_lower or "top opportunity did not convert" in q_lower or "largest opportunity fails" in q_lower):
+        return "FORECAST_EXPOSURE", False, None, None
+
+    # Billing Realization Percentage Calculation
+    if "billing realization percentage calculated" in q_lower or "realization percentage calculated" in q_lower or "billing realization calculated" in q_lower:
+        return "WORK_ORDER_OVERVIEW", False, None, None
+
+    # Leadership Priorities / What to focus on
+    if "what should leadership prioritize" in q_lower or "leadership prioritize right now" in q_lower or "prioritize right now" in q_lower:
+        return "LEADERSHIP_PRIORITIES_LIMITS", False, None, None
+
     # Sector Gap / Realization Gap
     if any(phrase in q_lower for phrase in [
         "weak execution", "weak delivery", "strong sales but weak",
         "gap between commercial", "commercial opportunity and execution",
-        "pipeline vs execution", "sales vs execution"
+        "pipeline vs execution", "sales vs execution",
+        "strong sales but weaker"
     ]):
         return "SECTOR_PIPELINE_VS_EXECUTION", False, None, None
 
@@ -787,7 +800,7 @@ Synthesize a professional Evidence-First Executive Response using markdown:
                 {"category": "Unrated (30%)", "Contribution": 0.56, "Nominal": 1.87}
             ]
         }
-    elif intent in ["SECTOR_COMBINATION", "SECTOR_PERFORMANCE"]:
+    elif intent in ["SECTOR_COMBINATION", "SECTOR_PERFORMANCE", "SECTOR_PIPELINE_VS_EXECUTION"]:
         operation = "SECTOR_COMPARISON"
         entity = "SECTOR"
         granularity = "GROUP"
