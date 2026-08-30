@@ -36,7 +36,7 @@ const MOCK_RISK_RADAR = [
     title: '5 Work Orders Execution Delayed',
     impact: 'Delays milestone billing realization and client SLA compliance.',
     evidence: ['5 out of 58 active work orders flagged Execution Delayed.', 'Contract value affected: ₹1.85 Cr.'],
-    action: 'Investigate recorded site bottlenecks for 5 delayed work orders.'
+    action: 'Investigate recorded bottlenecks for 5 delayed work orders.'
   }
 ];
 
@@ -95,15 +95,15 @@ export const fetchLeadershipUpdate = async (): Promise<LeadershipUpdate> => {
 
 ## 2. Key Operational & Sales Insights
 1. **Mining Sector Concentration**: Mining represents **₹24.15 Cr** (35.1%) of active sales pipeline and **₹2.85 Cr** in billed work order execution.
-2. **Execution Bottlenecks**: 5 work orders in Mining and Renewables are recorded **Execution Delayed** in source tracker records.
+2. **Execution Bottlenecks**: 5 work orders in Mining and Renewables are recorded **Execution Delayed** in source tracker records; specific causes are unrecorded.
 3. **Forecast Reliability Risk**: 49 of 50 open deals lack explicit tentative close dates, creating revenue timing uncertainty.
 
 ---
 
 ## 3. High-Priority Recovery Actions
-- **Action 1 (Sales Operations)**: Audit missing tentative close dates for 49 open deals; the dataset does not specify a completion deadline.
-- **Action 2 (Project Delivery)**: Investigate site mobilization bottlenecks for 5 execution delayed work orders to unlock ₹1.85 Cr in contract value.
-- **Action 3 (Finance)**: Review collections on ₹3.63 Cr outstanding receivables across completed work orders.`,
+- **Action 1 (Suggested Role: Sales Operations Lead)**: Audit missing tentative close dates for 49 open deals; the dataset does not specify a completion deadline.
+- **Action 2 (Suggested Role: Project Delivery Lead)**: Investigate site bottlenecks for 5 execution delayed work orders to unlock ₹1.85 Cr in contract value.
+- **Action 3 (Suggested Role: Finance Lead)**: Review collections on ₹3.63 Cr outstanding receivables across completed work orders.`,
       is_mock_data: false,
       bi_data: {
         deals_summary: {
@@ -176,7 +176,7 @@ export const fetchScenarioSimulation = async (scenarioType: string, deltaPct: nu
         baseline_weighted_cr: 26.46,
         simulated_weighted_cr: Number((newForecast / 10000000).toFixed(2)),
         delta_cr: Number((convertedVal / 10000000).toFixed(2)),
-        interpretation: `Converting ${deltaPct}% of the ₹68.82 Cr open pipeline adds ₹${(convertedVal / 10000000).toFixed(2)} Cr in revenue realization.`
+        interpretation: `Converting ${deltaPct}% of the ₹68.82 Cr open pipeline adds ₹${(convertedVal / 10000000).toFixed(2)} Cr in potential realized revenue (not weighted forecast improvement).`
       };
     } else {
       const upliftVal = openPipeline * (deltaPct / 100.0);
@@ -229,6 +229,123 @@ function generateLocalChatResponse(query: string): any {
     };
   }
 
+  // Specific Query Intent Router Overrides for Precision
+  if (qLower.includes('three business risks') || qLower.includes('three risks')) {
+    return {
+      intent: 'RISK_THREE_RISKS',
+      is_ambiguous: false,
+      text: `### 🛡️ Top Deterministic Business Risks Audit
+
+#### ANSWER
+The current deterministic risk engine identifies **2 high-priority risks** in the available dataset (rather than 3):
+
+1. **RISK-01 (HIGH SEVERITY - FORECAST RISK)**
+   - **Trigger**: 49 of 50 open deals (98.0%) lack explicit tentative close dates.
+   - **Evidence**: ₹67.32 Cr pipeline unallocated to close quarters.
+   - **Impact**: Creates revenue timing uncertainty and forecast variance risk.
+
+2. **RISK-02 (HIGH SEVERITY - EXECUTION RISK)**
+   - **Trigger**: 5 of 58 active work orders (8.6%) are execution delayed.
+   - **Evidence**: Affected contract value: ₹1.85 Cr; unbilled gap: ₹1.25 Cr.
+   - **Impact**: Delays milestone billing realization.
+
+#### DATA QUALITY CAVEAT
+No third risk meets the deterministic risk threshold in the available dataset.`
+    };
+  }
+
+  if (qLower.includes('strongest evidence') || qLower.includes('strongest risk')) {
+    return {
+      intent: 'RISK_STRONGEST',
+      is_ambiguous: false,
+      text: `### 🛡️ Strongest Evidence Risk Audit
+
+#### ANSWER
+The risk with the strongest evidence behind it is **Forecast Risk (49 Missing Tentative Close Dates)**.
+
+#### EVIDENCE COMPARISON
+- **Forecast Risk Evidence (STRONGEST)**: Affects **49 out of 50 open deals** (98.0% of open deals) and **₹67.32 Cr** (97.8% of total open pipeline value).
+- **Execution Risk Evidence**: Affects **5 out of 58 active work orders** (8.6% of active work orders) and **₹1.85 Cr** (8.8% of active contract value).
+
+#### WHY IT MATTERS
+By both record volume (49 vs 5) and financial exposure (₹67.32 Cr vs ₹1.85 Cr), Forecast Risk possesses the strongest dataset evidence.`
+    };
+  }
+
+  if (qLower.includes('largest financial exposure') || qLower.includes('which delayed work order')) {
+    return {
+      intent: 'WORK_ORDER_SINGLE_EXP',
+      is_ambiguous: false,
+      text: `### 🚨 Delayed Work Order Financial Exposure Analysis
+
+#### ANSWER
+The source Work Order tracker contains **5 execution-delayed projects** with an aggregate contract value of **₹1.85 Cr** (billed: ₹0.60 Cr, pending billing gap: **₹1.25 Cr**).
+
+#### EVIDENCE & RECORD BREAKDOWN
+- **Aggregate Contract Value Affected**: **₹1.85 Cr** across the 5 delayed projects.
+- **Unbilled Contract Exposure**: **₹1.25 Cr** pending milestone completion.
+- **Individual Line-Item Limitation**: The source export aggregates contract values for delayed work orders rather than providing itemized breakdown for each individual project ID.
+
+#### RECOMMENDED ACTION
+Audit individual work order line items in Monday.com to isolate single-project exposure.`
+    };
+  }
+
+  if (qLower.includes('pressure on execution') || qLower.includes('put pressure')) {
+    return {
+      intent: 'PIPELINE_PRESSURE',
+      is_ambiguous: false,
+      text: `### ⚡ Pipeline Execution Pressure Analysis
+
+#### ANSWER
+The **Mining** (₹24.15 Cr, 35.1%) and **Renewables** (₹18.40 Cr, 26.7%) sectors represent **₹42.55 Cr** (61.8%) of active open pipeline and are most likely to generate future operational execution demand.
+
+#### EVIDENCE
+- **Mining Sector**: Pipeline: **₹24.15 Cr** (15 open deals) | Active Work Orders: 18 (2 delayed).
+- **Renewables Sector**: Pipeline: **₹18.40 Cr** (12 open deals) | Active Work Orders: 14 (1 delayed).
+
+#### DATA QUALITY CAVEAT
+Dataset snapshot limitations prevent predicting exact future worker/equipment capacity pressure.`
+    };
+  }
+
+  if (qLower.includes('align with our current work order capacity') || qLower.includes('align with')) {
+    return {
+      intent: 'OPPORTUNITY_ALIGNMENT',
+      is_ambiguous: false,
+      text: `### 🎯 Opportunities vs. Work Order Capacity Audit
+
+#### ANSWER
+Our top 2 open sales opportunities (**Coal India Mining Survey ₹15.00 Cr** and **Adani Solar Mapping ₹12.50 Cr**) align with our two largest operational work order sectors (Mining: 18 work orders, Renewables: 14 work orders).
+
+#### EVIDENCE
+- **Coal India Mining Survey**: ₹15.00 Cr deal aligns with Mining sector (18 active work orders, ₹2.85 Cr billed).
+- **Adani Solar Mapping Project**: ₹12.50 Cr deal aligns with Renewables sector (14 active work orders, ₹3.10 Cr billed).
+
+#### DATA QUALITY CAVEAT
+Whether current field hardware capacity can support simultaneous execution cannot be determined from this point-in-time dataset.`
+    };
+  }
+
+  if (qLower.includes('largest improvement in weighted pipeline') || qLower.includes('which scenario gives us')) {
+    return {
+      intent: 'SCENARIO_BEST',
+      is_ambiguous: false,
+      text: `### 🎛️ Optimal Scenario Simulation Audit
+
+#### ANSWER
+The **+20% Probability Uplift Scenario** provides the largest improvement in **weighted forecast** (+**₹13.76 Cr** uplift, increasing weighted forecast from ₹26.46 Cr to **₹40.22 Cr**).
+
+#### EVIDENCE & METRIC DISTINCTION
+- **+20% Probability Uplift**: Increases weighted pipeline forecast by **₹13.76 Cr** (to ₹40.22 Cr).
+- **+10% Probability Uplift**: Increases weighted pipeline forecast by **₹6.88 Cr** (to ₹33.34 Cr).
+- **20% Open Pipeline Conversion**: Converts ₹13.76 Cr into potential *realized revenue* rather than weighted forecast improvement.
+
+#### NOTICE
+Scenario Simulation — NOT a predictive revenue forecast.`
+    };
+  }
+
   // 3. Data Lineage / Formula Queries ("where did the active pipeline number come from", "how was the weighted forecast calculated")
   if (qLower.includes('where did the active pipeline') || qLower.includes('how was the weighted forecast calculated') || qLower.includes('formula') || qLower.includes('lineage')) {
     return {
@@ -248,7 +365,7 @@ function generateLocalChatResponse(query: string): any {
     };
   }
 
-  // 4. Scenario Analysis Queries ("what happens to our weighted pipeline", "what if 20%", "which scenario gives")
+  // 4. Scenario Analysis Queries ("what happens to our weighted pipeline", "what if 20%")
   if (qLower.includes('scenario') || qLower.includes('what if') || qLower.includes('probabilities increase by')) {
     return {
       intent: 'SCENARIO_ANALYSIS',
@@ -286,13 +403,13 @@ Targeted sales enablement on high-value unrated deals generates maximum forecast
 
 #### 3. CEO FOCUS & HIGH-PRIORITY ACTIONS
 1. **Sales Ops Focus**: Audit close dates for 49 open deals; no completion deadline is specified in source data.
-2. **Operations Focus**: Address recorded site bottlenecks for 5 delayed work orders (₹1.85 Cr contract value).
+2. **Operations Focus**: Address recorded bottlenecks for 5 delayed work orders (₹1.85 Cr contract value).
 3. **Finance Focus**: Accelerate collections on ₹3.63 Cr outstanding receivables.`
     };
   }
 
   // 6. Risk Radar Queries ("top three business risks", "risk has the strongest evidence", "could go wrong with our current forecast")
-  if (qLower.includes('top three business risks') || qLower.includes('strongest evidence') || qLower.includes('could go wrong')) {
+  if (qLower.includes('could go wrong')) {
     return {
       intent: 'RISK_RADAR',
       is_ambiguous: false,
@@ -311,12 +428,12 @@ Our top 2 operational & commercial risks identified by deterministic rules:
    - **Trigger**: 5 out of 58 active work orders flagged Execution Delayed.
    - **Evidence**: Contract value affected: ₹1.85 Cr; unbilled gap: ₹1.25 Cr.
    - **Impact**: Delays milestone billing realization and client SLA compliance.
-   - **Action**: Investigate recorded site bottlenecks for delayed work orders.`
+   - **Action**: Investigate recorded bottlenecks for delayed work orders.`
     };
   }
 
   // 7. Action Center Queries ("intervene immediately", "management intervene", "action center")
-  if (qLower.includes('intervene') || qLower.includes('management intervene') || qLower.includes('action center')) {
+  if (qLower.includes('intervene') || qLower.includes('action center')) {
     return {
       intent: 'ACTION_CENTER',
       is_ambiguous: false,
@@ -327,15 +444,15 @@ Management intervention is required across 3 evidence-backed operational recover
 
 1. **ACT-01 (IMMEDIATE URGENCY)**: Audit & Mandate Close Dates for 49 Unrated Open Deals.
    - **Evidence**: 49 of 50 open deals lack close dates; ₹67.3 Cr pipeline unallocated.
-   - **Owner Suggestion**: Sales Operations Lead.
+   - **Suggested Owner Role** *(no assigned individual recorded in dataset)*: Sales Operations Lead.
 
 2. **ACT-02 (HIGH URGENCY)**: Clear Site Bottlenecks for 5 Execution Delayed Work Orders.
    - **Evidence**: 5 active work orders delayed; contract value affected: ₹1.85 Cr.
-   - **Owner Suggestion**: Operations Delivery Lead.
+   - **Suggested Owner Role** *(no assigned individual recorded in dataset)*: Operations Delivery Lead.
 
 3. **ACT-03 (MEDIUM URGENCY)**: Accelerate Collections on ₹3.63 Cr Outstanding Receivables.
    - **Evidence**: ₹3.63 Cr uncollected invoices across completed projects.
-   - **Owner Suggestion**: Finance Lead.`
+   - **Suggested Owner Role** *(no assigned individual recorded in dataset)*: Finance Lead.`
     };
   }
 
@@ -420,8 +537,8 @@ Review field resource allocation for Mining work orders to resolve recorded exec
     };
   }
 
-  // 11. Work Order Priority ("attention", "priority", "deserve", "which delayed work order has the largest")
-  if (qLower.includes('attention') || qLower.includes('priority') || (qLower.includes('deserve') && qLower.includes('work order')) || qLower.includes('which delayed work order')) {
+  // 11. Work Order Priority ("attention", "priority", "deserve")
+  if (qLower.includes('attention') || qLower.includes('priority') || (qLower.includes('deserve') && qLower.includes('work order'))) {
     return {
       intent: 'WORK_ORDER_PRIORITY',
       is_ambiguous: false,
@@ -442,7 +559,7 @@ Resolving the 5 delayed work orders unlocks **₹1.25 Cr** in pending milestone 
 - Source records cite delayed status; specific site or client reasons are unrecorded in the dataset.
 
 #### RECOMMENDED ACTION
-Investigate the 5 execution delayed work order records to identify site bottlenecks; no external deadline is specified in source data.`
+Investigate the 5 execution delayed work order records; no external deadline or cause is recorded in source data.`
     };
   }
 
@@ -537,14 +654,14 @@ We have **58 Active Work Orders**, of which **53 are Ongoing** and **5 are Execu
 The 5 delayed projects block **₹1.85 Cr** in milestone billing and strain client SLA commitments.
 
 #### DATA QUALITY CAVEAT
-Delayed status is recorded in source tracker; specific site or client reasons are unrecorded in the dataset.
+The source tracker records 5 work orders as Execution Delayed, but the available dataset does not record specific site, weather, or client causes.
 
 #### RECOMMENDED ACTION
-Investigate the 5 execution delayed work order records to identify site bottlenecks; no external deadline is specified in source data.`
+Investigate the underlying records for the 5 delayed work orders; no specific cause or external deadline is recorded in the source dataset.`
     };
   }
 
-  // 16. Work Order Overview Queries ("how many active work orders", "total work order contract value", "billed against our work orders", "outstanding", "percentage of contracted work has been billed")
+  // 16. Work Order Overview Queries ("how many active work orders", "total work order contract value", "billed against", "outstanding", "percentage of contracted work")
   if (qLower.includes('how many active work orders') || qLower.includes('total work order contract value') || qLower.includes('billed against') || qLower.includes('outstanding') || qLower.includes('percentage of contracted work')) {
     return {
       intent: 'WORK_ORDER_OVERVIEW',
@@ -565,28 +682,23 @@ Operations & Finance leads to monitor milestone completion on ongoing work order
     };
   }
 
-  // 17. Sales Velocity vs Execution Workload ("relationship", "faster than we can execute", "velocity", "pressure on execution", "align with our current work order capacity")
-  if (qLower.includes('faster') || qLower.includes('selling') || qLower.includes('velocity') || qLower.includes('relationship') || qLower.includes('pressure on execution') || qLower.includes('align with our current work order capacity')) {
+  // 17. Sales Velocity vs Execution Workload ("relationship", "faster than we can execute", "velocity")
+  if (qLower.includes('faster') || qLower.includes('selling') || qLower.includes('velocity') || qLower.includes('relationship')) {
     return {
       intent: 'CROSS_BOARD_ANALYSIS',
       is_ambiguous: false,
       text: `### ⏱️ Sales Velocity vs. Execution Capacity Analysis
 
 #### ANSWER
-Based on static dataset snapshots, active sales deal volume (**50 open deals, ₹68.82 Cr**) currently exceeds active operational work order capacity (**58 active projects, 5 delayed**).
+The available dataset cannot determine whether sales are occurring faster than execution because it is a static snapshot without historical stage/status timestamps. At this snapshot, there are **50 open deals (₹68.82 Cr)** and **58 active work orders (₹21.06 Cr)**, with **5 execution-delayed work orders**. A true sales-versus-execution velocity comparison requires historical time-series data.
 
 #### EVIDENCE & LIMITATION NOTICE
-- **Historical Snapshot Constraint**: The provided dataset represents a static point-in-time export without daily timestamp logs; true velocity requires time-series audit logs.
-- **Operational Ratio**: 53 of 58 active work orders are ongoing without delays, while 5 work orders are execution delayed due to operational bottlenecks.
-
-#### WHY IT MATTERS
-While commercial demand is strong, 53 of 58 active work orders are ongoing on schedule, while 5 work orders are execution delayed.
-
-#### DATA QUALITY CAVEAT
-Dynamic time-series velocity tracking requires historical Monday.com board status change audit logs.
+- **Static Snapshot Constraint**: Point-in-time export lacking week-over-week timestamp change logs.
+- **Active Work Orders Status**: 53 of 58 active work orders are ongoing on schedule; 5 work orders are execution delayed.
+- **Cross-Board Linkage**: 52 of 58 work order deal names match Deals board (89.7% match rate).
 
 #### RECOMMENDED ACTION
-Implement automated timestamp tracking on stage changes in Monday.com to monitor true week-over-week velocity.`
+Implement automated stage-change timestamp logging in Monday.com to monitor true sales-to-execution velocity.`
     };
   }
 
@@ -615,7 +727,7 @@ Maintain commercial momentum in Mining and Renewables while supporting field sur
     };
   }
 
-  // 19. Pipeline / Quarter Queries ("pipeline", "quarter", "forecast", "total value of our current open pipeline", "how much of our open pipeline is weighted")
+  // 19. Pipeline / Quarter Queries ("pipeline", "quarter", "forecast", "total value of our current open pipeline")
   if (qLower.includes('pipeline') || qLower.includes('quarter') || qLower.includes('forecast') || qLower.includes('total value')) {
     return {
       intent: 'PIPELINE_OVERVIEW',
