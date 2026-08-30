@@ -1,4 +1,4 @@
-# Skylark Executive Intelligence — 5-Minute Demo Script (V2)
+# Skylark Executive Intelligence — 5-Minute Demo Script
 
 This script guides a 5-minute technical presentation and live demonstration of **Skylark Executive Intelligence**.
 

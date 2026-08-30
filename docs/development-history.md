@@ -64,15 +64,14 @@ This document outlines the architectural milestones and engineering rationale be
 
 ---
 
-## Milestone 8: Executive Action Center & Priorities Engine (V3 Upgrade)
-- **Objective**: Convert deterministic risk signals into prioritized executive recovery directives (`action_center.py`).
-- **Key Decisions**:
-  - Built automated prioritization logic mapping delayed work orders to immediate recovery plans, owner suggestions, and business impact summaries.
-  - Implemented `/api/action-center` endpoint and `ActionCenterView.tsx` tab.
+## Milestone 8: Executive Action Center & Priorities Engine
+
+- **Objective**: Convert risk signals into prioritized executive recovery directives with urgency ratings, evidence bullets, impact statements, and owner suggestions.
+- **Key Decisions**: Created `action_center.py` engine mapping ground-truth risk signals to recovery directives. Added `/api/action-center` endpoint and `ActionCenterView.tsx` component.
 
 ---
 
-## Milestone 9: Deterministic Scenario Analysis Engine & Provenance Audit (V3 Upgrade)
+## Milestone 9: Deterministic Scenario Analysis Engine & Provenance Audit
 - **Objective**: Enable interactive what-if pipeline simulations and metric provenance transparency (`scenario_engine.py`).
 - **Key Decisions**:
   - Built 100% deterministic scenario simulation for win probability shifts (+10%, +20%) and open pipeline conversion without mutating underlying production records.

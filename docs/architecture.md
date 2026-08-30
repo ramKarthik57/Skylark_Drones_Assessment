@@ -1,4 +1,4 @@
-# Skylark Executive Intelligence — V2 System Architecture
+# Skylark Executive Intelligence — System Architecture
 
 ```mermaid
 flowchart TD

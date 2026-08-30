@@ -1,4 +1,4 @@
-# Skylark Executive Intelligence — Decision Log (V2)
+# Skylark Executive Intelligence — Decision Log
 
 ## 1. Key Assumptions & Semantic Interpretations
 

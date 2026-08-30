@@ -197,7 +197,7 @@ export function App() {
 
       {/* Footer */}
       <footer className="border-t border-slate-900 py-4 text-center text-xs text-slate-500">
-        Skylark Executive Intelligence • Turn messy operational data into decisions leadership can trust
+        Skylark Executive Intelligence • Engineered by Ram Karthik • Decisions leadership can trust
       </footer>
     </div>
   );
