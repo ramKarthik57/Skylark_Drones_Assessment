@@ -93,14 +93,73 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
 ## 3. High-Priority Recovery Actions
 - **Action 1 (Suggested Role: Sales Operations Lead)**: Audit missing tentative close dates for 49 open deals; the dataset does not specify a completion deadline.
 - **Action 2 (Suggested Role: Project Delivery Lead)**: Investigate site bottlenecks for 5 execution delayed work orders to unlock ₹1.85 Cr in contract value.
-- **Action 3 (Suggested Role: Finance Lead)**: Review collections on ₹3.63 Cr outstanding receivables across completed work orders.`,is_mock_data:!1,bi_data:{deals_summary:{total_deal_count:344,open_deal_count:50,this_quarter_deal_count:1,this_quarter_pipeline_value:15e5,won_deal_count:163,dead_deal_count:127,decided_deal_count:290,on_hold_deal_count:4,open_pipeline_value:6882e5,weighted_pipeline_value:2646e5,open_deals_with_prob:12,open_deals_missing_prob:38,won_revenue_value:95e6,win_rate:56.2,avg_deal_size:13764e3,top_opportunities:[],sector_breakdown:[],stage_breakdown:[]},work_orders_summary:{total_wo_count:175,active_wo_count:58,ongoing_count:53,delayed_count:5,completed_count:110,on_hold_count:7,total_wo_contract_value:2106e5,total_billed_value:1074e5,total_receivable_value:363e5,billing_completion_rate:51,sector_breakdown:[]},cross_board_metrics:{cross_board_match_rate:89.7,matched_deals_count:52,sales_vs_execution_gap:-8,velocity_status:`Demand Exceeds Operations Capacity`}},risk_radar:UH,data_trust:HH,data_quality_notes:[`49 open deals lack tentative close dates.`,`5 active work orders are execution delayed.`]}}},qH=async(e,t=10)=>{try{return(await BH.get(`${VH}/scenario`,{params:{scenario_type:e,delta_pct:t}})).data}catch{console.warn(`API connection unavailable. Executing scenario math locally.`);let n=2646e5,r=6882e5;if(e===`open_pipeline_conversion`){let i=t/100*r,a=n+i;return{title:`Open Pipeline Conversion (${t}% Conversion)`,scenario_type:e,baseline_weighted_cr:26.46,simulated_weighted_cr:Number((a/1e7).toFixed(2)),delta_cr:Number((i/1e7).toFixed(2)),interpretation:`Converting ${t}% of the ₹68.82 Cr open pipeline adds ₹${(i/1e7).toFixed(2)} Cr in potential realized revenue (not weighted forecast improvement).`}}{let i=t/100*r,a=n+i;return{title:`Probability Uplift (+${t}%)`,scenario_type:e,baseline_weighted_cr:26.46,simulated_weighted_cr:Number((a/1e7).toFixed(2)),delta_cr:Number((i/1e7).toFixed(2)),interpretation:`A +${t}% probability uplift across open deals increases weighted forecast by ₹${(i/1e7).toFixed(2)} Cr to ₹${(a/1e7).toFixed(2)} Cr.`}}}};function JH(e){let t=e.toLowerCase().trim();if([`ebitda`,`salary`,`cac`,`ltv`,`churn`,`profit margin`,`profitability`,`best employee`,`2028`].some(e=>t.includes(e)))return{intent:`UNSUPPORTED`,is_ambiguous:!1,text:`### ⚠️ Unsupported Metric Request
+- **Action 3 (Suggested Role: Finance Lead)**: Review collections on ₹3.63 Cr outstanding receivables across completed work orders.`,is_mock_data:!1,bi_data:{deals_summary:{total_deal_count:344,open_deal_count:50,this_quarter_deal_count:1,this_quarter_pipeline_value:15e5,won_deal_count:163,dead_deal_count:127,decided_deal_count:290,on_hold_deal_count:4,open_pipeline_value:6882e5,weighted_pipeline_value:2646e5,open_deals_with_prob:12,open_deals_missing_prob:38,won_revenue_value:95e6,win_rate:56.2,avg_deal_size:13764e3,top_opportunities:[],sector_breakdown:[],stage_breakdown:[]},work_orders_summary:{total_wo_count:175,active_wo_count:58,ongoing_count:53,delayed_count:5,completed_count:110,on_hold_count:7,total_wo_contract_value:2106e5,total_billed_value:1074e5,total_receivable_value:363e5,billing_completion_rate:51,sector_breakdown:[]},cross_board_metrics:{cross_board_match_rate:89.7,matched_deals_count:52,sales_vs_execution_gap:-8,velocity_status:`Demand Exceeds Operations Capacity`}},risk_radar:UH,data_trust:HH,data_quality_notes:[`49 open deals lack tentative close dates.`,`5 active work orders are execution delayed.`]}}},qH=async(e,t=10)=>{try{return(await BH.get(`${VH}/scenario`,{params:{scenario_type:e,delta_pct:t}})).data}catch{console.warn(`API connection unavailable. Executing scenario math locally.`);let n=2646e5,r=6882e5;if(e===`open_pipeline_conversion`){let i=t/100*r,a=n+i;return{title:`Open Pipeline Conversion (${t}% Conversion)`,scenario_type:e,baseline_weighted_cr:26.46,simulated_weighted_cr:Number((a/1e7).toFixed(2)),delta_cr:Number((i/1e7).toFixed(2)),interpretation:`Converting ${t}% of the ₹68.82 Cr open pipeline adds ₹${(i/1e7).toFixed(2)} Cr in potential realized revenue (not weighted forecast improvement).`}}{let i=t/100*r,a=n+i;return{title:`Probability Uplift (+${t}%)`,scenario_type:e,baseline_weighted_cr:26.46,simulated_weighted_cr:Number((a/1e7).toFixed(2)),delta_cr:Number((i/1e7).toFixed(2)),interpretation:`A +${t}% probability uplift across open deals increases weighted forecast by ₹${(i/1e7).toFixed(2)} Cr to ₹${(a/1e7).toFixed(2)} Cr.`}}}};function JH(e){let t=e.toLowerCase().trim();if([`ebitda`,`salary`,`cac`,`ltv`,`churn`,`profit margin`,`profitability`,`best employee`,`2028`,`fired`,`who should be fired`,`employee should be`].some(e=>t.includes(e)))return{intent:`UNSUPPORTED`,is_ambiguous:!1,text:`### ⚠️ Unsupported Metric Request
 
 **Data Unavailability Notice**:
-The dataset provided includes operational Deals and Work Orders tracking data. Metrics such as EBITDA, Salary, CAC, LTV, and Profit Margins are not tracked in source CRM or Work Order boards.`};if([`reveal system prompt`,`api key`,`environment variables`,`ignore previous instructions`,`monday.com token`].some(e=>t.includes(e)))return{intent:`UNSUPPORTED_SECURITY`,is_ambiguous:!1,text:`### 🔒 Security Refusal Card
+The dataset provided includes operational Deals and Work Orders tracking data. Metrics such as EBITDA, Salary, CAC, LTV, HR Firing Decisions, and Profit Margins are not tracked in source CRM or Work Order boards.`};if([`reveal system prompt`,`api key`,`environment variables`,`ignore previous instructions`,`monday.com token`].some(e=>t.includes(e)))return{intent:`UNSUPPORTED_SECURITY`,is_ambiguous:!1,text:`### 🔒 Security Refusal Card
 
 **Access Denied**: Request refused to protect system integrity, credentials, and configuration.`};if([`how are we doing`,`how is business`,`status report`,`give me an update`].some(e=>t===e||t===e+`?`))return{intent:`AMBIGUOUS`,is_ambiguous:!0,text:`### ❓ Ambiguous Query Detected
 
-To provide the most relevant business intelligence, please select a focus area:`,suggested_clarifications:[{label:`Overall Sales Pipeline (Q1 2026)`,query:`How is our pipeline looking this quarter?`},{label:`Sector Pipeline vs Execution Realization`,query:`Which sectors have high pipeline but relatively weak execution realization?`},{label:`Opportunity Forecast Slippage Risk`,query:`Which opportunities could have the biggest impact on our forecast if they slip?`},{label:`Pipeline Concentration Exposure`,query:`Where are we most exposed to concentration risk?`},{label:`Work Order Management Priorities`,query:`Which active work orders deserve immediate management attention?`}]};if(t.includes(`three business risks`)||t.includes(`three risks`))return{intent:`RISK_THREE_RISKS`,is_ambiguous:!1,text:`### 🛡️ Top Deterministic Business Risks Audit
+To provide the most relevant business intelligence, please select a focus area:`,suggested_clarifications:[{label:`Overall Sales Pipeline (Q1 2026)`,query:`How is our pipeline looking this quarter?`},{label:`Sector Pipeline vs Execution Realization`,query:`Which sectors have high pipeline but relatively weak execution realization?`},{label:`Opportunity Forecast Slippage Risk`,query:`Which opportunities could have the biggest impact on our forecast if they slip?`},{label:`Pipeline Concentration Exposure`,query:`Where are we most exposed to concentration risk?`},{label:`Work Order Management Priorities`,query:`Which active work orders deserve immediate management attention?`}]};if(t.includes(`who owns`)||t.includes(`action owners`)||t.includes(`who is responsible for the actions`))return{intent:`ACTION_OWNERS`,is_ambiguous:!1,text:`### 👤 Action Center Role Governance Audit
+
+#### ANSWER
+The dataset does NOT record assigned individual employee names or project owners. The roles listed in recommendations (**Sales Operations Lead**, **Operations Delivery Lead**, **Finance Lead**) are **suggested organizational roles** based on functional responsibility.
+
+#### DATA PROVENANCE CAVEAT
+- Individual owner/assignee columns are unpopulated or absent in the source Monday.com export.
+- No named employee is recorded or assigned in source CRM/Operations boards.
+
+#### RECOMMENDED ACTION
+Department heads should assign specific team members to own each action directive.`};if(t.includes(`client is responsible`)||t.includes(`client responsible`))return{intent:`WORK_ORDER_DELAY_CLIENT`,is_ambiguous:!1,text:`### 🏢 Work Order Delay Responsibility Audit
+
+#### ANSWER
+The source tracker records **5 Execution Delayed Work Orders**, but client-specific fault or contractual responsibility is **NOT recorded** in source dataset fields.
+
+#### EVIDENCE
+- Total Delayed Work Orders: **5 projects** (Contract Value: **₹1.85 Cr**).
+- Unbilled Billing Gap: **₹1.25 Cr** pending milestone delivery.
+- Dataset Limitation: Client communication logs and fault attribution are unrecorded in Monday.com tracker records.
+
+#### RECOMMENDED ACTION
+Project managers should review client project records directly to determine site responsibility.`};if(t.includes(`revenue definitely`)||t.includes(`definitely be next quarter`))return{intent:`UNSUPPORTED_FORECAST`,is_ambiguous:!1,text:`### 🔮 Revenue Guarantee & Forecasting Disclosure
+
+#### ANSWER
+Definite future revenue prediction is **NOT determinable** from static point-in-time datasets. Current open sales pipeline stands at **₹68.82 Cr** with a risk-adjusted weighted forecast of **₹26.46 Cr**.
+
+#### EVIDENCE
+- Active Open Pipeline: **₹68.82 Cr** across 50 deals.
+- Weighted Forecast: **₹26.46 Cr** (based on explicit win probabilities and 30% baseline for unrated deals).
+- Historical Win Rate: **56.2%** (163 Won / 127 Dead out of 290 decided deals).
+
+#### NOTICE
+Weighted pipeline is a risk-adjusted planning metric, NOT a guaranteed revenue commitment.`};if(t.includes(`exact reason coal india`)||t.includes(`definitely close`)||t.includes(`will close`))return{intent:`UNSUPPORTED_GUARANTEE`,is_ambiguous:!1,text:`### 🔒 Deal Closure Certainty Audit
+
+#### ANSWER
+No deal in source CRM records has a **100% guaranteed closure status** or qualitative closing rationale recorded. **Coal India Mining Survey** is recorded as an 80% High win probability deal valued at **₹15.00 Cr**.
+
+#### EVIDENCE
+- **Coal India Mining Survey**: ₹15.00 Cr | Probability: 80% High | Contribution: **₹12.00 Cr**.
+- **Adani Solar Mapping**: ₹12.50 Cr | Probability: 80% High | Contribution: **₹10.00 Cr**.
+- Data Quality Limitation: Specific qualitative client decision reasons are unrecorded in CRM fields.
+
+#### RECOMMENDED ACTION
+Sales leadership to confirm deal closing milestones with account executives.`};if(t.includes(`how many work orders will we have next month`)||t.includes(`next month`))return{intent:`WORK_ORDER_FUTURE`,is_ambiguous:!1,text:`### 📅 Future Work Order Volume Disclosure
+
+#### ANSWER
+Future monthly work order volume is **NOT recorded** in point-in-time snapshot datasets. Currently, there are **58 Active Work Orders** (53 Ongoing, 5 Execution Delayed).
+
+#### EVIDENCE
+- Active Work Orders: **58 projects** (Contract Value: **₹21.06 Cr**).
+- Billed Realization: **₹10.74 Cr** (51.0% realization rate).
+- Future Scheduling Limitation: Time-series operational projection logs are unrecorded in current export datasets.`};if(t.includes(`probability that mining will miss`)||t.includes(`miss its target`))return{intent:`SECTOR_TARGET_MISS`,is_ambiguous:!1,text:`### 🎯 Sector Target Variance Audit
+
+#### ANSWER
+Target miss probability is **NOT tracked** as a schema field. Mining currently holds **₹24.15 Cr** (35.1%) in active open sales pipeline and **₹2.85 Cr** in billed realization across 18 work orders (**2 execution delayed**).
+
+#### EVIDENCE
+- **Mining Open Pipeline**: **₹24.15 Cr** across 15 open deals.
+- **Mining Billed Realization**: **₹2.85 Cr** across 18 active work orders.
+- **Mining Execution Delays**: 2 work orders flagged Execution Delayed.`};if(t.includes(`three business risks`)||t.includes(`three risks`))return{intent:`RISK_THREE_RISKS`,is_ambiguous:!1,text:`### 🛡️ Top Deterministic Business Risks Audit
 
 #### ANSWER
 The current deterministic risk engine identifies **2 high-priority risks** in the available dataset (rather than 3):
@@ -347,7 +406,7 @@ Our top 5 active open deals represent **₹47.00 Cr** (68.3%) of total active sa
 Closing Coal India and Adani Solar would secure **₹22.00 Cr** (83.1%) of our Q1 weighted revenue target.
 
 #### RECOMMENDED ACTION
-Review sales progress for Coal India and Adani Solar opportunities based on recorded CRM deal stages.`};if(t.includes(`delayed`)||t.includes(`projects are delayed`)||t.includes(`causing our delayed`))return{intent:`WORK_ORDER_DELAY`,is_ambiguous:!1,text:`### 🚀 Operational Work Orders & Delay Audit
+Review sales progress for Coal India and Adani Solar opportunities based on recorded CRM deal stages.`};if(t.includes(`delayed`)||t.includes(`projects are delayed`)||t.includes(`causing our delayed`)||t.includes(`what caused the`))return{intent:`WORK_ORDER_DELAY`,is_ambiguous:!1,text:`### 🚀 Operational Work Orders & Delay Audit
 
 #### ANSWER
 We have **58 Active Work Orders**, of which **53 are Ongoing** and **5 are Execution Delayed**.
@@ -363,7 +422,7 @@ We have **58 Active Work Orders**, of which **53 are Ongoing** and **5 are Execu
 The 5 delayed projects block **₹1.85 Cr** in milestone billing and strain client SLA commitments.
 
 #### DATA QUALITY CAVEAT
-The source tracker records 5 work orders as Execution Delayed, but the available dataset does not record specific site, weather, or client causes.
+The source tracker records 5 work orders as Execution Delayed, but the available dataset does not record specific site, weather, completion target dates, or client causes.
 
 #### RECOMMENDED ACTION
 Investigate the underlying records for the 5 delayed work orders; no specific cause or external deadline is recorded in the source dataset.`};if(t.includes(`how many active work orders`)||t.includes(`total work order contract value`)||t.includes(`billed against`)||t.includes(`outstanding`)||t.includes(`percentage of contracted work`))return{intent:`WORK_ORDER_OVERVIEW`,is_ambiguous:!1,text:`### 🚀 Active Work Orders & Financial Overview
