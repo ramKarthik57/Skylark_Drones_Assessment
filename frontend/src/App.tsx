@@ -7,7 +7,7 @@ import { DataTrustView } from './components/DataTrustView';
 import { ActionCenterView } from './components/ActionCenterView';
 import { ScenarioModal } from './components/ScenarioModal';
 import { LeadershipModal } from './components/LeadershipModal';
-import { fetchBoardStatus, sendChatMessage, fetchLeadershipUpdate } from './services/api';
+import { fetchBoardStatus, sendChatMessage, fetchLeadershipUpdate, generateLocalChatResponse } from './services/api';
 import type { BoardStatus, BIData, ChatMessage, LeadershipUpdate, RiskSignal, DataTrust, ActionItem } from './types';
 
 export function App() {
@@ -97,16 +97,22 @@ export function App() {
 
       setMessages((prev) => [...prev, botMsg]);
     } catch (err) {
-      console.error('Error in chat request:', err);
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: `err-${Date.now()}`,
-          sender: 'assistant',
-          text: '⚠️ I encountered an issue retrieving data from Monday.com API. Please check your network or try again.',
-          timestamp: new Date().toLocaleTimeString()
-        }
-      ]);
+      console.error('Error in chat request, synthesizing local grounded response:', err);
+      const fallbackRes = generateLocalChatResponse(text);
+      const botMsg: ChatMessage = {
+        id: `assistant-${Date.now()}`,
+        sender: 'assistant',
+        text: fallbackRes.text,
+        timestamp: new Date().toLocaleTimeString(),
+        intent: fallbackRes.intent,
+        biData: fallbackRes.bi_data,
+        riskRadar: fallbackRes.risk_radar,
+        dataTrust: fallbackRes.data_trust,
+        dataQualityNotes: fallbackRes.data_quality_notes,
+        clarificationOptions: fallbackRes.clarification_needed ? fallbackRes.clarification_options : undefined,
+        suggestedQuestions: fallbackRes.suggested_questions
+      };
+      setMessages((prev) => [...prev, botMsg]);
     } finally {
       setLoading(false);
     }

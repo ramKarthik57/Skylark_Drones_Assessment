@@ -193,7 +193,7 @@ export const fetchScenarioSimulation = async (scenarioType: string, deltaPct: nu
   }
 };
 
-function generateLocalChatResponse(query: string): any {
+export function generateLocalChatResponse(query: string): any {
   const qLower = query.toLowerCase().trim();
 
   // 0. Greetings / Chit-Chat Check
