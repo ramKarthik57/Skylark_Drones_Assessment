@@ -302,7 +302,7 @@ Definite future revenue prediction is **NOT determinable** from static point-in-
 - Historical Win Rate: **56.2%** (163 Won / 127 Dead out of 290 decided deals).
 
 #### [MODELING ASSUMPTION]
-- Weighted Forecast (₹26.46 Cr) includes explicit win probabilities for 12 rated deals and a **30% application modeling baseline** for 38 unrated deals; this is an analytical modeling parameter, NOT a source-recorded probability.
+- Weighted Forecast (₹26.46 Cr) includes explicit win probabilities for 47 rated deals (18 High, 18 Medium, 11 Low) and a **30% application modeling baseline** for 3 unrated deals; this is an analytical modeling parameter, NOT a source-recorded probability.
 
 #### [NOTICE]
 Weighted pipeline is a risk-adjusted planning metric, NOT a guaranteed revenue commitment.`
@@ -491,13 +491,13 @@ Scenario Simulation — NOT a predictive revenue forecast.`
       text: `### 📐 Data Lineage & Calculation Methodology
 
 #### ANSWER
-- **Active Pipeline Value (₹68.82 Cr)**: Calculated by summing the \`Deal Value\` field across all 50 deals on the Monday.com Deals board with status \`Open\`.
+- **Active Pipeline Value (₹68.82 Cr)**: Calculated by summing the \`Deal Value\` field across all 50 deals in the Deals tracker with status \`Open\`.
 - **Weighted Forecast Value (₹26.46 Cr)**: Calculated using the formula: \`Weighted Forecast = ∑ (Deal Value × Win Probability)\`.
-  - For the 12 open deals with explicit probability ratings (High 80%, Medium 50%, Low 20%), explicit values are multiplied.
-  - For the 38 unrated open deals, a **30% application modeling baseline assumption** is applied according to governance rules.
+  - For the 47 open deals with explicit probability ratings (18 High 80%, 18 Medium 50%, 11 Low 20%), explicit values are multiplied.
+  - For the 3 unrated open deals (Sasuke, Krillin, Tanjiro), a **30% application modeling baseline assumption** is applied according to governance rules.
 
 #### [SOURCE FACT]
-- **Source Board**: Monday.com Deals Board (344 total records | 50 Open).
+- **Source Dataset**: Deals Funnel Dataset (344 total valid records | 50 Open).
 - **Match Rate**: 1:1 deal name linkage verified across 52 of 58 active work order records.`
     };
   }
@@ -718,20 +718,20 @@ Prioritize entering close dates and explicit probability ratings for top open de
       text: `### 🛡️ Data Trust & Probability Coverage Audit
 
 #### ANSWER
-Only **25.5%** of active open deals (12 of 50) have explicit win probability ratings. Overall Data Trust score is **HIGH CONFIDENCE** based on 5 dataset dimensions.
+**94.0%** of active open deals (47 of 50) have explicit win probability ratings. Overall Data Trust score is **HIGH CONFIDENCE** based on 5 dataset dimensions.
 
 #### [SOURCE FACT]
-- **Probability Coverage (25.5%)**: 12 rated open deals vs 38 unrated open deals.
-- **Field Completeness (72.8%)**: Essential CRM and Work Order field population.
-- **Date Normalized Coverage (89.1%)**: Valid ISO dates across CRM and Work Orders.
-- **Sector Mapping (100%)**: Standardized taxonomy across deals and work orders.
+- **Probability Coverage (94.0%)**: 47 rated open deals vs 3 unrated open deals.
+- **Field Completeness (65.3%)**: Essential CRM and Work Order field population.
+- **Date Normalized Coverage (99.8%)**: Valid timeline dates across CRM and Work Orders.
+- **Sector Mapping (98.5%)**: Standardized taxonomy across deals and work orders.
 - **Cross-Board Linkage (89.7%)**: 52 of 58 work order deal names matched 1:1 to Deals board.
 
 #### [MODELING ASSUMPTION]
-- Weighted forecast uses a 30% application baseline assumption for unrated deals; this is an analytical modeling parameter, NOT a source-recorded rating.
+- Weighted forecast uses a 30% application baseline assumption for 3 unrated deals; this is an analytical modeling parameter, NOT a source-recorded rating.
 
 #### [RECOMMENDATION]
-Assign explicit probability ratings (High 80%, Medium 50%, Low 20%) to the 38 unrated open deals.`
+Assign explicit probability ratings (High 80%, Medium 50%, Low 20%) to the 3 unrated open deals (Sasuke, Krillin, Tanjiro).`
     };
   }
 
@@ -866,7 +866,7 @@ Our active sales pipeline stands at **₹68.82 Cr** across 50 open deals. The ri
 - **Historical Win Rate**: **56.2%** (163 Won / 127 Dead out of 290 decided deals).
 
 #### [MODELING ASSUMPTION]
-- **Weighted Forecast (₹26.46 Cr)** includes explicit win probabilities for 12 rated deals and a **30% application baseline assumption** for 38 unrated deals; this is an analytical modeling parameter, NOT a source-recorded probability rating.
+- **Weighted Forecast (₹26.46 Cr)** includes explicit win probabilities for 47 rated deals (18 High, 18 Medium, 11 Low) and a **30% application baseline assumption** for 3 unrated deals; this is an analytical modeling parameter, NOT a source-recorded probability rating.
 
 #### [RECOMMENDATION]
 Sales Leadership should mandate tentative close date entries for all 49 unrated open deals; no completion deadline is specified in source data.`
@@ -880,7 +880,7 @@ Sales Leadership should mandate tentative close date entries for all 49 unrated 
     text: `### 📊 Skylark Executive Decision Support
 
 #### ANSWER
-Skylark Executive Intelligence has reconciled **344 Deals** and **175 Work Orders** from Monday.com boards.
+Skylark Executive Intelligence has reconciled **344 Deals** and **175 Work Orders** from the assignment dataset snapshot.
 
 #### [SOURCE FACT]
 - **Active Sales Pipeline**: **₹68.82 Cr** (50 open deals).
@@ -889,7 +889,7 @@ Skylark Executive Intelligence has reconciled **344 Deals** and **175 Work Order
 - **Financial Realization**: **₹10.74 Cr** Billed | **₹3.63 Cr** Receivables.
 
 #### [MODELING ASSUMPTION]
-- **Weighted Forecast (₹26.46 Cr)** includes explicit win probabilities for 12 rated deals and a **30% application baseline assumption** for 38 unrated deals.
+- **Weighted Forecast (₹26.46 Cr)** includes explicit win probabilities for 47 rated deals and a **30% application baseline assumption** for 3 unrated deals.
 
 #### [RECOMMENDATION]
 Select any KPI card or ask a specific question in the chat bar above for detailed sector or operational analysis.`

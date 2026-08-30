@@ -33,7 +33,7 @@ export const KPICards: React.FC<KPICardsProps> = ({ biData, onOpenLineage }) => 
       label: 'WEIGHTED FORECAST',
       value: formatINR(deals_summary.weighted_pipeline_value),
       context: 'Risk-adjusted by win probability',
-      source: '12 rated + 38 baseline'
+      source: '47 rated + 3 baseline'
     },
     {
       id: 'win_rate',

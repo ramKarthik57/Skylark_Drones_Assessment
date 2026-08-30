@@ -193,7 +193,7 @@ def format_fallback_insight(intent: str, bi_data: Dict[str, Any], data_quality: 
     if intent == "GREETING":
         lines.append("### 👋 Welcome to Skylark Executive Intelligence\n")
         lines.append("#### ANSWER")
-        lines.append("I am your Executive Business Intelligence Assistant connected to your **Deals** and **Work Orders** tracker data.\n")
+        lines.append("I am your Executive Decision Intelligence Assistant using the **assignment dataset snapshot** (Deals and Work Orders tracker records).\n")
         lines.append("#### [SUPPORTED BUSINESS INTENTS]")
         lines.append("- **Sales Pipeline & Forecasts**: Ask *\"How is our pipeline looking this quarter?\"*")
         lines.append("- **Sector Performance**: Ask *\"Which sectors have the strongest pipeline?\"*")
@@ -204,20 +204,20 @@ def format_fallback_insight(intent: str, bi_data: Dict[str, Any], data_quality: 
     elif intent == "DATA_LINEAGE":
         lines.append("### 📐 Data Lineage & Calculation Methodology\n")
         lines.append("#### ANSWER")
-        lines.append("- **Active Pipeline Value (₹68.82 Cr)**: Summed from `Deal Value` across all 50 open deals on Monday.com Deals board.")
+        lines.append("- **Active Pipeline Value (₹68.82 Cr)**: Summed from `Deal Value` across all 50 open deals in the Deals tracker.")
         lines.append("- **Weighted Forecast Value (₹26.46 Cr)**: Calculated as `∑ (Deal Value × Win Probability)`.\n")
         lines.append("#### [SOURCE FACT]")
-        lines.append("- Explicit closure probabilities assigned to 12 open deals (High 80%, Medium 50%, Low 20%).")
-        lines.append("- Source Board: Monday.com Deals Board (344 total records | 50 Open).\n")
+        lines.append("- Explicit closure probabilities assigned to 47 open deals: 18 High (80%), 18 Medium (50%), 11 Low (20%).")
+        lines.append("- Source: Deals Funnel Dataset (344 total valid records | 50 Open).\n")
         lines.append("#### [MODELING ASSUMPTION]")
-        lines.append("- Includes a 30% application modeling baseline assumption for 38 unrated open deals; this is an analytical modeling parameter, NOT a source-recorded probability rating.\n")
+        lines.append("- Includes a 30% application modeling baseline assumption for 3 unrated open deals (Sasuke ₹1.76 Cr, Krillin ₹0.11 Cr, Tanjiro ₹0.00 Cr); this is an analytical modeling parameter, NOT a source-recorded probability rating.\n")
 
     elif intent == "ACTION_OWNERS":
         lines.append("### 👤 Action Center Role Governance Audit\n")
         lines.append("#### ANSWER")
         lines.append("The source dataset does NOT record assigned individual employee names or project owners. Roles listed in action recommendations are **suggested functional roles** (modeling suggestions), NOT source-assigned individuals.\n")
         lines.append("#### [SOURCE FACT]")
-        lines.append("- Owner / Assignee columns are unpopulated or absent in the source Monday.com export.")
+        lines.append("- Owner / Assignee columns are unpopulated or absent in the source export.")
         lines.append("- No named employee or individual owner is assigned in source CRM or Operations records.\n")
         lines.append("#### [RECOMMENDATION]")
         lines.append("Department heads should assign specific team members to own each action directive.")
@@ -242,7 +242,7 @@ def format_fallback_insight(intent: str, bi_data: Dict[str, Any], data_quality: 
         lines.append("- Active Open Pipeline: **₹68.82 Cr** across 50 deals.")
         lines.append("- Historical Win Rate: **56.2%** (163 Won / 127 Dead out of 290 decided deals).\n")
         lines.append("#### [MODELING ASSUMPTION]")
-        lines.append("- Weighted Forecast (₹26.46 Cr) includes explicit win probabilities for 12 rated deals and a **30% application modeling baseline** for 38 unrated deals; this is an analytical modeling parameter, NOT a source-recorded probability.\n")
+        lines.append("- Weighted Forecast (₹26.46 Cr) includes explicit win probabilities for 47 rated deals (18 High, 18 Medium, 11 Low) and a **30% application modeling baseline** for 3 unrated deals; this is an analytical modeling parameter, NOT a source-recorded probability.\n")
         lines.append("#### [NOTICE]")
         lines.append("Weighted pipeline is a risk-adjusted planning metric, NOT a guaranteed revenue commitment.")
 
@@ -445,30 +445,30 @@ def format_fallback_insight(intent: str, bi_data: Dict[str, Any], data_quality: 
     elif intent == "FORECAST_DATA_QUALITY":
         lines.append("### 🧹 Forecast Reliability & Data Quality Priority Audit\n")
         lines.append("#### ANSWER")
-        lines.append("Sales leadership must fix **missing tentative close dates** for **49 out of 50 open deals** and **unrated closure probabilities** for **38 open deals**.\n")
+        lines.append("Sales leadership must fix **missing tentative close dates** for **49 out of 50 open deals** and capture probability ratings for **3 unrated open deals**.\n")
         lines.append("#### [SOURCE FACT]")
         lines.append("- **Missing Tentative Close Dates**: 49 of 50 open deals (98.0%) lack close dates in CRM records (₹67.32 Cr pipeline unallocated).")
-        lines.append("- **Unrated Closure Probabilities**: 38 of 50 open deals (76.0%) lack explicit win probability ratings.")
-        lines.append("- **Probability Coverage Score**: Only **25.5%** of deals have explicit win probabilities.\n")
+        lines.append("- **Probability Forecast Coverage**: **47 of 50 open deals (94.0%)** have explicit win probability ratings (18 High, 18 Medium, 11 Low).")
+        lines.append("- **Unrated Closure Probabilities**: Only 3 of 50 open deals (6.0%) lack explicit ratings (Sasuke, Krillin, Tanjiro).\n")
         lines.append("#### [MODELING ASSUMPTION]")
-        lines.append("- Includes a 30% application modeling baseline assumption for unrated open deals; this is an analytical governance modeling parameter, NOT a source-recorded probability rating.\n")
+        lines.append("- Includes a 30% application modeling baseline assumption for the 3 unrated open deals; this is an analytical governance modeling parameter, NOT a source-recorded probability rating.\n")
         lines.append("#### [RECOMMENDATION]")
-        lines.append("Prioritize entering close dates and explicit probability ratings for top open deals; the dataset does not specify a completion deadline.")
+        lines.append("Prioritize entering close dates for top open deals; the dataset does not specify a completion deadline.")
 
     elif intent == "DATA_TRUST":
         lines.append("### 🛡️ Data Trust & Probability Coverage Audit\n")
         lines.append("#### ANSWER")
-        lines.append("Only **25.5%** of active open deals (12 of 50) have explicit win probability ratings. Overall Data Trust score is **HIGH CONFIDENCE** based on 5 dataset dimensions.\n")
+        lines.append("**94.0%** of active open deals (47 of 50) have explicit win probability ratings. Overall Data Trust score is **HIGH CONFIDENCE** based on 5 dataset dimensions.\n")
         lines.append("#### [SOURCE FACT]")
-        lines.append("- **Probability Coverage (25.5%)**: 12 rated open deals vs 38 unrated open deals.")
-        lines.append("- **Field Completeness (72.8%)**: Essential CRM and Work Order field population.")
-        lines.append("- **Date Normalized Coverage (89.1%)**: Valid ISO dates across CRM and Work Orders.")
-        lines.append("- **Sector Mapping (100%)**: Standardized taxonomy across deals and work orders.")
+        lines.append("- **Probability Coverage (94.0%)**: 47 rated open deals vs 3 unrated open deals.")
+        lines.append("- **Field Completeness (65.3%)**: Essential CRM and Work Order field population.")
+        lines.append("- **Date Normalized Coverage (99.8%)**: Valid timeline dates across CRM and Work Orders.")
+        lines.append("- **Sector Mapping (98.5%)**: Standardized taxonomy across deals and work orders.")
         lines.append("- **Cross-Board Linkage (89.7%)**: 52 of 58 work order deal names matched 1:1 to Deals board.\n")
         lines.append("#### [MODELING ASSUMPTION]")
-        lines.append("- Weighted forecast uses a 30% application baseline assumption for unrated deals; this is an analytical modeling parameter, NOT a source-recorded rating.\n")
+        lines.append("- Weighted forecast uses a 30% application baseline assumption for 3 unrated deals; this is an analytical modeling parameter, NOT a source-recorded rating.\n")
         lines.append("#### [RECOMMENDATION]")
-        lines.append("Assign explicit probability ratings (High 80%, Medium 50%, Low 20%) to the 38 unrated open deals.")
+        lines.append("Assign explicit probability ratings (High 80%, Medium 50%, Low 20%) to the 3 unrated open deals (Sasuke, Krillin, Tanjiro).")
 
     elif intent == "TOP_OPPORTUNITIES":
         lines.append("### 🏆 Top 5 Active Open Deal Opportunities\n")
@@ -516,7 +516,7 @@ def format_fallback_insight(intent: str, bi_data: Dict[str, Any], data_quality: 
         lines.append("- **Active Open Deals**: 50 deals totaling **₹68.82 Cr**.")
         lines.append("- **Historical Win Rate**: **56.2%** (163 Won / 127 Dead out of 290 decided deals).\n")
         lines.append("#### [MODELING ASSUMPTION]")
-        lines.append("- **Weighted Forecast (₹26.46 Cr)** includes explicit win probabilities for 12 rated deals and a **30% application baseline assumption** for 38 unrated deals; this is an analytical modeling parameter, NOT a source-recorded probability.\n")
+        lines.append("- **Weighted Forecast (₹26.46 Cr)** includes explicit win probabilities for 47 rated deals (18 High, 18 Medium, 11 Low) and a **30% application baseline assumption** for 3 unrated deals; this is an analytical modeling parameter, NOT a source-recorded probability.\n")
         lines.append("#### [RECOMMENDATION]")
         lines.append("Sales leadership to review close date entries for open deals; no external deadline is specified in source data.")
 
@@ -644,7 +644,7 @@ Structure:
 
 ## 1. Executive Summary & Core Ground Truth Metrics
 - **Active Sales Pipeline**: **₹{round(ds.get('open_pipeline_value', 0)/10000000, 2)} Cr** across {ds.get('open_deal_count', 0)} open opportunities.
-- **Weighted Risk-Adjusted Forecast**: **₹{round(ds.get('weighted_pipeline_value', 0)/10000000, 2)} Cr** (closure probability coverage: 25.5%).
+- **Weighted Risk-Adjusted Forecast**: **₹{round(ds.get('weighted_pipeline_value', 0)/10000000, 2)} Cr** (closure probability coverage: 94.0%).
 - **Historical Win Rate**: **56.2%** (163 Won / 127 Dead across 290 decided opportunities).
 - **Active Operations**: **{wos.get('active_wo_count', 0)} Work Orders** ({wos.get('ongoing_count', 0)} Ongoing, **{wos.get('delayed_count', 0)} Execution Delayed**).
 - **Financial Realization**: **₹{round(wos.get('total_wo_contract_value', 0)/10000000, 2)} Cr** Contracted | **₹{round(wos.get('total_billed_value', 0)/10000000, 2)} Cr** Billed | **₹{round(wos.get('total_receivable_value', 0)/10000000, 2)} Cr** Receivables.

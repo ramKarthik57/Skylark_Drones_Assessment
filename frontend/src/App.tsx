@@ -63,7 +63,7 @@ export function App() {
         {
           id: 'welcome-1',
           sender: 'assistant',
-          text: `Welcome to **Skylark Executive Intelligence**. I am connected to your **Monday.com Deals** & **Work Orders** tracker records. Ask me any executive question about pipeline health, sector revenue, operational workloads, or delayed projects.`,
+          text: `Welcome to **Skylark Executive Intelligence**. I am using the **assignment dataset snapshot** (Deals & Work Orders tracker records). Ask me any executive question about pipeline health, sector revenue, operational workloads, or delayed projects.`,
           timestamp: new Date().toLocaleTimeString(),
           biData: initRes.bi_data,
           dataQualityNotes: initRes.data_quality_notes
@@ -158,28 +158,28 @@ export function App() {
   const handleOpenLineage = (metricName: string) => {
     let info = {
       metricName,
-      sourceDataset: 'Monday.com Deals Board (344 Total Records)',
+      sourceDataset: 'Deals Funnel Dataset (344 Total Valid Records)',
       filterApplied: 'deal_status = "Open"',
       recordsConsidered: '50 Records (Including 1 Tanjiro normalized record)',
       formula: 'Σ (deal_value)',
       resultValue: '₹68.82 Cr',
-      qualityCaveat: '49 of 50 open deals lack tentative close dates; 38 open deals lack explicit probability ratings.'
+      qualityCaveat: '49 of 50 open deals lack tentative close dates; 47 open deals have explicit probabilities (94.0%).'
     };
 
     if (metricName.includes('WEIGHTED') || metricName.includes('FORECAST')) {
       info = {
         metricName: 'Weighted Risk-Adjusted Forecast',
-        sourceDataset: 'Monday.com Deals Board (344 Total Records)',
+        sourceDataset: 'Deals Funnel Dataset (344 Total Valid Records)',
         filterApplied: 'deal_status = "Open"',
-        recordsConsidered: '50 Open Deals (12 Rated + 38 Baseline)',
+        recordsConsidered: '50 Open Deals (47 Rated: 18 High, 18 Med, 11 Low + 3 Baseline)',
         formula: '∑ (Deal Value × Explicit Win Probability) + ∑ (Deal Value × 30% Modeling Baseline)',
         resultValue: '₹26.46 Cr',
-        qualityCaveat: 'Explicit probabilities applied: High 80%, Medium 50%, Low 20%. Unrated deals use 30% baseline.'
+        qualityCaveat: 'Explicit probabilities applied: High 80%, Medium 50%, Low 20%. Unrated deals (Sasuke, Krillin, Tanjiro) use 30% baseline.'
       };
     } else if (metricName.includes('WIN RATE')) {
       info = {
         metricName: 'Closed Win Rate',
-        sourceDataset: 'Monday.com Deals Board (344 Total Records)',
+        sourceDataset: 'Deals Funnel Dataset (344 Total Valid Records)',
         filterApplied: 'deal_status IN ("Won", "Dead")',
         recordsConsidered: '290 Decided Deals (163 Won, 127 Dead)',
         formula: '(Won Deals / (Won Deals + Dead Deals)) × 100',
@@ -189,7 +189,7 @@ export function App() {
     } else if (metricName.includes('WORK ORDER') || metricName.includes('DELAYED')) {
       info = {
         metricName: 'Active & Delayed Work Orders',
-        sourceDataset: 'Monday.com Work Orders Board (175 Total Records)',
+        sourceDataset: 'Work Orders Dataset (175 Total Records)',
         filterApplied: 'execution_status IN ("Ongoing", "Delayed")',
         recordsConsidered: '58 Active Work Orders (53 Ongoing, 5 Execution Delayed)',
         formula: 'Count of Active Project Records',
@@ -199,7 +199,7 @@ export function App() {
     } else if (metricName.includes('RECEIVABLE')) {
       info = {
         metricName: 'Total Outstanding Receivables',
-        sourceDataset: 'Monday.com Work Orders Board (175 Total Records)',
+        sourceDataset: 'Work Orders Dataset (175 Total Records)',
         filterApplied: 'All Work Orders with amount_receivable > 0',
         recordsConsidered: '175 Work Orders',
         formula: 'Σ (amount_receivable)',

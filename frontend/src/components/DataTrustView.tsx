@@ -81,7 +81,7 @@ export const DataTrustView: React.FC<DataTrustProps> = ({ dataTrust }) => {
           </div>
           <div className="p-2.5 rounded bg-[#090a0f] border border-[#1e2333]">
             <span className="font-semibold text-slate-200">Probability Coverage ({dataTrust.probability_coverage_score}%)</span>
-            <p className="text-slate-400 mt-0.5">12 rated open deals vs 38 unrated deals using 30% baseline modeling assumption.</p>
+            <p className="text-slate-400 mt-0.5">47 rated open deals vs 3 unrated deals using 30% baseline modeling assumption.</p>
           </div>
           <div className="p-2.5 rounded bg-[#090a0f] border border-[#1e2333]">
             <span className="font-semibold text-slate-200">Sector Taxonomy ({dataTrust.sector_coverage_score}%)</span>
