@@ -1,6 +1,6 @@
 # Skylark Executive Intelligence — 5-Minute Demo Script (V2)
 
-This script guides a 5-minute technical presentation and live evaluation of **Skylark Executive Intelligence (V2 Shortlist Edition)**.
+This script guides a 5-minute technical presentation and live demonstration of **Skylark Executive Intelligence**.
 
 ---
 

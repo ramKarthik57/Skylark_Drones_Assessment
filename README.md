@@ -1,4 +1,4 @@
-# 🚀 Skylark Executive Intelligence (V2 Shortlist Edition)
+# 🚀 Skylark Executive Intelligence
 
 > *"Turn messy operational data into decisions leadership can trust."*
 
