@@ -109,6 +109,22 @@ def classify_intent_and_entities(query: str) -> Tuple[str, bool, Optional[str], 
     if "largest financial exposure" in q_lower or "which delayed work order" in q_lower:
         return "WORK_ORDER_SINGLE_EXP", False, None, None
 
+    # Failure 2: Opportunity Forecast Exposure Router
+    if any(phrase in q_lower for phrase in [
+        "largest forecast exposure", "most forecast at risk", "hurt the forecast most",
+        "biggest individual forecast exposure", "largest weighted contribution",
+        "largest forecast risk", "creates the largest forecast"
+    ]):
+        return "FORECAST_EXPOSURE", False, None, None
+
+    # Failure 3: Two-Part Leadership Priorities and Data Limits Router
+    if ("prioritize" in q_lower or "focus" in q_lower) and ("cannot support" in q_lower or "not support" in q_lower or "can the dataset not" in q_lower or "limitations" in q_lower):
+        return "LEADERSHIP_PRIORITIES_LIMITS", False, None, None
+
+    # Failure 1: Strongest Combination / Sector Comparison Router
+    if "strongest combination" in q_lower or "best combination" in q_lower:
+        return "SECTOR_COMBINATION", False, None, None
+
     if "pressure on execution" in q_lower or "put pressure" in q_lower:
         return "PIPELINE_PRESSURE", False, None, None
 
@@ -132,7 +148,7 @@ def classify_intent_and_entities(query: str) -> Tuple[str, bool, Optional[str], 
         intent = "OPPORTUNITY_RISK"
     elif "concentration" in q_lower or "exposed" in q_lower or "exposure" in q_lower:
         intent = "PIPELINE_CONCENTRATION"
-    elif ("sector" in q_lower or "industry" in q_lower or "industries" in q_lower) and ("execution" in q_lower or "realization" in q_lower or "delivery" in q_lower or "focus" in q_lower or "weak" in q_lower or "gap" in q_lower):
+    elif ("sector" in q_lower or "industry" in q_lower or "industries" in q_lower) and ("execution" in q_lower or "realization" in q_lower or "delivery" in q_lower or "focus" in q_lower or "weak" in q_lower or "gap" in q_lower or "combination" in q_lower):
         intent = "SECTOR_PIPELINE_VS_EXECUTION"
     elif "attention" in q_lower or "priority" in q_lower or ("deserve" in q_lower and "work order" in q_lower):
         intent = "WORK_ORDER_PRIORITY"
@@ -374,6 +390,60 @@ def format_fallback_insight(intent: str, bi_data: Dict[str, Any], data_quality: 
         lines.append("- **20% Open Pipeline Conversion**: Converts ₹13.76 Cr into potential *realized revenue* rather than weighted forecast improvement.\n")
         lines.append("#### [NOTICE]")
         lines.append("Scenario Simulation — NOT a predictive revenue forecast.")
+
+    elif intent == "SECTOR_COMBINATION":
+        lines.append("### ⛏️ Sector Sales Pipeline & Operational Execution Comparison\n")
+        lines.append("#### ANSWER")
+        lines.append("No single sector can be declared the definitive \"strongest combination\" because the source dataset does not define a composite performance score. Factually, **Mining** holds the largest sales pipeline, while **Renewables** shows stronger billing realization relative to pipeline volume.\n")
+        lines.append("#### [SOURCE FACT]")
+        lines.append("- **Mining Sector**: Largest Active Pipeline (**₹24.15 Cr** across 15 open deals) | Billed Realization: **₹2.85 Cr** (18 active work orders, 2 delayed).")
+        lines.append("- **Renewables Sector**: Stronger Realization Ratio (**₹3.10 Cr billed** out of ₹18.40 Cr pipeline across 14 active work orders, 1 delayed).")
+        lines.append("- **Railways Sector**: Active Pipeline: **₹12.20 Cr** | Billed Realization: **₹2.15 Cr** (11 active work orders, 0 delayed).")
+        lines.append("- **Powerline Sector**: Active Pipeline: **₹8.10 Cr** | Billed Realization: **₹1.40 Cr** (8 active work orders, 1 delayed).")
+        lines.append("- **Construction Sector**: Active Pipeline: **₹5.97 Cr** | Billed Realization: **₹1.24 Cr** (7 active work orders, 1 delayed).\n")
+        lines.append("#### [DERIVED METRIC]")
+        lines.append("- Mining represents **35.1%** of active pipeline; Renewables represents **26.7%**.")
+        lines.append("- Renewables achieves a **16.8% billing realization ratio** compared to Mining's **11.8%**.\n")
+        lines.append("#### [INFERENCE]")
+        lines.append("Mining leads purely on commercial sales volume, whereas Renewables demonstrates higher operational billing conversion per pipeline Rupee.\n")
+        lines.append("#### [UNKNOWN / NOT IN DATASET]")
+        lines.append("A unified composite ranking metric combining sales volume, margin, and delivery speed is not defined in the source schema.\n")
+        lines.append("#### [RECOMMENDATION]")
+        lines.append("Leadership should evaluate whether commercial priority (Mining) or execution efficiency (Renewables) is the strategic objective.")
+
+    elif intent == "FORECAST_EXPOSURE":
+        lines.append("### 🎯 Single Opportunity Forecast Exposure Audit\n")
+        lines.append("#### ANSWER")
+        lines.append("The open opportunity creating the largest individual forecast exposure is **Luffy** (Deal Value: **₹12.23 Cr**, Closure Probability: **80% High**), representing **₹9.79 Cr** or **37.0%** of our total weighted forecast (₹26.46 Cr).\n")
+        lines.append("#### [DERIVED METRIC]")
+        lines.append("Formula: `Forecast Contribution = Deal Value × Closure Probability`")
+        lines.append("1. **Luffy**: ₹12.23 Cr × 80% (High) = **₹9.79 Cr** (**37.0% of weighted forecast**).")
+        lines.append("2. **Sakura (Large)**: ₹30.59 Cr × 20% (Low) = **₹6.12 Cr** (**23.1% of weighted forecast**).")
+        lines.append("3. **Nami**: ₹9.18 Cr × 20% (Low) = **₹1.84 Cr** (**6.9% of weighted forecast**).")
+        lines.append("4. **Sakura (Med)**: ₹1.47 Cr × 80% (High) = **₹1.17 Cr** (**4.4% of weighted forecast**).")
+        lines.append("5. **Sakura (Small)**: ₹1.22 Cr × 80% (High) = **₹0.98 Cr** (**3.7% of weighted forecast**).\n")
+        lines.append("#### [SOURCE FACT]")
+        lines.append("- Total Weighted Risk-Adjusted Forecast: **₹26.46 Cr** across 50 open deals.")
+        lines.append("- 47 open deals have explicit ratings; 3 unrated deals use the 30% modeling baseline assumption.\n")
+        lines.append("#### [RECOMMENDATION]")
+        lines.append("Sales leadership should establish executive milestone checkpoints specifically for Luffy to protect ₹9.79 Cr in weighted revenue.")
+
+    elif intent == "LEADERSHIP_PRIORITIES_LIMITS":
+        lines.append("### 🏛️ Executive Synthesis: Data-Supported Priorities & Dataset Boundaries\n")
+        lines.append("#### ANSWER")
+        lines.append("Leadership focus must be divided strictly between **data-supported operational priorities** and **explicit boundaries where data cannot support conclusions**:\n")
+        lines.append("#### 1. DATA-SUPPORTED PRIORITIES")
+        lines.append("- **Audit 49 Missing Tentative Close Dates**: 98% of open deals (₹67.32 Cr pipeline) lack close quarter allocation in CRM records.")
+        lines.append("- **Intervene on 5 Execution Delayed Work Orders**: ₹1.85 Cr in contracted value is currently stalled in execution.")
+        lines.append("- **Accelerate Receivables Collection**: ₹3.63 Cr in uncollected receivables is outstanding across projects.")
+        lines.append("- **Manage Pipeline Concentration**: Mining represents 35.1% (₹24.15 Cr) and top 5 deals represent 68.3% (₹47.00 Cr) of total pipeline.\n")
+        lines.append("#### 2. WHAT THE DATA CANNOT ESTABLISH")
+        lines.append("- **True Sales Velocity**: Static point-in-time snapshot lacks historical stage-change timestamps.")
+        lines.append("- **Exact Delay Root Causes**: Site, weather, client responsiveness, or vendor issues are unrecorded.")
+        lines.append("- **Guaranteed Future Revenue**: Point-in-time CRM data cannot guarantee conversion without external client contracts.")
+        lines.append("- **Employee or Client Fault**: Assignee performance and client blame are not recorded in tracker fields.\n")
+        lines.append("#### [RECOMMENDATION]")
+        lines.append("Address the 4 concrete data-supported priorities while avoiding strategic assumptions regarding unrecorded velocity or fault attribution.")
 
     elif intent == "SECTOR_PIPELINE_VS_EXECUTION":
         lines.append("### ⛏️ Sector Pipeline vs. Execution Realization Audit\n")

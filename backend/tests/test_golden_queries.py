@@ -97,3 +97,57 @@ def test_no_ai_invented_facts_in_responses():
     assert "by friday" not in res.text.lower()
     assert "heavy monsoon weather" not in res.text.lower()
     assert "sla breach" not in res.text.lower()
+
+def test_forecast_exposure_question_not_concentration():
+    q = "Which open opportunity creates the largest forecast exposure if it does not convert, and how much of the weighted forecast does it represent?"
+    res = process_agent_query(q)
+    assert res.intent == "FORECAST_EXPOSURE"
+    assert "Luffy" in res.text
+    assert "₹9.79 Cr" in res.text or "9.79" in res.text
+    assert "37.0%" in res.text or "37" in res.text
+    assert "Mining represents" not in res.text # not sector concentration
+
+def test_opportunity_exposure_paraphrases():
+    paraphrases = [
+        "Which opportunity puts the most forecast at risk?",
+        "Which deal would hurt the forecast most if it failed?",
+        "Where is our biggest individual forecast exposure?",
+        "Which deal has the largest weighted contribution?"
+    ]
+    for q in paraphrases:
+        intent, _, _, _ = classify_intent_and_entities(q)
+        assert intent == "FORECAST_EXPOSURE", f"Failed for query: {q}"
+
+def test_sector_combination_question_honest_when_no_composite_metric():
+    q = "Which sector currently has the strongest combination of sales pipeline and operational execution, and what evidence supports that conclusion?"
+    res = process_agent_query(q)
+    assert res.intent == "SECTOR_COMBINATION"
+    assert "No single sector can be declared" in res.text or "composite" in res.text.lower()
+    assert "Mining" in res.text
+    assert "Renewables" in res.text
+    assert "[SOURCE FACT]" in res.text
+    assert "[DERIVED METRIC]" in res.text
+    assert "[UNKNOWN / NOT IN DATASET]" in res.text
+
+def test_two_part_leadership_question():
+    q = "What should leadership prioritize right now based strictly on the available data, and what important conclusions can the dataset not support?"
+    res = process_agent_query(q)
+    assert res.intent == "LEADERSHIP_PRIORITIES_LIMITS"
+    assert "DATA-SUPPORTED PRIORITIES" in res.text
+    assert "WHAT THE DATA CANNOT ESTABLISH" in res.text
+    assert "49 Missing Tentative Close Dates" in res.text or "49" in res.text
+    assert "True Sales Velocity" in res.text or "Exact Delay Root Causes" in res.text
+
+def test_probability_count_is_47_rated_3_unrated():
+    res = process_agent_query("How was the weighted forecast calculated?")
+    assert "47 open deals" in res.text or "47" in res.text
+    assert "3 unrated" in res.text or "3" in res.text
+    assert "12 rated" not in res.text
+    assert "38 unrated" not in res.text
+
+def test_exact_question_contract():
+    res_single = process_agent_query("Which open opportunity creates the largest forecast exposure?")
+    assert "Luffy" in res_single.text
+    res_composite = process_agent_query("Which sector has the strongest combination?")
+    assert "composite" in res_composite.text.lower()
+

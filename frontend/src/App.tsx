@@ -59,11 +59,16 @@ export function App() {
       if (initRes.data_trust) setDataTrust(initRes.data_trust);
       if (initRes.data_quality_notes) setDataQualityNotes(initRes.data_quality_notes);
 
+      const isLive = status.connected_live_monday && !status.is_mock_data;
+      const welcomeSource = isLive
+        ? "I’m connected to your live Monday.com Deals & Work Orders boards."
+        : "I’m using the assignment dataset snapshot.";
+
       setMessages([
         {
           id: 'welcome-1',
           sender: 'assistant',
-          text: `Welcome to **Skylark Executive Intelligence**. I am using the **assignment dataset snapshot** (Deals & Work Orders tracker records). Ask me any executive question about pipeline health, sector revenue, operational workloads, or delayed projects.`,
+          text: `Welcome to **Skylark Executive Intelligence**. ${welcomeSource} Ask me any executive question about pipeline health, sector revenue, operational workloads, or delayed projects.`,
           timestamp: new Date().toLocaleTimeString(),
           biData: initRes.bi_data,
           dataQualityNotes: initRes.data_quality_notes

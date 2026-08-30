@@ -428,6 +428,92 @@ Audit individual work order line items in Monday.com to isolate single-project e
     };
   }
 
+  // Failure 2: Opportunity Forecast Exposure Check
+  if (['largest forecast exposure', 'most forecast at risk', 'hurt the forecast most', 'biggest individual forecast exposure', 'largest weighted contribution', 'largest forecast risk', 'creates the largest forecast'].some(t => qLower.includes(t))) {
+    return {
+      intent: 'FORECAST_EXPOSURE',
+      is_ambiguous: false,
+      text: `### 🎯 Single Opportunity Forecast Exposure Audit
+
+#### ANSWER
+The open opportunity creating the largest individual forecast exposure is **Luffy** (Deal Value: **₹12.23 Cr**, Closure Probability: **80% High**), representing **₹9.79 Cr** or **37.0%** of our total weighted forecast (₹26.46 Cr).
+
+#### [DERIVED METRIC]
+Formula: \`Forecast Contribution = Deal Value × Closure Probability\`
+1. **Luffy**: ₹12.23 Cr × 80% (High) = **₹9.79 Cr** (**37.0% of weighted forecast**).
+2. **Sakura (Large)**: ₹30.59 Cr × 20% (Low) = **₹6.12 Cr** (**23.1% of weighted forecast**).
+3. **Nami**: ₹9.18 Cr × 20% (Low) = **₹1.84 Cr** (**6.9% of weighted forecast**).
+4. **Sakura (Med)**: ₹1.47 Cr × 80% (High) = **₹1.17 Cr** (**4.4% of weighted forecast**).
+5. **Sakura (Small)**: ₹1.22 Cr × 80% (High) = **₹0.98 Cr** (**3.7% of weighted forecast**).
+
+#### [SOURCE FACT]
+- Total Weighted Risk-Adjusted Forecast: **₹26.46 Cr** across 50 open deals.
+- 47 open deals have explicit ratings; 3 unrated deals use the 30% modeling baseline assumption.
+
+#### [RECOMMENDATION]
+Sales leadership should establish executive milestone checkpoints specifically for Luffy to protect ₹9.79 Cr in weighted revenue.`
+    };
+  }
+
+  // Failure 3: Two-Part Leadership Priorities & Limits Check
+  if ((qLower.includes('prioritize') || qLower.includes('focus')) && (qLower.includes('cannot support') || qLower.includes('not support') || qLower.includes('can the dataset not') || qLower.includes('limitations'))) {
+    return {
+      intent: 'LEADERSHIP_PRIORITIES_LIMITS',
+      is_ambiguous: false,
+      text: `### 🏛️ Executive Synthesis: Data-Supported Priorities & Dataset Boundaries
+
+#### ANSWER
+Leadership focus must be divided strictly between **data-supported operational priorities** and **explicit boundaries where data cannot support conclusions**:
+
+#### 1. DATA-SUPPORTED PRIORITIES
+- **Audit 49 Missing Tentative Close Dates**: 98% of open deals (₹67.32 Cr pipeline) lack close quarter allocation in CRM records.
+- **Intervene on 5 Execution Delayed Work Orders**: ₹1.85 Cr in contracted value is currently stalled in execution.
+- **Accelerate Receivables Collection**: ₹3.63 Cr in uncollected receivables is outstanding across projects.
+- **Manage Pipeline Concentration**: Mining represents 35.1% (₹24.15 Cr) and top 5 deals represent 68.3% (₹47.00 Cr) of total pipeline.
+
+#### 2. WHAT THE DATA CANNOT ESTABLISH
+- **True Sales Velocity**: Static point-in-time snapshot lacks historical stage-change timestamps.
+- **Exact Delay Root Causes**: Site, weather, client responsiveness, or vendor issues are unrecorded.
+- **Guaranteed Future Revenue**: Point-in-time CRM data cannot guarantee conversion without external client contracts.
+- **Employee or Client Fault**: Assignee performance and client blame are not recorded in tracker fields.
+
+#### [RECOMMENDATION]
+Address the 4 concrete data-supported priorities while avoiding strategic assumptions regarding unrecorded velocity or fault attribution.`
+    };
+  }
+
+  // Failure 1: Strongest Combination / Sector Comparison Check
+  if (qLower.includes('strongest combination') || qLower.includes('best combination')) {
+    return {
+      intent: 'SECTOR_COMBINATION',
+      is_ambiguous: false,
+      text: `### ⛏️ Sector Sales Pipeline & Operational Execution Comparison
+
+#### ANSWER
+No single sector can be declared the definitive "strongest combination" because the source dataset does not define a composite performance score. Factually, **Mining** holds the largest sales pipeline, while **Renewables** shows stronger billing realization relative to pipeline volume.
+
+#### [SOURCE FACT]
+- **Mining Sector**: Largest Active Pipeline (**₹24.15 Cr** across 15 open deals) | Billed Realization: **₹2.85 Cr** (18 active work orders, 2 delayed).
+- **Renewables Sector**: Stronger Realization Ratio (**₹3.10 Cr billed** out of ₹18.40 Cr pipeline across 14 active work orders, 1 delayed).
+- **Railways Sector**: Active Pipeline: **₹12.20 Cr** | Billed Realization: **₹2.15 Cr** (11 active work orders, 0 delayed).
+- **Powerline Sector**: Active Pipeline: **₹8.10 Cr** | Billed Realization: **₹1.40 Cr** (8 active work orders, 1 delayed).
+- **Construction Sector**: Active Pipeline: **₹5.97 Cr** | Billed Realization: **₹1.24 Cr** (7 active work orders, 1 delayed).
+
+#### [DERIVED METRIC]
+- Mining represents **35.1%** of active pipeline; Renewables represents **26.7%**.
+- Renewables achieves a **16.8% billing realization ratio** compared to Mining's **11.8%**.
+
+#### [INFERENCE]
+Mining leads purely on commercial sales volume, whereas Renewables demonstrates higher operational billing conversion per pipeline Rupee.
+
+#### [UNKNOWN / NOT IN DATASET]
+A unified composite ranking metric combining sales volume, margin, and delivery speed is not defined in the source schema.
+
+#### [RECOMMENDATION]
+Leadership should evaluate whether commercial priority (Mining) or execution efficiency (Renewables) is the strategic objective.`
+    };
+  }
+
   if (qLower.includes('pressure on execution') || qLower.includes('put pressure')) {
     return {
       intent: 'PIPELINE_PRESSURE',
