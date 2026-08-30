@@ -107,44 +107,33 @@ export const Header: React.FC<HeaderProps> = ({
         </nav>
 
         {/* Status & Quick Action Controls */}
-        <div className="flex items-center flex-wrap gap-2">
-          {/* Connection Status Indicator */}
-          {status?.connected_live_monday && !status?.is_mock_data ? (
-            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded border text-[11px] font-medium bg-emerald-950/30 border-emerald-800/40 text-emerald-300">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-              <span>LIVE Monday.com</span>
-            </div>
-          ) : (
-            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded border text-[11px] font-medium bg-slate-900 border-slate-700/60 text-slate-300">
-              <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
-              <span>DEMO Assignment Snapshot</span>
-            </div>
-          )}
-
-          {/* Scenario Trigger */}
-          <button
-            onClick={onOpenScenarioModal}
-            className="flex items-center gap-1 px-2.5 py-1 rounded bg-[#141722] hover:bg-[#1a1e2d] text-slate-300 font-medium text-[11px] border border-[#1e2333] transition-colors"
-            title="Executive Scenario What-If Simulation"
-          >
-            <Sliders className="h-3 w-3 text-slate-400" />
-            <span>Scenario</span>
-          </button>
-
+        {/* Status & Quick Action Controls */}
+        <div className="flex items-center gap-2">
           {/* Refresh Button */}
           <button
             onClick={onRefresh}
             disabled={loading}
-            className="p-1.5 rounded bg-[#141722] hover:bg-[#1a1e2d] text-slate-400 hover:text-slate-200 border border-[#1e2333] transition-colors disabled:opacity-40"
-            title="Refresh Data"
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#141722] hover:bg-[#1a1e2d] text-slate-300 hover:text-slate-100 text-xs font-medium border border-[#1e2333] transition-colors disabled:opacity-40"
+            title="Sync Latest Board Data"
           >
-            <RefreshCw className={`h-3.5 w-3.5 ${loading ? 'animate-spin' : ''}`} />
+            <RefreshCw className={`h-3 w-3 ${loading ? 'animate-spin text-sky-400' : 'text-slate-400'}`} />
+            <span className="hidden sm:inline">Sync Data</span>
+          </button>
+
+          {/* Scenario Trigger */}
+          <button
+            onClick={onOpenScenarioModal}
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#141722] hover:bg-[#1a1e2d] text-slate-300 hover:text-slate-100 font-medium text-xs border border-[#1e2333] transition-colors"
+            title="Executive Scenario What-If Simulation"
+          >
+            <Sliders className="h-3 w-3 text-sky-400" />
+            <span>Scenario Lab</span>
           </button>
 
           {/* Leadership Brief Button */}
           <button
             onClick={onOpenLeadershipModal}
-            className="flex items-center gap-1.5 px-3 py-1 rounded bg-sky-700 hover:bg-sky-600 text-white font-medium text-[11px] transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1 rounded bg-sky-600 hover:bg-sky-500 text-white font-medium text-xs transition-colors shadow-sm"
           >
             <FileText className="h-3 w-3" />
             <span>Leadership Brief</span>

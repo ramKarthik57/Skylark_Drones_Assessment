@@ -103,13 +103,15 @@ def calculate_bi_analytics(
     # Stage Breakdown (Deals)
     stage_deals_map: Dict[str, Dict[str, Any]] = {}
     for d in filtered_deals:
-        stg = d.get("stage") or "Unspecified Stage"
+        stg = d.get("deal_stage") or d.get("stage") or "Unspecified Stage"
         if stg not in stage_deals_map:
             stage_deals_map[stg] = {"count": 0, "total_val": 0.0}
         stage_deals_map[stg]["count"] += 1
         stage_deals_map[stg]["total_val"] += d.get("deal_value") or 0.0
 
-    stage_breakdown = [{"stage": k, **v} for k, v in stage_deals_map.items()]
+    stage_breakdown = [
+        {"stage": k, **v} for k, v in sorted(stage_deals_map.items(), key=lambda x: x[1]["count"], reverse=True)
+    ]
 
     # Top Opportunities
     sorted_open_deals = sorted(open_deals, key=lambda x: x.get("deal_value") or 0.0, reverse=True)
