@@ -83,22 +83,35 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
 
     const { type, title, data } = msg.visualization;
 
+    // Strict Data Consistency Assertion: Verify chart data points appear in msg.text
+    if (Array.isArray(data) && data.length > 0) {
+      const textLower = msg.text.toLowerCase();
+      // Check if primary entities exist in text (e.g. for opportunity bars, verify deal name is in text)
+      if (type === 'TOP_OPPORTUNITY_BAR') {
+        const topEntity = String(data[0]?.name || '').toLowerCase();
+        if (topEntity && !textLower.includes(topEntity) && !textLower.includes(topEntity.split(' ')[0])) {
+          console.warn(`[BI Data Integrity] Visualization entity '${data[0]?.name}' not found in narrative text. Suppressing chart to prevent hallucination mismatch.`);
+          return null;
+        }
+      }
+    }
+
     // 1. Top Opportunity / Forecast Exposure Horizontal/Vertical Bar Chart
     if (type === 'TOP_OPPORTUNITY_BAR') {
       return (
-        <div className="mt-5 pt-3.5 border-t border-[#2d2d32] bg-[#18181b] p-4 rounded-xl border border-[#333338] shadow-inner">
-          <div className="flex items-center gap-2 mb-3 text-xs font-mono text-[#a1a1aa]">
-            <BarChart2 className="h-4 w-4 text-[#d97706]" />
-            <span className="font-semibold text-[#f4f4f5]">{title}</span>
+        <div className="mt-5 pt-3.5 border-t border-[#2d1854] bg-gradient-to-b from-[#1c103c] to-[#130a2a] p-5 rounded-2xl border border-[#412275] shadow-xl shadow-purple-950/30">
+          <div className="flex items-center gap-2 mb-3 text-xs font-mono text-purple-300">
+            <BarChart2 className="h-4 w-4 text-amber-400" />
+            <span className="font-bold text-white">{title}</span>
           </div>
-          <div className="h-40 w-full">
+          <div className="h-44 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={data} margin={{ top: 4, right: 15, left: -15, bottom: 4 }}>
-                <CartesianGrid strokeDasharray="2 2" stroke="#2d2d32" vertical={false} />
-                <XAxis dataKey="name" stroke="#71717a" fontSize={11} tickLine={false} />
-                <YAxis stroke="#71717a" fontSize={11} tickLine={false} />
+                <CartesianGrid strokeDasharray="2 2" stroke="#2d1854" vertical={false} />
+                <XAxis dataKey="name" stroke="#a855f7" fontSize={11} tickLine={false} />
+                <YAxis stroke="#a855f7" fontSize={11} tickLine={false} />
                 <Tooltip
-                  contentStyle={{ backgroundColor: '#202024', borderColor: '#3f3f46', borderRadius: '8px', fontSize: '12px', color: '#fafafa' }}
+                  contentStyle={{ backgroundColor: '#1a0e38', borderColor: '#412275', borderRadius: '12px', fontSize: '12px', color: '#ffffff' }}
                   formatter={(val: any) => [`₹${val} Cr`, 'Value / Forecast Contribution']}
                 />
                 <Bar dataKey="Value" fill="#d97706" radius={[4, 4, 0, 0]} />
