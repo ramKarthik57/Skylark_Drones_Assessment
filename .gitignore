@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+
+# Environment Secrets
+.env
+.env.local
+.env.production
+
+# Build Outputs & Caches
+dist/
+build/
+.pytest_cache/
+*.egg-info/
+
+# System & IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Zip Archives
+*.zip
