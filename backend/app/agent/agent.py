@@ -901,16 +901,16 @@ Generate an Executive Leadership Briefing Report based strictly on these ground 
 
 Structure:
 # SKYLARK EXECUTIVE INTELLIGENCE — LEADERSHIP BRIEFING
-## 1. Executive Summary & Core Ground Truth Metrics
-## 2. Key Operational & Sales Insights
-## 3. High-Priority Recovery Actions (Grounded in data, NO invented deadlines/people/causes)
+**1. Executive Summary & Core Ground Truth Metrics**
+**2. Key Operational & Sales Insights**
+**3. High-Priority Recovery Actions (Grounded in data, NO invented deadlines/people/causes)**
 """
 
     llm_report = call_llm(prompt)
     if not llm_report:
         llm_report = f"""# SKYLARK EXECUTIVE INTELLIGENCE — LEADERSHIP BRIEFING
 
-## 1. Executive Summary & Core Ground Truth Metrics
+**1. Executive Summary & Core Ground Truth Metrics**
 - **Active Sales Pipeline**: **₹{round(ds.get('open_pipeline_value', 0)/10000000, 2)} Cr** across {ds.get('open_deal_count', 0)} open opportunities.
 - **Weighted Risk-Adjusted Forecast**: **₹{round(ds.get('weighted_pipeline_value', 0)/10000000, 2)} Cr** (closure probability coverage: 94.0%).
 - **Historical Win Rate**: **56.2%** (163 Won / 127 Dead across 290 decided opportunities).
@@ -919,14 +919,14 @@ Structure:
 
 ---
 
-## 2. Key Operational & Sales Insights
+**2. Key Operational & Sales Insights**
 1. **Mining Sector Concentration**: Mining represents **₹24.15 Cr** (35.1%) of active sales pipeline and **₹2.85 Cr** in billed work order execution.
 2. **Execution Delays**: 5 work orders in Mining and Renewables are recorded **Execution Delayed** in source tracker records; specific causes are unrecorded.
 3. **Forecast Reliability Risk**: 49 of 50 open deals lack explicit tentative close dates, creating revenue timing uncertainty.
 
 ---
 
-## 3. High-Priority Recovery Actions
+**3. High-Priority Recovery Actions**
 - **Action 1 (Suggested Role — not assigned in source data: Sales Operations Lead)**: Audit missing tentative close dates for 49 open deals; the dataset does not specify a completion deadline.
 - **Action 2 (Suggested Role — not assigned in source data: Project Delivery Lead)**: Review project tracker records for 5 execution delayed work orders to unlock ₹1.85 Cr in contract value.
 - **Action 3 (Suggested Role — not assigned in source data: Finance Lead)**: Review collections on ₹3.63 Cr outstanding receivables across completed work orders."""

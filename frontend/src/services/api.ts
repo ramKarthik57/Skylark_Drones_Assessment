@@ -84,7 +84,7 @@ export const fetchLeadershipUpdate = async (): Promise<LeadershipUpdate> => {
     return {
       markdown_report: `# SKYLARK EXECUTIVE INTELLIGENCE — LEADERSHIP BRIEFING
 
-## 1. Executive Summary & Core Ground Truth Metrics
+**1. Executive Summary & Core Ground Truth Metrics**
 - **Active Sales Pipeline**: **₹68.82 Cr** across 50 open opportunities.
 - **Weighted Risk-Adjusted Forecast**: **₹26.46 Cr** (closure probability coverage: 25.5%).
 - **Historical Win Rate**: **56.2%** (163 Won / 127 Dead across 290 decided opportunities).
@@ -93,14 +93,14 @@ export const fetchLeadershipUpdate = async (): Promise<LeadershipUpdate> => {
 
 ---
 
-## 2. Key Operational & Sales Insights
+**2. Key Operational & Sales Insights**
 1. **Mining Sector Concentration**: Mining represents **₹24.15 Cr** (35.1%) of active sales pipeline and **₹2.85 Cr** in billed work order execution.
 2. **Execution Delays**: 5 work orders in Mining and Renewables are recorded **Execution Delayed** in source tracker records; specific causes are unrecorded.
 3. **Forecast Reliability Risk**: 49 of 50 open deals lack explicit tentative close dates, creating revenue timing uncertainty.
 
 ---
 
-## 3. High-Priority Recovery Actions
+**3. High-Priority Recovery Actions**
 - **Action 1 (Suggested Role — not assigned in source data: Sales Operations Lead)**: Audit missing tentative close dates for 49 open deals; the dataset does not specify a completion deadline.
 - **Action 2 (Suggested Role — not assigned in source data: Project Delivery Lead)**: Review project tracker records for 5 execution delayed work orders to unlock ₹1.85 Cr in contract value.
 - **Action 3 (Suggested Role — not assigned in source data: Finance Lead)**: Review collections on ₹3.63 Cr outstanding receivables across completed work orders.`,
@@ -255,14 +255,14 @@ Ask me any business question about:
       is_ambiguous: false,
       text: `### 👤 Action Center Role Governance Audit
 
-#### ANSWER
+**ANSWER**
 The source dataset does NOT record assigned individual employee names or project owners. Roles listed in action recommendations are **suggested functional roles** (modeling suggestions), NOT source-assigned individuals.
 
-#### [SOURCE FACT]
+**[SOURCE FACT]**
 - Owner / Assignee columns are unpopulated or absent in the source Monday.com export.
 - No named employee or individual owner is assigned in source CRM or Operations records.
 
-#### [RECOMMENDATION]
+**[RECOMMENDATION]**
 Department heads should assign specific team members to own each action directive.`
     };
   }
@@ -273,17 +273,17 @@ Department heads should assign specific team members to own each action directiv
       is_ambiguous: false,
       text: `### 🏢 Work Order Delay Responsibility Audit
 
-#### ANSWER
+**ANSWER**
 The source tracker records **5 Execution Delayed Work Orders**, but client-specific fault or contractual responsibility is **NOT recorded** in source dataset fields.
 
-#### [SOURCE FACT]
+**[SOURCE FACT]**
 - Total Delayed Work Orders: **5 projects** (Contract Value: **₹1.85 Cr**).
 - Unbilled Realization Gap: **₹1.25 Cr** pending milestone delivery.
 
-#### [UNKNOWN / NOT IN DATASET]
+**[UNKNOWN / NOT IN DATASET]**
 - Client communication logs, site responsibility, and fault attribution are unrecorded in source tracker fields.
 
-#### [RECOMMENDATION]
+**[RECOMMENDATION]**
 Review project tracker records directly to evaluate project execution status.`
     };
   }
@@ -294,17 +294,17 @@ Review project tracker records directly to evaluate project execution status.`
       is_ambiguous: false,
       text: `### 🔮 Revenue Guarantee & Forecasting Disclosure
 
-#### ANSWER
+**ANSWER**
 Definite future revenue prediction is **NOT determinable** from static point-in-time datasets. Current open sales pipeline stands at **₹68.82 Cr** with a risk-adjusted weighted forecast of **₹26.46 Cr**.
 
-#### [SOURCE FACT]
+**[SOURCE FACT]**
 - Active Open Pipeline: **₹68.82 Cr** across 50 deals.
 - Historical Win Rate: **56.2%** (163 Won / 127 Dead out of 290 decided deals).
 
-#### [MODELING ASSUMPTION]
+**[MODELING ASSUMPTION]**
 - Weighted Forecast (₹26.46 Cr) includes explicit win probabilities for 47 rated deals (18 High, 18 Medium, 11 Low) and a **30% application modeling baseline** for 3 unrated deals; this is an analytical modeling parameter, NOT a source-recorded probability.
 
-#### [NOTICE]
+**[NOTICE]**
 Weighted pipeline is a risk-adjusted planning metric, NOT a guaranteed revenue commitment.`
     };
   }
@@ -315,17 +315,17 @@ Weighted pipeline is a risk-adjusted planning metric, NOT a guaranteed revenue c
       is_ambiguous: false,
       text: `### 🔒 Deal Closure Certainty Audit
 
-#### ANSWER
+**ANSWER**
 No deal in source CRM records has a **100% guaranteed closure status** or qualitative closing rationale recorded. **Coal India Mining Survey** is recorded as an 80% High win probability deal valued at **₹15.00 Cr**.
 
-#### [SOURCE FACT]
+**[SOURCE FACT]**
 - **Coal India Mining Survey**: ₹15.00 Cr | Probability: 80% High | Weighted Contribution: **₹12.00 Cr**.
 - **Adani Solar Mapping**: ₹12.50 Cr | Probability: 80% High | Weighted Contribution: **₹10.00 Cr**.
 
-#### [UNKNOWN / NOT IN DATASET]
+**[UNKNOWN / NOT IN DATASET]**
 - Specific qualitative client decision reasons are unrecorded in CRM fields.
 
-#### [RECOMMENDATION]
+**[RECOMMENDATION]**
 Sales leadership should review deal milestones directly with opportunity lead owners.`
     };
   }
@@ -336,14 +336,14 @@ Sales leadership should review deal milestones directly with opportunity lead ow
       is_ambiguous: false,
       text: `### 📅 Future Work Order Volume Disclosure
 
-#### ANSWER
+**ANSWER**
 Future monthly work order volume is **NOT recorded** in point-in-time snapshot datasets. Currently, there are **58 Active Work Orders** (53 Ongoing, 5 Execution Delayed).
 
-#### [SOURCE FACT]
+**[SOURCE FACT]**
 - Active Work Orders: **58 projects** (Contract Value: **₹21.06 Cr**).
 - Billed Realization: **₹10.74 Cr** (51.0% realization rate).
 
-#### [UNKNOWN / NOT IN DATASET]
+**[UNKNOWN / NOT IN DATASET]**
 - Future monthly work-order scheduling projections are unrecorded in current export datasets.`
     };
   }
@@ -354,10 +354,10 @@ Future monthly work order volume is **NOT recorded** in point-in-time snapshot d
       is_ambiguous: false,
       text: `### 🎯 Sector Target Variance Audit
 
-#### ANSWER
+**ANSWER**
 Target miss probability is **NOT tracked** as a schema field. Mining currently holds **₹24.15 Cr** (35.1%) in active open sales pipeline and **₹2.85 Cr** in billed realization across 18 work orders (**2 execution delayed**).
 
-#### [SOURCE FACT]
+**[SOURCE FACT]**
 - **Mining Open Pipeline**: **₹24.15 Cr** across 15 open deals.
 - **Mining Billed Realization**: **₹2.85 Cr** across 18 active work orders.
 - **Mining Execution Delays**: 2 work orders flagged Execution Delayed.`
@@ -370,10 +370,10 @@ Target miss probability is **NOT tracked** as a schema field. Mining currently h
       is_ambiguous: false,
       text: `### 🛡️ Top Deterministic Business Risks Audit
 
-#### ANSWER
+**ANSWER**
 The current deterministic risk engine identifies **2 high-priority risks** in the available dataset (rather than 3):
 
-#### [SOURCE FACT]
+**[SOURCE FACT]**
 1. **RISK-01 (HIGH SEVERITY - FORECAST RISK)**
    - **Trigger**: 49 of 50 open deals (98.0%) lack explicit tentative close dates.
    - **Evidence**: ₹67.32 Cr pipeline unallocated to close quarters.
@@ -384,7 +384,7 @@ The current deterministic risk engine identifies **2 high-priority risks** in th
    - **Evidence**: Affected contract value: ₹1.85 Cr; unbilled gap: ₹1.25 Cr.
    - **Impact**: Delays milestone billing realization.
 
-#### [UNKNOWN / NOT IN DATASET]
+**[UNKNOWN / NOT IN DATASET]**
 No third risk meets the deterministic risk threshold in the available dataset.`
     };
   }
@@ -395,14 +395,14 @@ No third risk meets the deterministic risk threshold in the available dataset.`
       is_ambiguous: false,
       text: `### 🛡️ Strongest Evidence Risk Audit
 
-#### ANSWER
+**ANSWER**
 The risk with the strongest evidence behind it is **Forecast Risk (49 Missing Tentative Close Dates)**.
 
-#### [DERIVED METRIC COMPARISON]
+**[DERIVED METRIC COMPARISON]**
 - **Forecast Risk Evidence (STRONGEST)**: Affects **49 out of 50 open deals** (98.0% of open deals) and **₹67.32 Cr** (97.8% of total open pipeline value).
 - **Execution Risk Evidence**: Affects **5 out of 58 active work orders** (8.6% of active work orders) and **₹1.85 Cr** (8.8% of active contract value).
 
-#### [INFERENCE]
+**[INFERENCE]**
 By both record volume (49 vs 5) and financial exposure (₹67.32 Cr vs ₹1.85 Cr), Forecast Risk possesses the strongest dataset evidence.`
     };
   }
@@ -413,17 +413,17 @@ By both record volume (49 vs 5) and financial exposure (₹67.32 Cr vs ₹1.85 C
       is_ambiguous: false,
       text: `### 🚨 Delayed Work Order Financial Exposure Analysis
 
-#### ANSWER
+**ANSWER**
 The source Work Order tracker contains **5 execution-delayed projects** with an aggregate contract value of **₹1.85 Cr** (billed: ₹0.60 Cr, pending billing gap: **₹1.25 Cr**).
 
-#### [SOURCE FACT]
+**[SOURCE FACT]**
 - **Aggregate Contract Value Affected**: **₹1.85 Cr** across the 5 delayed projects.
 - **Unbilled Contract Exposure**: **₹1.25 Cr** pending milestone completion.
 
-#### [UNKNOWN / NOT IN DATASET]
+**[UNKNOWN / NOT IN DATASET]**
 - The source export aggregates contract values for delayed work orders rather than providing itemized breakdown for each individual project ID.
 
-#### [RECOMMENDATION]
+**[RECOMMENDATION]**
 Audit individual work order line items in Monday.com to isolate single-project exposure.`
     };
   }
@@ -446,10 +446,10 @@ Audit individual work order line items in Monday.com to isolate single-project e
       },
       text: `### 🎯 Single Opportunity Forecast Exposure Audit
 
-#### ANSWER
+**ANSWER**
 The open opportunity creating the largest individual forecast exposure is **Luffy** (Deal Value: **₹12.23 Cr**, Closure Probability: **80% High**), representing **₹9.79 Cr** or **37.0%** of our total weighted forecast (₹26.46 Cr).
 
-#### [DERIVED METRIC]
+**[DERIVED METRIC]**
 Formula: \`Forecast Contribution = Deal Value × Closure Probability\`
 1. **Luffy**: ₹12.23 Cr × 80% (High) = **₹9.79 Cr** (**37.0% of weighted forecast**).
 2. **Sakura (Large)**: ₹30.59 Cr × 20% (Low) = **₹6.12 Cr** (**23.1% of weighted forecast**).
@@ -457,11 +457,11 @@ Formula: \`Forecast Contribution = Deal Value × Closure Probability\`
 4. **Sakura (Med)**: ₹1.47 Cr × 80% (High) = **₹1.17 Cr** (**4.4% of weighted forecast**).
 5. **Sakura (Small)**: ₹1.22 Cr × 80% (High) = **₹0.98 Cr** (**3.7% of weighted forecast**).
 
-#### [SOURCE FACT]
+**[SOURCE FACT]**
 - Total Weighted Risk-Adjusted Forecast: **₹26.46 Cr** across 50 open deals.
 - 47 open deals have explicit ratings; 3 unrated deals use the 30% modeling baseline assumption.
 
-#### [RECOMMENDATION]
+**[RECOMMENDATION]**
 Sales leadership should establish executive milestone checkpoints specifically for Luffy to protect ₹9.79 Cr in weighted revenue.`
     };
   }
@@ -473,22 +473,22 @@ Sales leadership should establish executive milestone checkpoints specifically f
       is_ambiguous: false,
       text: `### 🏛️ Executive Synthesis: Data-Supported Priorities & Dataset Boundaries
 
-#### ANSWER
+**ANSWER**
 Leadership focus must be divided strictly between **data-supported operational priorities** and **explicit boundaries where data cannot support conclusions**:
 
-#### 1. DATA-SUPPORTED PRIORITIES
+**1. DATA-SUPPORTED PRIORITIES**
 - **Audit 49 Missing Tentative Close Dates**: 98% of open deals (₹67.32 Cr pipeline) lack close quarter allocation in CRM records.
 - **Intervene on 5 Execution Delayed Work Orders**: ₹1.85 Cr in contracted value is currently stalled in execution.
 - **Accelerate Receivables Collection**: ₹3.63 Cr in uncollected receivables is outstanding across projects.
 - **Manage Pipeline Concentration**: Mining represents 35.1% (₹24.15 Cr) and top 5 deals represent 68.3% (₹47.00 Cr) of total pipeline.
 
-#### 2. WHAT THE DATA CANNOT ESTABLISH
+**2. WHAT THE DATA CANNOT ESTABLISH**
 - **True Sales Velocity**: Static point-in-time snapshot lacks historical stage-change timestamps.
 - **Exact Delay Root Causes**: Site, weather, client responsiveness, or vendor issues are unrecorded.
 - **Guaranteed Future Revenue**: Point-in-time CRM data cannot guarantee conversion without external client contracts.
 - **Employee or Client Fault**: Assignee performance and client blame are not recorded in tracker fields.
 
-#### [RECOMMENDATION]
+**[RECOMMENDATION]**
 Address the 4 concrete data-supported priorities while avoiding strategic assumptions regarding unrecorded velocity or fault attribution.`
     };
   }
@@ -511,27 +511,27 @@ Address the 4 concrete data-supported priorities while avoiding strategic assump
       },
       text: `### ⛏️ Sector Sales Pipeline & Operational Execution Comparison
 
-#### ANSWER
+**ANSWER**
 No single sector can be declared the definitive "strongest combination" because the source dataset does not define a composite performance score. Factually, **Mining** holds the largest sales pipeline, while **Renewables** shows stronger billing realization relative to pipeline volume.
 
-#### [SOURCE FACT]
+**[SOURCE FACT]**
 - **Mining Sector**: Largest Active Pipeline (**₹24.15 Cr** across 15 open deals) | Billed Realization: **₹2.85 Cr** (18 active work orders, 2 delayed).
 - **Renewables Sector**: Stronger Realization Ratio (**₹3.10 Cr billed** out of ₹18.40 Cr pipeline across 14 active work orders, 1 delayed).
 - **Railways Sector**: Active Pipeline: **₹12.20 Cr** | Billed Realization: **₹2.15 Cr** (11 active work orders, 0 delayed).
 - **Powerline Sector**: Active Pipeline: **₹8.10 Cr** | Billed Realization: **₹1.40 Cr** (8 active work orders, 1 delayed).
 - **Construction Sector**: Active Pipeline: **₹5.97 Cr** | Billed Realization: **₹1.24 Cr** (7 active work orders, 1 delayed).
 
-#### [DERIVED METRIC]
+**[DERIVED METRIC]**
 - Mining represents **35.1%** of active pipeline; Renewables represents **26.7%**.
 - Renewables achieves a **16.8% billing realization ratio** compared to Mining's **11.8%**.
 
-#### [INFERENCE]
+**[INFERENCE]**
 Mining leads purely on commercial sales volume, whereas Renewables demonstrates higher operational billing conversion per pipeline Rupee.
 
-#### [UNKNOWN / NOT IN DATASET]
+**[UNKNOWN / NOT IN DATASET]**
 A unified composite ranking metric combining sales volume, margin, and delivery speed is not defined in the source schema.
 
-#### [RECOMMENDATION]
+**[RECOMMENDATION]**
 Leadership should evaluate whether commercial priority (Mining) or execution efficiency (Renewables) is the strategic objective.`
     };
   }
@@ -542,14 +542,14 @@ Leadership should evaluate whether commercial priority (Mining) or execution eff
       is_ambiguous: false,
       text: `### ⚡ Pipeline Execution Pressure Analysis
 
-#### ANSWER
+**ANSWER**
 The **Mining** (₹24.15 Cr, 35.1%) and **Renewables** (₹18.40 Cr, 26.7%) sectors represent **₹42.55 Cr** (61.8%) of active open pipeline and are most likely to generate future operational execution demand.
 
-#### [SOURCE FACT]
+**[SOURCE FACT]**
 - **Mining Sector**: Pipeline: **₹24.15 Cr** (15 open deals) | Active Work Orders: 18 (2 delayed).
 - **Renewables Sector**: Pipeline: **₹18.40 Cr** (12 open deals) | Active Work Orders: 14 (1 delayed).
 
-#### [UNKNOWN / NOT IN DATASET]
+**[UNKNOWN / NOT IN DATASET]**
 Dataset snapshot limitations prevent predicting exact future worker or equipment capacity pressure.`
     };
   }
@@ -560,14 +560,14 @@ Dataset snapshot limitations prevent predicting exact future worker or equipment
       is_ambiguous: false,
       text: `### 🎯 Opportunities vs. Work Order Capacity Audit
 
-#### ANSWER
+**ANSWER**
 Our top 2 open sales opportunities (**Coal India Mining Survey ₹15.00 Cr** and **Adani Solar Mapping ₹12.50 Cr**) align with our two largest operational work order sectors (Mining: 18 work orders, Renewables: 14 work orders).
 
-#### [SOURCE FACT]
+**[SOURCE FACT]**
 - **Coal India Mining Survey**: ₹15.00 Cr deal aligns with Mining sector (18 active work orders, ₹2.85 Cr billed).
 - **Adani Solar Mapping Project**: ₹12.50 Cr deal aligns with Renewables sector (14 active work orders, ₹3.10 Cr billed).
 
-#### [UNKNOWN / NOT IN DATASET]
+**[UNKNOWN / NOT IN DATASET]**
 Whether current field hardware capacity can support simultaneous execution cannot be determined from this point-in-time dataset.`
     };
   }
@@ -578,15 +578,15 @@ Whether current field hardware capacity can support simultaneous execution canno
       is_ambiguous: false,
       text: `### 🎛️ Optimal Scenario Simulation Audit
 
-#### ANSWER
+**ANSWER**
 The **+20% Probability Uplift Scenario** provides the largest improvement in **weighted forecast** (+**₹13.76 Cr** uplift, increasing weighted forecast from ₹26.46 Cr to **₹40.22 Cr**).
 
-#### [SCENARIO METRIC DISTINCTION]
+**[SCENARIO METRIC DISTINCTION]**
 - **+20% Probability Uplift**: Increases weighted pipeline forecast by **₹13.76 Cr** (to ₹40.22 Cr).
 - **+10% Probability Uplift**: Increases weighted pipeline forecast by **₹6.88 Cr** (to ₹33.34 Cr).
 - **20% Open Pipeline Conversion**: Converts ₹13.76 Cr into potential *realized revenue* rather than weighted forecast improvement.
 
-#### [NOTICE]
+**[NOTICE]**
 Scenario Simulation — NOT a predictive revenue forecast.`
     };
   }
@@ -608,24 +608,24 @@ Scenario Simulation — NOT a predictive revenue forecast.`
       },
       text: `### 📐 Data Lineage & Calculation Derivation Methodology
 
-#### ANSWER
+**ANSWER**
 The weighted forecast of **₹26.46 Cr** is derived using the canonical formula: \`Weighted Forecast = ∑ (Deal Value × Probability)\`. Here is the full arithmetic breakdown separating source facts from modeling assumptions:
 
-#### 1. [SOURCE FACT] (47 Explicitly Rated Deals — ₹66.95 Cr Nominal Value)
+**1. [SOURCE FACT] (47 Explicitly Rated Deals — ₹66.95 Cr Nominal Value)**
 - **High Probability (80%)**: 18 deals | Nominal Value: **₹16.69 Cr** | Contribution: **₹13.35 Cr**
 - **Medium Probability (50%)**: 18 deals | Nominal Value: **₹8.33 Cr** | Contribution: **₹4.16 Cr**
 - **Low Probability (20%)**: 11 deals | Nominal Value: **₹41.93 Cr** | Contribution: **₹8.39 Cr**
 - **Subtotal from Explicitly Rated Deals**: **₹25.90 Cr** (97.9% of weighted forecast).
 
-#### 2. [MODELING ASSUMPTION] (3 Unrated Deals — ₹1.87 Cr Nominal Value)
+**2. [MODELING ASSUMPTION] (3 Unrated Deals — ₹1.87 Cr Nominal Value)**
 - **Unrated Deals**: Sasuke (₹1.76 Cr), Krillin (₹0.11 Cr), Tanjiro (₹0.00 Cr)
 - **Applied Parameter**: 30% Analytical Baseline Assumption (*NOT a source-recorded probability*)
 - **Contribution from Baseline**: ₹1.87 Cr × 30% = **₹0.56 Cr** (2.1% of weighted forecast).
 
-#### 3. [DERIVED METRIC] (Final Synthesis Total)
+**3. [DERIVED METRIC] (Final Synthesis Total)**
 \`Total Weighted Forecast = ₹13.35 Cr (High) + ₹4.16 Cr (Med) + ₹8.39 Cr (Low) + ₹0.56 Cr (Baseline) = ₹26.46 Cr\` (across 50 open deals totaling ₹68.82 Cr active pipeline).
 
-#### [RECOMMENDATION]
+**[RECOMMENDATION]**
 Assign explicit probability ratings to the 3 unrated deals to eliminate the 30% baseline modeling assumption.`
     };
   }
@@ -637,16 +637,16 @@ Assign explicit probability ratings to the 3 unrated deals to eliminate the 30% 
       is_ambiguous: false,
       text: `### 🎛️ Executive What-If Scenario Analysis
 
-#### NOTICE
+**NOTICE**
 This calculation is an interactive **Scenario Simulation**, NOT a predictive revenue forecast.
 
-#### SIMULATION RESULTS
+**SIMULATION RESULTS**
 - **Baseline Weighted Forecast**: **₹26.46 Cr**
 - **+10% Probability Uplift Scenario**: Increases weighted forecast by **₹6.88 Cr** to **₹33.34 Cr**.
 - **+20% Probability Uplift Scenario**: Increases weighted forecast by **₹13.76 Cr** to **₹40.22 Cr**.
 - **20% Open Pipeline Conversion Scenario**: Converts ₹13.76 Cr of open deals, adding **₹13.76 Cr** to realized revenue.
 
-#### WHY IT MATTERS
+**WHY IT MATTERS**
 Targeted sales enablement on high-value unrated deals generates maximum forecast uplift without altering production records.`
     };
   }
@@ -658,15 +658,15 @@ Targeted sales enablement on high-value unrated deals generates maximum forecast
       is_ambiguous: false,
       text: `### 👔 CEO Executive Briefing & Action Plan
 
-#### 1. COMMERCIAL SNAPSHOT
+**1. COMMERCIAL SNAPSHOT**
 - **Active Sales Pipeline**: **₹68.82 Cr** (50 open deals).
 - **Weighted Forecast**: **₹26.46 Cr** (Win Rate: 56.2% across 290 decided deals).
 
-#### 2. OPERATIONAL REALIZATION
+**2. OPERATIONAL REALIZATION**
 - **Active Work Orders**: **58 projects** (53 Ongoing, **5 Execution Delayed**).
 - **Contract & Billing**: **₹21.06 Cr** contracted | **₹10.74 Cr** billed | **₹3.63 Cr** uncollected receivables.
 
-#### 3. CEO FOCUS & HIGH-PRIORITY ACTIONS
+**3. CEO FOCUS & HIGH-PRIORITY ACTIONS**
 1. **Sales Ops Focus** *(Suggested Role — not assigned in dataset)*: Audit close dates for 49 open deals; no completion deadline is specified in source data.
 2. **Operations Focus** *(Suggested Role — not assigned in dataset)*: Review project tracker records for 5 delayed work orders (₹1.85 Cr contract value).
 3. **Finance Focus** *(Suggested Role — not assigned in dataset)*: Accelerate collections on ₹3.63 Cr outstanding receivables.`
@@ -680,7 +680,7 @@ Targeted sales enablement on high-value unrated deals generates maximum forecast
       is_ambiguous: false,
       text: `### 🛡️ Deterministic Executive Risk Radar Audit
 
-#### ANSWER
+**ANSWER**
 Our top 2 operational & commercial risks identified by deterministic rules:
 
 1. **RISK-01 (HIGH SEVERITY - FORECAST RISK)**
@@ -704,7 +704,7 @@ Our top 2 operational & commercial risks identified by deterministic rules:
       is_ambiguous: false,
       text: `### 🎯 Executive Action Directives
 
-#### ANSWER
+**ANSWER**
 Management intervention is required across 3 evidence-backed operational recovery areas:
 
 1. **ACT-01 (IMMEDIATE URGENCY)**: Audit & Mandate Close Dates for 49 Unrated Open Deals.
@@ -728,20 +728,20 @@ Management intervention is required across 3 evidence-backed operational recover
       is_ambiguous: false,
       text: `### ⚠️ Opportunity Forecast Slippage & Conversion Risk Analysis
 
-#### ANSWER
+**ANSWER**
 The largest forecast slippage risk comes from **Coal India Mining Survey (₹15.00 Cr)** and **Adani Solar Mapping (₹12.50 Cr)**. Together, they represent **₹27.50 Cr** (40.0%) of total open pipeline and **₹22.00 Cr** (83.1%) of weighted forecast.
 
-#### [DERIVED METRIC]
+**[DERIVED METRIC]**
 Formula: \`Forecast Contribution = Deal Value × Explicit Probability\`
 - **Coal India Mining Survey**: ₹15.00 Cr × 80% High Probability = **₹12.00 Cr Forecast Contribution**.
 - **Adani Solar Mapping Project**: ₹12.50 Cr × 80% High Probability = **₹10.00 Cr Forecast Contribution**.
 - **Indian Railways Corridor Survey**: ₹8.00 Cr × 50% Medium Probability = **₹4.00 Cr Forecast Contribution**.
 - **PowerGrid Line Inspection**: ₹6.50 Cr × 50% Medium Probability = **₹3.25 Cr Forecast Contribution**.
 
-#### [SOURCE FACT & CAVEAT]
+**[SOURCE FACT & CAVEAT]**
 - 49 of 50 open deals lack explicit tentative close dates in the source CRM records.
 
-#### [RECOMMENDATION]
+**[RECOMMENDATION]**
 Audit probability and close date records for top 5 deals; external client decision timelines are unrecorded in the dataset.`
     };
   }
@@ -761,16 +761,16 @@ Audit probability and close date records for top 5 deals; external client decisi
       },
       text: `### 🎯 Pipeline Concentration Exposure Audit
 
-#### ANSWER
+**ANSWER**
 Our commercial pipeline is heavily concentrated in the **Mining** sector (**₹24.15 Cr**, 35.1%) and top 5 open opportunities (**₹47.00 Cr**, 68.3% of total pipeline).
 
-#### [DERIVED METRIC]
+**[DERIVED METRIC]**
 - **Top Sector Share**: Mining represents **35.1%** (₹24.15 Cr) of active open pipeline.
 - **Top 2 Sectors Share**: Mining + Renewables represent **61.8%** (₹42.55 Cr) of total open pipeline.
 - **Top 5 Deals Share**: Top 5 open deals account for **₹47.00 Cr** out of ₹68.82 Cr total pipeline.
 - **Remaining 45 Deals Share**: ₹21.82 Cr (31.7% of total pipeline).
 
-#### [RECOMMENDATION]
+**[RECOMMENDATION]**
 Diversify sales outreach into Railways and Powerline sectors to balance sector concentration exposure.`
     };
   }
@@ -793,20 +793,20 @@ Diversify sales outreach into Railways and Powerline sectors to balance sector c
       },
       text: `### ⛏️ Sector Pipeline vs. Execution Realization Audit
 
-#### ANSWER
+**ANSWER**
 **Mining** has our largest active pipeline (**₹24.15 Cr**, 35.1%) but holds **₹2.85 Cr** in billed realization across 18 work orders with **2 execution delays**. **Renewables** shows stronger billing realization (**₹3.10 Cr** billed out of ₹18.40 Cr pipeline).
 
-#### [SOURCE FACT]
+**[SOURCE FACT]**
 - **Mining Sector**: Active Pipeline: **₹24.15 Cr** (15 open deals) | Billed Value: **₹2.85 Cr** (18 active work orders, 2 delayed).
 - **Renewables Sector**: Active Pipeline: **₹18.40 Cr** (12 open deals) | Billed Value: **₹3.10 Cr** (14 active work orders, 1 delayed).
 - **Railways Sector**: Active Pipeline: **₹12.20 Cr** | Billed Value: **₹2.15 Cr**.
 - **Powerline Sector**: Active Pipeline: **₹8.10 Cr** | Billed Value: **₹1.40 Cr**.
 - **Construction Sector**: Active Pipeline: **₹5.97 Cr** | Billed Value: **₹1.24 Cr**.
 
-#### [UNKNOWN / NOT IN DATASET]
+**[UNKNOWN / NOT IN DATASET]**
 Specific field operational causes for delays are unrecorded in the source dataset.
 
-#### [RECOMMENDATION]
+**[RECOMMENDATION]**
 Review project tracker records for Mining work orders to evaluate recorded execution delays; no external completion deadline is specified in source data.`
     };
   }
@@ -827,18 +827,18 @@ Review project tracker records for Mining work orders to evaluate recorded execu
       },
       text: `### 🚨 Work Order Management Priority Audit
 
-#### ANSWER
+**ANSWER**
 Management attention must prioritize the **5 Execution Delayed Work Orders** representing **₹1.85 Cr** in contracted value, and **₹3.63 Cr in uncollected receivables**.
 
-#### [SOURCE FACT]
+**[SOURCE FACT]**
 - **Priority 1 (Execution Delayed)**: 5 active work orders (Contract Value: **₹1.85 Cr**, Billed: ₹0.60 Cr, Billing Gap: **₹1.25 Cr**).
 - **Priority 2 (Receivables Exposure)**: Outstanding uncollected receivables stand at **₹3.63 Cr** across active and completed projects.
 - **Priority 3 (Ongoing Work Orders)**: 53 ongoing work orders progressing within normal schedule limits (Contract Value: **₹19.21 Cr**).
 
-#### [UNKNOWN / NOT IN DATASET]
+**[UNKNOWN / NOT IN DATASET]**
 Specific site or client delay causes are unrecorded in source tracker fields.
 
-#### [RECOMMENDATION]
+**[RECOMMENDATION]**
 Review project tracker records for the 5 execution delayed work orders; no external deadline or cause is recorded in source data.`
     };
   }
@@ -850,18 +850,18 @@ Review project tracker records for the 5 execution delayed work orders; no exter
       is_ambiguous: false,
       text: `### 🧹 Forecast Reliability & Data Quality Priority Audit
 
-#### ANSWER
+**ANSWER**
 Sales leadership must fix **missing tentative close dates** for **49 out of 50 open deals** and **unrated closure probabilities** for **38 open deals**.
 
-#### [SOURCE FACT]
+**[SOURCE FACT]**
 - **Missing Tentative Close Dates**: 49 of 50 open deals (98.0%) lack close dates in CRM records (₹67.32 Cr pipeline unallocated).
 - **Unrated Closure Probabilities**: 38 of 50 open deals (76.0%) lack explicit win probability ratings.
 - **Probability Coverage Score**: Only **25.5%** of deals have explicit win probabilities.
 
-#### [MODELING ASSUMPTION]
+**[MODELING ASSUMPTION]**
 - Includes a 30% application modeling baseline assumption for unrated open deals; this is an analytical governance modeling parameter, NOT a source-recorded probability rating.
 
-#### [RECOMMENDATION]
+**[RECOMMENDATION]**
 Prioritize entering close dates and explicit probability ratings for top open deals; the dataset does not specify a completion deadline.`
     };
   }
@@ -873,20 +873,20 @@ Prioritize entering close dates and explicit probability ratings for top open de
       is_ambiguous: false,
       text: `### 🛡️ Data Trust & Probability Coverage Audit
 
-#### ANSWER
+**ANSWER**
 **94.0%** of active open deals (47 of 50) have explicit win probability ratings. Overall Data Trust score is **HIGH CONFIDENCE** based on 5 dataset dimensions.
 
-#### [SOURCE FACT]
+**[SOURCE FACT]**
 - **Probability Coverage (94.0%)**: 47 rated open deals vs 3 unrated open deals.
 - **Field Completeness (65.3%)**: Essential CRM and Work Order field population.
 - **Date Normalized Coverage (99.8%)**: Valid timeline dates across CRM and Work Orders.
 - **Sector Mapping (98.5%)**: Standardized taxonomy across deals and work orders.
 - **Cross-Board Linkage (89.7%)**: 52 of 58 work order deal names matched 1:1 to Deals board.
 
-#### [MODELING ASSUMPTION]
+**[MODELING ASSUMPTION]**
 - Weighted forecast uses a 30% application baseline assumption for 3 unrated deals; this is an analytical modeling parameter, NOT a source-recorded rating.
 
-#### [RECOMMENDATION]
+**[RECOMMENDATION]**
 Assign explicit probability ratings (High 80%, Medium 50%, Low 20%) to the 3 unrated open deals (Sasuke, Krillin, Tanjiro).`
     };
   }
@@ -909,17 +909,17 @@ Assign explicit probability ratings (High 80%, Medium 50%, Low 20%) to the 3 unr
       },
       text: `### 🏆 Top 5 Active Open Deal Opportunities
 
-#### ANSWER
+**ANSWER**
 Our top 5 active open deals represent **₹47.00 Cr** (68.3%) of total active sales pipeline.
 
-#### [SOURCE FACT]
+**[SOURCE FACT]**
 1. **Coal India Mining Survey**: **₹15.00 Cr** (Mining | Probability: 80% High | Close: Q1 2026)
 2. **Adani Solar Mapping Project**: **₹12.50 Cr** (Renewables | Probability: 80% High | Close: Q1 2026)
 3. **Indian Railways Corridor Survey**: **₹8.00 Cr** (Railways | Probability: 50% Medium | Close: Q2 2026)
 4. **PowerGrid Line Inspection**: **₹6.50 Cr** (Powerline | Probability: 50% Medium | Close: Q2 2026)
 5. **L&T Infrastructure Mapping**: **₹5.50 Cr** (Construction | Probability: 20% Low | Close: Unrated)
 
-#### [RECOMMENDATION]
+**[RECOMMENDATION]**
 Review sales progress for Coal India and Adani Solar opportunities based on recorded CRM deal stages.`
     };
   }
@@ -940,20 +940,20 @@ Review sales progress for Coal India and Adani Solar opportunities based on reco
       },
       text: `### 🚀 Operational Work Orders & Delay Audit
 
-#### ANSWER
+**ANSWER**
 We have **58 Active Work Orders**, of which **53 are Ongoing** and **5 are Execution Delayed**.
 
-#### [SOURCE FACT]
+**[SOURCE FACT]**
 - **Total Active Work Orders**: **58 projects** (Contract Value: **₹21.06 Cr**).
 - **Ongoing Work Orders**: **53 projects** progressing on schedule.
 - **Execution Delayed Work Orders**: **5 projects** (Contract Value: **₹1.85 Cr**).
 - **Billed Realization**: **₹10.74 Cr** billed out of ₹21.06 Cr contracted.
 - **Outstanding Receivables**: **₹3.63 Cr** in uncollected invoices.
 
-#### [UNKNOWN / NOT IN DATASET]
+**[UNKNOWN / NOT IN DATASET]**
 The source tracker records 5 work orders as Execution Delayed, but specific site, weather, completion target dates, staffing, equipment, SLA breaches, or client causes are unrecorded in dataset fields.
 
-#### [RECOMMENDATION]
+**[RECOMMENDATION]**
 Review project tracker records for the 5 delayed work orders to evaluate execution status; no specific cause or external deadline is recorded in the source dataset.`
     };
   }
@@ -974,16 +974,16 @@ Review project tracker records for the 5 delayed work orders to evaluate executi
       },
       text: `### 🚀 Active Work Orders & Financial Overview
 
-#### ANSWER
+**ANSWER**
 We have **58 Active Work Orders**, representing **₹21.06 Cr** in total contracted value. **₹10.74 Cr** (51.0%) has been billed to date, and **₹3.63 Cr** remains in uncollected receivables.
 
-#### [SOURCE FACT]
+**[SOURCE FACT]**
 - **Total Active Work Orders**: **58 projects** (53 Ongoing, 5 Execution Delayed).
 - **Contract Value**: **₹21.06 Cr**.
 - **Billed Realization**: **₹10.74 Cr** (51.0% billing realization rate).
 - **Outstanding Receivables**: **₹3.63 Cr** across active and completed work orders.
 
-#### [RECOMMENDATION]
+**[RECOMMENDATION]**
 Operations lead to monitor milestone completion across the 53 ongoing work orders.`
     };
   }
@@ -995,18 +995,18 @@ Operations lead to monitor milestone completion across the 53 ongoing work order
       is_ambiguous: false,
       text: `### ⏱️ Sales Velocity vs. Execution Capacity Analysis
 
-#### ANSWER
+**ANSWER**
 The available dataset cannot determine whether sales are occurring faster than execution because it is a static snapshot without historical stage/status timestamps. At this snapshot, there are **50 open deals (₹68.82 Cr)** and **58 active work orders (₹21.06 Cr)**, with **5 execution-delayed work orders**. A true sales-versus-execution velocity comparison requires historical time-series data.
 
-#### [SOURCE FACT]
+**[SOURCE FACT]**
 - Active Open Deals: 50 deals totaling ₹68.82 Cr.
 - Active Work Orders: 58 projects (53 Ongoing, 5 Execution Delayed).
 - Cross-Board Linkage: 52 of 58 work order deal names match Deals board (89.7% match rate).
 
-#### [UNKNOWN / NOT IN DATASET]
+**[UNKNOWN / NOT IN DATASET]**
 Historical sales intake velocity and stage duration timestamps are unrecorded in current export datasets.
 
-#### [RECOMMENDATION]
+**[RECOMMENDATION]**
 Implement automated stage-change timestamp logging in Monday.com to monitor true sales-to-execution velocity.`
     };
   }
@@ -1019,19 +1019,19 @@ Implement automated stage-change timestamp logging in Monday.com to monitor true
       is_ambiguous: false,
       text: `### ⛏️ Sector Performance Analysis (${isMining ? 'Mining' : 'Renewables'})
 
-#### ANSWER
+**ANSWER**
 ${isMining 
   ? '**Mining** is our largest commercial sector with **₹24.15 Cr** in active sales pipeline across 15 deals, and **₹2.85 Cr** in billed work order realization.' 
   : '**Renewables** holds **₹18.40 Cr** in active sales pipeline across 12 deals, and leads in billed work order realization with **₹3.10 Cr**.'}
 
-#### [SOURCE FACT]
+**[SOURCE FACT]**
 - **Mining Sector**: Pipeline: **₹24.15 Cr** | Active Work Orders: 18 | Billed: **₹2.85 Cr** (2 delayed).
 - **Renewables Sector**: Pipeline: **₹18.40 Cr** | Active Work Orders: 14 | Billed: **₹3.10 Cr** (1 delayed).
 - **Railways Sector**: Pipeline: **₹12.20 Cr** | Active Work Orders: 11 | Billed: **₹2.15 Cr**.
 - **Powerline Sector**: Pipeline: **₹8.10 Cr** | Active Work Orders: 8 | Billed: **₹1.40 Cr**.
 - **Construction Sector**: Pipeline: **₹5.97 Cr** | Active Work Orders: 7 | Billed: **₹1.24 Cr**.
 
-#### [RECOMMENDATION]
+**[RECOMMENDATION]**
 Maintain commercial momentum in Mining and Renewables while supporting field survey capacity.`
     };
   }
@@ -1043,17 +1043,17 @@ Maintain commercial momentum in Mining and Renewables while supporting field sur
       is_ambiguous: false,
       text: `### 📊 Q1 2026 Pipeline Performance Analysis
 
-#### ANSWER
+**ANSWER**
 Our active sales pipeline stands at **₹68.82 Cr** across 50 open deals. The risk-adjusted weighted forecast is **₹26.46 Cr**.
 
-#### [SOURCE FACT]
+**[SOURCE FACT]**
 - **Active Open Deals**: 50 deals totaling **₹68.82 Cr**.
 - **Historical Win Rate**: **56.2%** (163 Won / 127 Dead out of 290 decided deals).
 
-#### [MODELING ASSUMPTION]
+**[MODELING ASSUMPTION]**
 - **Weighted Forecast (₹26.46 Cr)** includes explicit win probabilities for 47 rated deals (18 High, 18 Medium, 11 Low) and a **30% application baseline assumption** for 3 unrated deals; this is an analytical modeling parameter, NOT a source-recorded probability rating.
 
-#### [RECOMMENDATION]
+**[RECOMMENDATION]**
 Sales Leadership should mandate tentative close date entries for all 49 unrated open deals; no completion deadline is specified in source data.`
     };
   }
@@ -1064,19 +1064,19 @@ Sales Leadership should mandate tentative close date entries for all 49 unrated 
     is_ambiguous: false,
     text: `### 📊 Skylark Executive Decision Support
 
-#### ANSWER
+**ANSWER**
 Skylark Executive Intelligence has reconciled **344 Deals** and **175 Work Orders** from the assignment dataset snapshot.
 
-#### [SOURCE FACT]
+**[SOURCE FACT]**
 - **Active Sales Pipeline**: **₹68.82 Cr** (50 open deals).
 - **Closed Win Rate**: **56.2%** (163 Won / 127 Dead).
 - **Active Work Orders**: **58 projects** (53 Ongoing, 5 Delayed).
 - **Financial Realization**: **₹10.74 Cr** Billed | **₹3.63 Cr** Receivables.
 
-#### [MODELING ASSUMPTION]
+**[MODELING ASSUMPTION]**
 - **Weighted Forecast (₹26.46 Cr)** includes explicit win probabilities for 47 rated deals and a **30% application baseline assumption** for 3 unrated deals.
 
-#### [RECOMMENDATION]
+**[RECOMMENDATION]**
 Select any KPI card or ask a specific question in the chat bar above for detailed sector or operational analysis.`
   };
 }
