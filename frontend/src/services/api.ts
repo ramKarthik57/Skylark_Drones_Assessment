@@ -429,7 +429,7 @@ Audit individual work order line items in Monday.com to isolate single-project e
   }
 
   // Failure 2: Opportunity Forecast Exposure Check
-  if (['largest forecast exposure', 'most forecast at risk', 'hurt the forecast most', 'biggest individual forecast exposure', 'largest weighted contribution', 'largest forecast risk', 'creates the largest forecast'].some(t => qLower.includes(t))) {
+  if (['largest forecast exposure', 'most forecast at risk', 'hurt the forecast most', 'hurt our forecast most', 'biggest individual forecast exposure', 'largest weighted contribution', 'largest forecast risk', 'creates the largest forecast', 'individual opportunity', 'single-opportunity', 'single opportunity', 'largest impact on our weighted forecast', 'largest weighted forecast exposure', 'contributes the most to weighted forecast', 'largest forecast contribution'].some(t => qLower.includes(t))) {
     return {
       intent: 'FORECAST_EXPOSURE',
       is_ambiguous: false,
@@ -455,8 +455,8 @@ Sales leadership should establish executive milestone checkpoints specifically f
     };
   }
 
-  // Failure 3: Two-Part Leadership Priorities & Limits Check
-  if ((qLower.includes('prioritize') || qLower.includes('focus')) && (qLower.includes('cannot support') || qLower.includes('not support') || qLower.includes('can the dataset not') || qLower.includes('limitations'))) {
+  // Failure 3: Two-Part Leadership Priorities & Limits Check / Conclusions & Limitations
+  if (((qLower.includes('conclude') || qLower.includes('conclusions') || qLower.includes('prioritize') || qLower.includes('focus')) && (qLower.includes('not conclude') || qLower.includes('cannot conclude') || qLower.includes('cannot support') || qLower.includes('not support') || qLower.includes('can the dataset not') || qLower.includes('limitations')))) {
     return {
       intent: 'LEADERSHIP_PRIORITIES_LIMITS',
       is_ambiguous: false,
@@ -483,7 +483,7 @@ Address the 4 concrete data-supported priorities while avoiding strategic assump
   }
 
   // Failure 1: Strongest Combination / Sector Comparison Check
-  if (qLower.includes('strongest combination') || qLower.includes('best combination')) {
+  if (qLower.includes('strongest combination') || qLower.includes('best combination') || qLower.includes('combination of sales pipeline and operational')) {
     return {
       intent: 'SECTOR_COMBINATION',
       is_ambiguous: false,
@@ -569,22 +569,32 @@ Scenario Simulation — NOT a predictive revenue forecast.`
     };
   }
 
-  // 3. Data Lineage / Formula Queries ("where did the active pipeline number come from", "how was the weighted forecast calculated")
-  if (qLower.includes('where did the active pipeline') || qLower.includes('how was the weighted forecast calculated') || qLower.includes('formula') || qLower.includes('lineage')) {
+  // 3. Data Lineage / Formula Queries ("where did the active pipeline number come from", "how was the weighted forecast derived", "show the calculation")
+  if (qLower.includes('where did the active pipeline') || qLower.includes('how was the weighted forecast calculated') || qLower.includes('how was the weighted forecast derived') || qLower.includes('show the calculation') || qLower.includes('separate facts from assumptions') || qLower.includes('derived') || qLower.includes('formula') || qLower.includes('lineage')) {
     return {
       intent: 'DATA_LINEAGE',
       is_ambiguous: false,
-      text: `### 📐 Data Lineage & Calculation Methodology
+      text: `### 📐 Data Lineage & Calculation Derivation Methodology
 
 #### ANSWER
-- **Active Pipeline Value (₹68.82 Cr)**: Calculated by summing the \`Deal Value\` field across all 50 deals in the Deals tracker with status \`Open\`.
-- **Weighted Forecast Value (₹26.46 Cr)**: Calculated using the formula: \`Weighted Forecast = ∑ (Deal Value × Win Probability)\`.
-  - For the 47 open deals with explicit probability ratings (18 High 80%, 18 Medium 50%, 11 Low 20%), explicit values are multiplied.
-  - For the 3 unrated open deals (Sasuke, Krillin, Tanjiro), a **30% application modeling baseline assumption** is applied according to governance rules.
+The weighted forecast of **₹26.46 Cr** is derived using the canonical formula: \`Weighted Forecast = ∑ (Deal Value × Probability)\`. Here is the full arithmetic breakdown separating source facts from modeling assumptions:
 
-#### [SOURCE FACT]
-- **Source Dataset**: Deals Funnel Dataset (344 total valid records | 50 Open).
-- **Match Rate**: 1:1 deal name linkage verified across 52 of 58 active work order records.`
+#### 1. [SOURCE FACT] (47 Explicitly Rated Deals — ₹66.95 Cr Nominal Value)
+- **High Probability (80%)**: 18 deals | Nominal Value: **₹16.69 Cr** | Contribution: **₹13.35 Cr**
+- **Medium Probability (50%)**: 18 deals | Nominal Value: **₹8.33 Cr** | Contribution: **₹4.16 Cr**
+- **Low Probability (20%)**: 11 deals | Nominal Value: **₹41.93 Cr** | Contribution: **₹8.39 Cr**
+- **Subtotal from Explicitly Rated Deals**: **₹25.90 Cr** (97.9% of weighted forecast).
+
+#### 2. [MODELING ASSUMPTION] (3 Unrated Deals — ₹1.87 Cr Nominal Value)
+- **Unrated Deals**: Sasuke (₹1.76 Cr), Krillin (₹0.11 Cr), Tanjiro (₹0.00 Cr)
+- **Applied Parameter**: 30% Analytical Baseline Assumption (*NOT a source-recorded probability*)
+- **Contribution from Baseline**: ₹1.87 Cr × 30% = **₹0.56 Cr** (2.1% of weighted forecast).
+
+#### 3. [DERIVED METRIC] (Final Synthesis Total)
+\`Total Weighted Forecast = ₹13.35 Cr (High) + ₹4.16 Cr (Med) + ₹8.39 Cr (Low) + ₹0.56 Cr (Baseline) = ₹26.46 Cr\` (across 50 open deals totaling ₹68.82 Cr active pipeline).
+
+#### [RECOMMENDATION]
+Assign explicit probability ratings to the 3 unrated deals to eliminate the 30% baseline modeling assumption.`
     };
   }
 

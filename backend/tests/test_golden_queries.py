@@ -89,7 +89,7 @@ def test_issue_9_q48_scenario_semantics_distinction():
 
 def test_baseline_30_percent_labeled_as_modeling_assumption():
     res = process_agent_query("How was the weighted forecast calculated?")
-    assert "30% application modeling baseline assumption" in res.text or "modeling baseline" in res.text.lower()
+    assert "30% Analytical Baseline Assumption" in res.text or "30% application modeling baseline" in res.text or "baseline assumption" in res.text.lower()
 
 def test_no_ai_invented_facts_in_responses():
     res = process_agent_query("What are the biggest risks to converting our current pipeline into revenue?")
@@ -150,4 +150,53 @@ def test_exact_question_contract():
     assert "Luffy" in res_single.text
     res_composite = process_agent_query("Which sector has the strongest combination?")
     assert "composite" in res_composite.text.lower()
+
+def test_paraphrases_individual_forecast_exposure():
+    queries = [
+        "Which individual opportunity has the largest impact on our weighted forecast if it fails to convert?",
+        "Which deal has the largest weighted forecast exposure?",
+        "Which opportunity would hurt our forecast most if it failed?",
+        "Which individual deal contributes the most to weighted forecast?",
+        "Where is our biggest single-opportunity forecast exposure?",
+        "Which deal has the largest weighted contribution?",
+        "Which opportunity puts the most forecast at risk?"
+    ]
+    for q in queries:
+        intent, _, _, _ = classify_intent_and_entities(q)
+        assert intent == "FORECAST_EXPOSURE", f"Routing failure for: {q}"
+        res = process_agent_query(q)
+        assert "Luffy" in res.text
+        assert "₹9.79 Cr" in res.text or "9.79" in res.text
+
+def test_paraphrases_calculation_derivation():
+    queries = [
+        "How was the weighted forecast derived? Show the calculation and separate facts from assumptions.",
+        "How was the weighted forecast calculated?",
+        "Show me the formula and calculation for weighted forecast",
+        "How did we derive the 26.46 Cr forecast?"
+    ]
+    for q in queries:
+        intent, _, _, _ = classify_intent_and_entities(q)
+        assert intent == "DATA_LINEAGE", f"Routing failure for: {q}"
+        res = process_agent_query(q)
+        assert "18 High (80%)" in res.text or "High Probability (80%)" in res.text
+        assert "18 Medium (50%)" in res.text or "Medium Probability (50%)" in res.text
+        assert "11 Low (20%)" in res.text or "Low Probability (20%)" in res.text
+        assert "30% Analytical Baseline Assumption" in res.text or "30%" in res.text
+        assert "₹26.46 Cr" in res.text or "26.46" in res.text
+
+def test_paraphrases_conclusions_and_limitations():
+    queries = [
+        "What can we conclude from this data, and what can we not conclude?",
+        "What can we conclude, and what cannot be supported by this dataset?",
+        "What should leadership prioritize right now based strictly on the available data, and what important conclusions can the dataset not support?",
+        "What conclusions are supported versus unsupported by our operational data?"
+    ]
+    for q in queries:
+        intent, _, _, _ = classify_intent_and_entities(q)
+        assert intent == "LEADERSHIP_PRIORITIES_LIMITS", f"Routing failure for: {q}"
+        res = process_agent_query(q)
+        assert "DATA-SUPPORTED PRIORITIES" in res.text
+        assert "WHAT THE DATA CANNOT ESTABLISH" in res.text
+
 
