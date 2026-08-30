@@ -2,6 +2,8 @@
 
 > *"Turn messy operational data into decisions leadership can trust."*
 
+**GitHub Repository**: [https://github.com/ramKarthik57/Skylark_Drones_Assessment](https://github.com/ramKarthik57/Skylark_Drones_Assessment)
+
 Executive-level AI Business Intelligence workspace querying Monday.com **Deals** & **Work Orders** boards dynamically with data normalization, deterministic analytics, risk radar engines, data trust metrics, evidence-backed AI insights, and 1-click Leadership Updates.
 
 ---
@@ -12,9 +14,9 @@ Executive-level AI Business Intelligence workspace querying Monday.com **Deals**
 2. **Data Trust Engine (`data_trust.py`)**: Computes multi-dimensional mathematical trust scores (Completeness, Date Coverage, Probability Rating Coverage, Sector Mapping, Cross-Board Linkage Confidence).
 3. **Executive Risk Radar (`risk_engine.py`)**: Deterministic risk signals covering Forecast Risk, Execution Risk, Pipeline Concentration Risk, Data Integrity, and Cross-Board Linkage.
 4. **Deterministic BI Engine (`bi_engine.py`)**: Calculates active pipeline (**₹68.82 Cr**), weighted forecast (**₹26.46 Cr**), win rate (**56.5%** across 292 decided opportunities), active work orders (**58 projects**), delayed work orders (**5 projects**), and billed contract value (**₹10.74 Cr**).
-5. **Adversarial & Unsupported Query Refusal**: Refuses un-supported business questions (e.g. EBITDA, employee productivity) gracefully, preventing LLM hallucinations.
+5. **Adversarial & Unsupported Query Refusal**: Refuses unsupported business questions (e.g. EBITDA, employee productivity) gracefully, preventing LLM hallucinations.
 6. **Evidence-First AI Answers**: Formats AI responses into structured `ANSWER`, `EVIDENCE`, `WHY IT MATTERS`, `DATA QUALITY`, and `RECOMMENDED ACTION`.
-7. **31 PyTest Unit & Integration Tests**: 100% test pass rate covering normalizer, BI engine, data quality auditor, risk engine, data trust, agent router, and FastAPI endpoints.
+7. **37 PyTest Unit & Integration Tests**: 100% test pass rate covering normalizer, BI engine, data quality auditor, risk engine, data trust, agent router, and FastAPI endpoints.
 
 ---
 
@@ -69,7 +71,7 @@ USE_MOCK_FALLBACK=true
 ```bash
 cd backend
 python -m pip install -r requirements.txt
-python -m pytest tests          # Runs 31 unit & integration tests
+python -m pytest tests          # Runs 37 unit & integration tests
 python app/main.py
 ```
 *(Backend runs at `http://localhost:8000` with Swagger docs at `http://localhost:8000/docs`)*
