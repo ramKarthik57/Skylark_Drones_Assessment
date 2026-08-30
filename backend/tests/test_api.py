@@ -9,13 +9,35 @@ def test_root_endpoint():
     assert response.status_code == 200
     assert response.json()["status"] == "online"
 
+def test_health_endpoint():
+    response = client.get("/api/health")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["status"] == "healthy"
+    assert "monday_integration" in data
+
 def test_boards_status_endpoint():
     response = client.get("/api/boards/status")
     assert response.status_code == 200
     data = response.json()
     assert "deals_count" in data
     assert "work_orders_count" in data
+    assert "action_center" in data
     assert data["deals_count"] > 0
+
+def test_action_center_endpoint():
+    response = client.get("/api/action-center")
+    assert response.status_code == 200
+    data = response.json()
+    assert "actions" in data
+    assert data["count"] > 0
+
+def test_scenario_endpoint():
+    response = client.get("/api/scenario?scenario_type=probability_increase&delta_pct=10.0")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["scenario_type"] == "probability_increase"
+    assert "baseline_formatted" in data
 
 def test_chat_endpoint():
     response = client.post("/api/chat", json={"message": "How is our pipeline looking this quarter?"})
