@@ -8,7 +8,7 @@ This script guides a 5-minute technical presentation and live demonstration of *
 - **Speaker**: *"Welcome. Today we are demonstrating Skylark Executive Intelligence, an executive decision-support workspace designed for founders and sales leadership to query live Monday.com Deals Funnel and Work Orders boards."*
 - **Showcase**:
   - Show the connection badge (`● LIVE — Monday.com` or `● DEMO — Mock Data`).
-  - Highlight the 6 Executive KPI Cards (**₹68.82 Cr Active Pipeline**, **₹26.46 Cr Weighted Forecast**, **56.5% Closed Win Rate**, **58 Active Work Orders**, **5 Execution Delayed Projects**, **₹10.74 Cr Billed Value**).
+  - Highlight the 6 Executive KPI Cards (**₹68.82 Cr Active Pipeline**, **₹26.46 Cr Weighted Forecast**, **56.2% Closed Win Rate**, **58 Active Work Orders**, **5 Execution Delayed Projects**, **₹10.74 Cr Billed Value**).
   - Walk through **"What Leadership Should Know"** signal cards (Forecast Risk, Execution Risk, Pipeline Concentration).
 
 ---

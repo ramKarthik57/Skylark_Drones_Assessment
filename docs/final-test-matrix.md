@@ -12,7 +12,7 @@ This matrix documents the 37 unit, integration, edge-case, security, and data-qu
 | **Normalizer** | `test_normalize_wo_status` | Maps Work Order execution status to `Ongoing`, `Delayed`, `Completed`, `On Hold` | **PASS** |
 | **Normalizer** | `test_normalize_sector` | Standardizes sector taxonomy into `Mining`, `Renewables`, `Railways`, `Powerline`, `Construction` | **PASS** |
 | **Normalizer** | `test_clean_record_nulls` | Replaces `nan`, `N/A`, `None` strings with explicit clean nulls | **PASS** |
-| **BI Engine** | `test_bi_analytics_calculation` | Calculates active pipeline (**₹68.82 Cr**), weighted forecast, win rate (**56.5%**), active WOs (**58**) | **PASS** |
+| **BI Engine** | `test_bi_analytics_calculation` | Calculates active pipeline (**₹68.82 Cr**), weighted forecast, win rate (**56.2%**), active WOs (**58**) | **PASS** |
 | **BI Engine** | `test_bi_analytics_sector_filter` | Filters Deals & Work Orders boards dynamically by industry sector | **PASS** |
 | **BI Engine** | `test_bi_analytics_quarter_filter` | Filters active pipeline for targeted quarter based on `Tentative Close Date` | **PASS** |
 | **BI Engine** | `test_bi_analytics_top_opportunities` | Sorts top sales opportunities by deal value in descending order | **PASS** |

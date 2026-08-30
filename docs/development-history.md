@@ -9,7 +9,7 @@ This document outlines the architectural milestones and engineering rationale be
 - **Key Decisions**:
   - Identified data quality issues: 49 open deals missing tentative close dates, unrated deals, and 5 delayed execution work orders.
   - Reconciled cross-board deal name matching at **89.7% match rate** (52/58 work order deal names matched).
-  - Established win rate calculation formula: `Won / (Won + Dead)` = `165 / (165 + 127)` = **56.5%** across 292 decided opportunities.
+  - Established win rate calculation formula: `Won / (Won + Dead)` = `163 / (163 + 127)` = **56.2%** across 290 decided opportunities.
 
 ---
 

@@ -22,6 +22,7 @@ Executive-level AI Business Intelligence workspace querying Monday.com **Deals**
 
 - **Live Monday.com GraphQL v2 Integration**: Queries `boards`, `items_page`, and `column_values` dynamically with automated board seeder (`seed_monday.py`). Strict `APP_ENV=production` mode enforces live API credentials without silent mock fallbacks.
 - **Mathematical Data Trust Engine (`data_trust.py`)**: Calculates 5 dataset trust dimensions (Field Completeness, Date Coverage, Probability Rating Coverage, Sector Mapping, Cross-Board Linkage Confidence).
+- **Deterministic BI Engine (`bi_engine.py`)**: Calculates active pipeline (**₹68.82 Cr**), weighted forecast (**₹26.46 Cr**), win rate (**56.2%** across 290 decided opportunities), active work orders (**58 projects**), delayed work orders (**5 projects**), and billed contract value (**₹10.74 Cr**).
 - **Deterministic Executive Risk Radar (`risk_engine.py`)**: Categorizes business risks (Forecast Risk, Execution Risk, Concentration Risk, Linkage Risk) with ground-truth evidence and actionable recommendations.
 - **Cross-Board Linkage Audit**: Quantifies deal name matching across CRM Deals and Work Orders tracker boards at **89.7% match rate** (52/58 matched).
 - **Automated Test Suite**: **37 PyTest unit and integration tests** in `backend/tests/` passing 100% in 1.70s.

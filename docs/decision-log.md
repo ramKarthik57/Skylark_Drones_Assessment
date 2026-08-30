@@ -4,7 +4,7 @@
 
 * **Active Pipeline Definition**: Deals with normalized status `Open` constitute active pipeline (**₹68.82 Cr** across 50 deals). `Won` deals represent closed revenue (**₹9.50 Cr**). `Dead` deals represent lost pipeline (**₹152.23 Cr**).
 * **Weighted Forecast Coverage**: Open deals use explicit closure probabilities (`High` = 80%, `Medium` = 50%, `Low` = 20%). 258 unrated deals use a baseline 30% calculation, and probability coverage (25.5%) is explicitly reported to leadership.
-* **Win Rate Denominator**: Win Rate is calculated strictly as `Won / (Won + Dead)` = `165 / (165 + 127)` = **56.5%**, explicitly displaying the denominator of 292 decided opportunities.
+* **Win Rate Denominator**: Win Rate is calculated strictly as `Won / (Won + Dead)` = `163 / (163 + 127)` = **56.2%**, explicitly displaying the denominator of 290 decided opportunities.
 * **Quarterly Close Semantics**: *"This quarter"* queries are interpreted against `Tentative Close Date` / `Close Date` for opportunities expected to close in Q1/Q2 2026.
 * **Cross-Board Linkage**: `Deal Name` ↔ `Deal name masked` has a quantified **89.7% match rate** (52/58 matched). Client codes use namespace prefixes (`COMPANY089` vs `WOCOMPANY_002`).
 
