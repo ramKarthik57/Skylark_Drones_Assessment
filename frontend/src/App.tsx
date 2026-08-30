@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { 
   MessageSquarePlus, 
+  LayoutDashboard,
   Database, 
   Info, 
   Sparkles,
@@ -8,16 +9,19 @@ import {
   ChevronRight
 } from 'lucide-react';
 import { ChatInterface } from './components/ChatInterface';
+import { CommandCenterView } from './components/CommandCenterView';
 import { LeadershipModal } from './components/LeadershipModal';
 import { DataLineageModal } from './components/DataLineageModal';
 import { fetchBoardStatus, sendChatMessage, fetchLeadershipUpdate, generateLocalChatResponse } from './services/api';
-import type { BoardStatus, BIData, ChatMessage, LeadershipUpdate, DataTrust } from './types';
+import type { BoardStatus, BIData, ChatMessage, LeadershipUpdate, RiskSignal, DataTrust } from './types';
 
 export function App() {
-  const [activeNav, setActiveNav] = useState<'chat' | 'data' | 'about'>('chat');
+  const [activeNav, setActiveNav] = useState<'overview' | 'chat' | 'data' | 'about'>('chat');
   const [boardStatus, setBoardStatus] = useState<BoardStatus | null>(null);
   const [biData, setBIData] = useState<BIData | null>(null);
+  const [riskRadar, setRiskRadar] = useState<RiskSignal[]>([]);
   const [dataTrust, setDataTrust] = useState<DataTrust | null>(null);
+  const [dataQualityNotes, setDataQualityNotes] = useState<string[]>([]);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [loading, setLoading] = useState(false);
   const [leadershipModalOpen, setLeadershipModalOpen] = useState(false);
@@ -32,12 +36,15 @@ export function App() {
     try {
       const status = await fetchBoardStatus();
       setBoardStatus(status);
+      if (status.risk_radar) setRiskRadar(status.risk_radar);
       if (status.data_trust) setDataTrust(status.data_trust);
 
       // Perform initial query for baseline metrics
       const initRes = await sendChatMessage('How is our pipeline looking this quarter?');
       if (initRes.bi_data) setBIData(initRes.bi_data);
+      if (initRes.risk_radar) setRiskRadar(initRes.risk_radar);
       if (initRes.data_trust) setDataTrust(initRes.data_trust);
+      if (initRes.data_quality_notes) setDataQualityNotes(initRes.data_quality_notes);
 
       const isLive = status.connected_live_monday && !status.is_mock_data;
       const welcomeSource = isLive
@@ -215,6 +222,20 @@ export function App() {
           </div>
 
           <button
+            onClick={() => setActiveNav('overview')}
+            className={`w-full flex items-center justify-between px-3 py-2 rounded-md text-xs font-medium transition-colors ${
+              activeNav === 'overview'
+                ? 'bg-[#181d2a] text-slate-100 border border-[#262f45]'
+                : 'text-slate-400 hover:text-slate-200 hover:bg-[#121520]'
+            }`}
+          >
+            <div className="flex items-center gap-2.5">
+              <LayoutDashboard className="h-3.5 w-3.5 text-sky-400" />
+              <span>Overview</span>
+            </div>
+          </button>
+
+          <button
             onClick={() => setActiveNav('chat')}
             className={`w-full flex items-center justify-between px-3 py-2 rounded-md text-xs font-medium transition-colors ${
               activeNav === 'chat'
@@ -297,6 +318,7 @@ export function App() {
         <header className="h-12 border-b border-[#1a1f2c] bg-[#0b0d13] flex items-center justify-between px-6 shrink-0">
           <div className="flex items-center gap-3">
             <h2 className="text-xs font-medium text-slate-200">
+              {activeNav === 'overview' && 'Executive Overview & Reconciled Metrics'}
               {activeNav === 'chat' && 'Executive Decision Intelligence'}
               {activeNav === 'data' && 'Reconciled Data & Provenance'}
               {activeNav === 'about' && 'System Architecture & Mathematical Derivations'}
@@ -316,6 +338,21 @@ export function App() {
 
         {/* View Switcher */}
         <div className="flex-1 overflow-hidden p-4 md:p-6 flex flex-col">
+          {activeNav === 'overview' && (
+            <div className="flex-1 overflow-y-auto">
+              <CommandCenterView
+                biData={biData}
+                riskRadar={riskRadar}
+                dataQualityNotes={dataQualityNotes}
+                onNavigateToAskAI={(q) => {
+                  setActiveNav('chat');
+                  if (q) handleSendMessage(q);
+                }}
+                onOpenLineage={handleOpenLineage}
+              />
+            </div>
+          )}
+
           {activeNav === 'chat' && (
             <ChatInterface
               messages={messages}
