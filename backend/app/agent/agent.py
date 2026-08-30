@@ -144,6 +144,8 @@ def classify_intent_and_entities(query: str) -> Tuple[str, bool, Optional[str], 
         intent = "CROSS_BOARD_ANALYSIS"
     elif "biggest active opportunities" in q_lower or "top opportunities" in q_lower or "five biggest" in q_lower or "top deals" in q_lower:
         intent = "TOP_OPPORTUNITIES"
+    elif "active and delayed" in q_lower or "active work order" in q_lower or "how many active" in q_lower:
+        intent = "WORK_ORDER_OVERVIEW"
     elif "delayed" in q_lower or "causing our delayed" in q_lower or "who is responsible for the delayed" in q_lower or "when will the delayed" in q_lower or "what caused the" in q_lower:
         intent = "WORK_ORDER_DELAY"
     elif "work order" in q_lower or "project" in q_lower or "contract" in q_lower or "billed" in q_lower or "receivable" in q_lower or "ongoing" in q_lower or "completed" in q_lower:
