@@ -202,7 +202,7 @@ export function generateLocalChatResponse(query: string): any {
     return {
       intent: 'GREETING',
       is_ambiguous: false,
-      text: `### 👋 Welcome to Skylark Executive Intelligence
+      text: `**Welcome to Skylark Executive Intelligence
 
 I am your Executive Business Intelligence Assistant connected to your **Deals** and **Work Orders** tracker data.
 
@@ -220,7 +220,7 @@ Ask me any business question about:
     return {
       intent: 'UNSUPPORTED',
       is_ambiguous: false,
-      text: '### ⚠️ Unsupported Metric Request\n\n**Data Unavailability Notice**:\nThe dataset provided includes operational Deals and Work Orders tracking data. Metrics such as EBITDA, Salary, CAC, LTV, HR Firing Decisions, and Profit Margins are not tracked in source CRM or Work Order boards.'
+      text: '**⚠️ Unsupported Metric Request\n\n**Data Unavailability Notice**:\nThe dataset provided includes operational Deals and Work Orders tracking data. Metrics such as EBITDA, Salary, CAC, LTV, HR Firing Decisions, and Profit Margins are not tracked in source CRM or Work Order boards.'
     };
   }
 
@@ -228,7 +228,7 @@ Ask me any business question about:
     return {
       intent: 'UNSUPPORTED_SECURITY',
       is_ambiguous: false,
-      text: '### 🔒 Security Refusal Card\n\n**Access Denied**: Request refused to protect system integrity, credentials, and configuration.'
+      text: '**Security Refusal Card\n\n**Access Denied**: Request refused to protect system integrity, credentials, and configuration.'
     };
   }
 
@@ -237,7 +237,7 @@ Ask me any business question about:
     return {
       intent: 'AMBIGUOUS',
       is_ambiguous: true,
-      text: '### ❓ Ambiguous Query Detected\n\nTo provide the most relevant business intelligence, please select a focus area:',
+      text: '**❓ Ambiguous Query Detected\n\nTo provide the most relevant business intelligence, please select a focus area:',
       suggested_clarifications: [
         { label: 'Overall Sales Pipeline (Q1 2026)', query: 'How is our pipeline looking this quarter?' },
         { label: 'Sector Pipeline vs Execution Realization', query: 'Which sectors have high pipeline but relatively weak execution realization?' },
@@ -253,7 +253,7 @@ Ask me any business question about:
     return {
       intent: 'ACTION_OWNERS',
       is_ambiguous: false,
-      text: `### 👤 Action Center Role Governance Audit
+      text: `**Action Center Role Governance Audit
 
 **ANSWER**
 The source dataset does NOT record assigned individual employee names or project owners. Roles listed in action recommendations are **suggested functional roles** (modeling suggestions), NOT source-assigned individuals.
@@ -271,7 +271,7 @@ Department heads should assign specific team members to own each action directiv
     return {
       intent: 'WORK_ORDER_DELAY_CLIENT',
       is_ambiguous: false,
-      text: `### 🏢 Work Order Delay Responsibility Audit
+      text: `**Work Order Delay Responsibility Audit
 
 **ANSWER**
 The source tracker records **5 Execution Delayed Work Orders**, but client-specific fault or contractual responsibility is **NOT recorded** in source dataset fields.
@@ -292,7 +292,7 @@ Review project tracker records directly to evaluate project execution status.`
     return {
       intent: 'UNSUPPORTED_FORECAST',
       is_ambiguous: false,
-      text: `### 🔮 Revenue Guarantee & Forecasting Disclosure
+      text: `**Revenue Guarantee & Forecasting Disclosure
 
 **ANSWER**
 Definite future revenue prediction is **NOT determinable** from static point-in-time datasets. Current open sales pipeline stands at **₹68.82 Cr** with a risk-adjusted weighted forecast of **₹26.46 Cr**.
@@ -313,7 +313,7 @@ Weighted pipeline is a risk-adjusted planning metric, NOT a guaranteed revenue c
     return {
       intent: 'UNSUPPORTED_GUARANTEE',
       is_ambiguous: false,
-      text: `### 🔒 Deal Closure Certainty Audit
+      text: `**Deal Closure Certainty Audit
 
 **ANSWER**
 No deal in source CRM records has a **100% guaranteed closure status** or qualitative closing rationale recorded. **Coal India Mining Survey** is recorded as an 80% High win probability deal valued at **₹15.00 Cr**.
@@ -334,7 +334,7 @@ Sales leadership should review deal milestones directly with opportunity lead ow
     return {
       intent: 'WORK_ORDER_FUTURE',
       is_ambiguous: false,
-      text: `### 📅 Future Work Order Volume Disclosure
+      text: `**Future Work Order Volume Disclosure
 
 **ANSWER**
 Future monthly work order volume is **NOT recorded** in point-in-time snapshot datasets. Currently, there are **58 Active Work Orders** (53 Ongoing, 5 Execution Delayed).
@@ -352,7 +352,7 @@ Future monthly work order volume is **NOT recorded** in point-in-time snapshot d
     return {
       intent: 'SECTOR_TARGET_MISS',
       is_ambiguous: false,
-      text: `### 🎯 Sector Target Variance Audit
+      text: `**Sector Target Variance Audit
 
 **ANSWER**
 Target miss probability is **NOT tracked** as a schema field. Mining currently holds **₹24.15 Cr** (35.1%) in active open sales pipeline and **₹2.85 Cr** in billed realization across 18 work orders (**2 execution delayed**).
@@ -368,7 +368,7 @@ Target miss probability is **NOT tracked** as a schema field. Mining currently h
     return {
       intent: 'RISK_THREE_RISKS',
       is_ambiguous: false,
-      text: `### 🛡️ Top Deterministic Business Risks Audit
+      text: `**️ Top Deterministic Business Risks Audit
 
 **ANSWER**
 The current deterministic risk engine identifies **2 high-priority risks** in the available dataset (rather than 3):
@@ -393,7 +393,7 @@ No third risk meets the deterministic risk threshold in the available dataset.`
     return {
       intent: 'RISK_STRONGEST',
       is_ambiguous: false,
-      text: `### 🛡️ Strongest Evidence Risk Audit
+      text: `**️ Strongest Evidence Risk Audit
 
 **ANSWER**
 The risk with the strongest evidence behind it is **Forecast Risk (49 Missing Tentative Close Dates)**.
@@ -411,7 +411,7 @@ By both record volume (49 vs 5) and financial exposure (₹67.32 Cr vs ₹1.85 C
     return {
       intent: 'WORK_ORDER_SINGLE_EXP',
       is_ambiguous: false,
-      text: `### 🚨 Delayed Work Order Financial Exposure Analysis
+      text: `**Delayed Work Order Financial Exposure Analysis
 
 **ANSWER**
 The source Work Order tracker contains **5 execution-delayed projects** with an aggregate contract value of **₹1.85 Cr** (billed: ₹0.60 Cr, pending billing gap: **₹1.25 Cr**).
@@ -444,7 +444,7 @@ Audit individual work order line items in Monday.com to isolate single-project e
           { name: 'Sakura (S)', Value: 0.98, DealValue: 1.22, Probability: '80% (High)' }
         ]
       },
-      text: `### 🎯 Single Opportunity Forecast Exposure Audit
+      text: `**Single Opportunity Forecast Exposure Audit
 
 **ANSWER**
 The open opportunity creating the largest individual forecast exposure is **Luffy** (Deal Value: **₹12.23 Cr**, Closure Probability: **80% High**), representing **₹9.79 Cr** or **37.0%** of our total weighted forecast (₹26.46 Cr).
@@ -471,7 +471,7 @@ Sales leadership should establish executive milestone checkpoints specifically f
     return {
       intent: 'LEADERSHIP_PRIORITIES_LIMITS',
       is_ambiguous: false,
-      text: `### 🏛️ Executive Synthesis: Data-Supported Priorities & Dataset Boundaries
+      text: `**️ Executive Synthesis: Data-Supported Priorities & Dataset Boundaries
 
 **ANSWER**
 Leadership focus must be divided strictly between **data-supported operational priorities** and **explicit boundaries where data cannot support conclusions**:
@@ -509,7 +509,7 @@ Address the 4 concrete data-supported priorities while avoiding strategic assump
           { sector: 'Construction', Pipeline: 5.97, Billed: 1.24, Delayed: 1, ActiveWOs: 7 }
         ]
       },
-      text: `### ⛏️ Sector Sales Pipeline & Operational Execution Comparison
+      text: `**⛏️ Sector Sales Pipeline & Operational Execution Comparison
 
 **ANSWER**
 No single sector can be declared the definitive "strongest combination" because the source dataset does not define a composite performance score. Factually, **Mining** holds the largest sales pipeline, while **Renewables** shows stronger billing realization relative to pipeline volume.
@@ -540,7 +540,7 @@ Leadership should evaluate whether commercial priority (Mining) or execution eff
     return {
       intent: 'PIPELINE_PRESSURE',
       is_ambiguous: false,
-      text: `### ⚡ Pipeline Execution Pressure Analysis
+      text: `**⚡ Pipeline Execution Pressure Analysis
 
 **ANSWER**
 The **Mining** (₹24.15 Cr, 35.1%) and **Renewables** (₹18.40 Cr, 26.7%) sectors represent **₹42.55 Cr** (61.8%) of active open pipeline and are most likely to generate future operational execution demand.
@@ -558,7 +558,7 @@ Dataset snapshot limitations prevent predicting exact future worker or equipment
     return {
       intent: 'OPPORTUNITY_ALIGNMENT',
       is_ambiguous: false,
-      text: `### 🎯 Opportunities vs. Work Order Capacity Audit
+      text: `**Opportunities vs. Work Order Capacity Audit
 
 **ANSWER**
 Our top 2 open sales opportunities (**Coal India Mining Survey ₹15.00 Cr** and **Adani Solar Mapping ₹12.50 Cr**) align with our two largest operational work order sectors (Mining: 18 work orders, Renewables: 14 work orders).
@@ -576,7 +576,7 @@ Whether current field hardware capacity can support simultaneous execution canno
     return {
       intent: 'SCENARIO_BEST',
       is_ambiguous: false,
-      text: `### 🎛️ Optimal Scenario Simulation Audit
+      text: `**️ Optimal Scenario Simulation Audit
 
 **ANSWER**
 The **+20% Probability Uplift Scenario** provides the largest improvement in **weighted forecast** (+**₹13.76 Cr** uplift, increasing weighted forecast from ₹26.46 Cr to **₹40.22 Cr**).
@@ -606,7 +606,7 @@ Scenario Simulation — NOT a predictive revenue forecast.`
           { category: 'Unrated (30%)', Contribution: 0.56, Nominal: 1.87 }
         ]
       },
-      text: `### 📐 Data Lineage & Calculation Derivation Methodology
+      text: `**Data Lineage & Calculation Derivation Methodology
 
 **ANSWER**
 The weighted forecast of **₹26.46 Cr** is derived using the canonical formula: \`Weighted Forecast = ∑ (Deal Value × Probability)\`. Here is the full arithmetic breakdown separating source facts from modeling assumptions:
@@ -635,7 +635,7 @@ Assign explicit probability ratings to the 3 unrated deals to eliminate the 30% 
     return {
       intent: 'SCENARIO_ANALYSIS',
       is_ambiguous: false,
-      text: `### 🎛️ Executive What-If Scenario Analysis
+      text: `**️ Executive What-If Scenario Analysis
 
 **NOTICE**
 This calculation is an interactive **Scenario Simulation**, NOT a predictive revenue forecast.
@@ -656,7 +656,7 @@ Targeted sales enablement on high-value unrated deals generates maximum forecast
     return {
       intent: 'LEADERSHIP_BRIEF',
       is_ambiguous: false,
-      text: `### 👔 CEO Executive Briefing & Action Plan
+      text: `**CEO Executive Briefing & Action Plan
 
 **1. COMMERCIAL SNAPSHOT**
 - **Active Sales Pipeline**: **₹68.82 Cr** (50 open deals).
@@ -678,7 +678,7 @@ Targeted sales enablement on high-value unrated deals generates maximum forecast
     return {
       intent: 'RISK_RADAR',
       is_ambiguous: false,
-      text: `### 🛡️ Deterministic Executive Risk Radar Audit
+      text: `**️ Deterministic Executive Risk Radar Audit
 
 **ANSWER**
 Our top 2 operational & commercial risks identified by deterministic rules:
@@ -702,7 +702,7 @@ Our top 2 operational & commercial risks identified by deterministic rules:
     return {
       intent: 'ACTION_CENTER',
       is_ambiguous: false,
-      text: `### 🎯 Executive Action Directives
+      text: `**Executive Action Directives
 
 **ANSWER**
 Management intervention is required across 3 evidence-backed operational recovery areas:
@@ -726,7 +726,7 @@ Management intervention is required across 3 evidence-backed operational recover
     return {
       intent: 'OPPORTUNITY_RISK',
       is_ambiguous: false,
-      text: `### ⚠️ Opportunity Forecast Slippage & Conversion Risk Analysis
+      text: `**⚠️ Opportunity Forecast Slippage & Conversion Risk Analysis
 
 **ANSWER**
 The largest forecast slippage risk comes from **Coal India Mining Survey (₹15.00 Cr)** and **Adani Solar Mapping (₹12.50 Cr)**. Together, they represent **₹27.50 Cr** (40.0%) of total open pipeline and **₹22.00 Cr** (83.1%) of weighted forecast.
@@ -759,7 +759,7 @@ Audit probability and close date records for top 5 deals; external client decisi
           { name: 'Remaining 45', Value: 21.82, Share: 31.7 }
         ]
       },
-      text: `### 🎯 Pipeline Concentration Exposure Audit
+      text: `**Pipeline Concentration Exposure Audit
 
 **ANSWER**
 Our commercial pipeline is heavily concentrated in the **Mining** sector (**₹24.15 Cr**, 35.1%) and top 5 open opportunities (**₹47.00 Cr**, 68.3% of total pipeline).
@@ -791,7 +791,7 @@ Diversify sales outreach into Railways and Powerline sectors to balance sector c
           { sector: 'Construction', Pipeline: 5.97, Billed: 1.24, Delayed: 1, ActiveWOs: 7 }
         ]
       },
-      text: `### ⛏️ Sector Pipeline vs. Execution Realization Audit
+      text: `**⛏️ Sector Pipeline vs. Execution Realization Audit
 
 **ANSWER**
 **Mining** has our largest active pipeline (**₹24.15 Cr**, 35.1%) but holds **₹2.85 Cr** in billed realization across 18 work orders with **2 execution delays**. **Renewables** shows stronger billing realization (**₹3.10 Cr** billed out of ₹18.40 Cr pipeline).
@@ -825,7 +825,7 @@ Review project tracker records for Mining work orders to evaluate recorded execu
           { name: 'Delayed', value: 5, color: '#f59e0b' }
         ]
       },
-      text: `### 🚨 Work Order Management Priority Audit
+      text: `**Work Order Management Priority Audit
 
 **ANSWER**
 Management attention must prioritize the **5 Execution Delayed Work Orders** representing **₹1.85 Cr** in contracted value, and **₹3.63 Cr in uncollected receivables**.
@@ -848,7 +848,7 @@ Review project tracker records for the 5 execution delayed work orders; no exter
     return {
       intent: 'FORECAST_DATA_QUALITY',
       is_ambiguous: false,
-      text: `### 🧹 Forecast Reliability & Data Quality Priority Audit
+      text: `**Forecast Reliability & Data Quality Priority Audit
 
 **ANSWER**
 Sales leadership must fix **missing tentative close dates** for **49 out of 50 open deals** and **unrated closure probabilities** for **38 open deals**.
@@ -871,7 +871,7 @@ Prioritize entering close dates and explicit probability ratings for top open de
     return {
       intent: 'DATA_TRUST',
       is_ambiguous: false,
-      text: `### 🛡️ Data Trust & Probability Coverage Audit
+      text: `**️ Data Trust & Probability Coverage Audit
 
 **ANSWER**
 **94.0%** of active open deals (47 of 50) have explicit win probability ratings. Overall Data Trust score is **HIGH CONFIDENCE** based on 5 dataset dimensions.
@@ -907,7 +907,7 @@ Assign explicit probability ratings (High 80%, Medium 50%, Low 20%) to the 3 unr
           { name: 'L&T Mapping', Value: 5.50, DealValue: 5.50, Probability: '20% (Low)' }
         ]
       },
-      text: `### 🏆 Top 5 Active Open Deal Opportunities
+      text: `**Top 5 Active Open Deal Opportunities
 
 **ANSWER**
 Our top 5 active open deals represent **₹47.00 Cr** (68.3%) of total active sales pipeline.
@@ -938,7 +938,7 @@ Review sales progress for Coal India and Adani Solar opportunities based on reco
           { name: 'Delayed', value: 5, color: '#f59e0b' }
         ]
       },
-      text: `### 🚀 Operational Work Orders & Delay Audit
+      text: `**Operational Work Orders & Delay Audit
 
 **ANSWER**
 We have **58 Active Work Orders**, of which **53 are Ongoing** and **5 are Execution Delayed**.
@@ -972,7 +972,7 @@ Review project tracker records for the 5 delayed work orders to evaluate executi
           { name: 'Delayed', value: 5, color: '#f59e0b' }
         ]
       },
-      text: `### 🚀 Active Work Orders & Financial Overview
+      text: `**Active Work Orders & Financial Overview
 
 **ANSWER**
 We have **58 Active Work Orders**, representing **₹21.06 Cr** in total contracted value. **₹10.74 Cr** (51.0%) has been billed to date, and **₹3.63 Cr** remains in uncollected receivables.
@@ -993,7 +993,7 @@ Operations lead to monitor milestone completion across the 53 ongoing work order
     return {
       intent: 'CROSS_BOARD_ANALYSIS',
       is_ambiguous: false,
-      text: `### ⏱️ Sales Velocity vs. Execution Capacity Analysis
+      text: `**⏱️ Sales Velocity vs. Execution Capacity Analysis
 
 **ANSWER**
 The available dataset cannot determine whether sales are occurring faster than execution because it is a static snapshot without historical stage/status timestamps. At this snapshot, there are **50 open deals (₹68.82 Cr)** and **58 active work orders (₹21.06 Cr)**, with **5 execution-delayed work orders**. A true sales-versus-execution velocity comparison requires historical time-series data.
@@ -1017,7 +1017,7 @@ Implement automated stage-change timestamp logging in Monday.com to monitor true
     return {
       intent: 'SECTOR_PERFORMANCE',
       is_ambiguous: false,
-      text: `### ⛏️ Sector Performance Analysis (${isMining ? 'Mining' : 'Renewables'})
+      text: `**⛏️ Sector Performance Analysis (${isMining ? 'Mining' : 'Renewables'})
 
 **ANSWER**
 ${isMining 
@@ -1041,7 +1041,7 @@ Maintain commercial momentum in Mining and Renewables while supporting field sur
     return {
       intent: 'PIPELINE_OVERVIEW',
       is_ambiguous: false,
-      text: `### 📊 Q1 2026 Pipeline Performance Analysis
+      text: `**Q1 2026 Pipeline Performance Analysis
 
 **ANSWER**
 Our active sales pipeline stands at **₹68.82 Cr** across 50 open deals. The risk-adjusted weighted forecast is **₹26.46 Cr**.
@@ -1062,7 +1062,7 @@ Sales Leadership should mandate tentative close date entries for all 49 unrated 
   return {
     intent: 'PIPELINE_OVERVIEW',
     is_ambiguous: false,
-    text: `### 📊 Skylark Executive Decision Support
+    text: `**Skylark Executive Decision Support
 
 **ANSWER**
 Skylark Executive Intelligence has reconciled **344 Deals** and **175 Work Orders** from the assignment dataset snapshot.
