@@ -65,7 +65,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
 
     // 1. Forecast Exposure & Top Opportunities Chart
     if (intent === 'FORECAST_EXPOSURE' || intent === 'TOP_OPPORTUNITIES' || intent === 'OPPORTUNITY_RISK') {
-      const oppData = (deals_summary.top_5_open_deals || []).slice(0, 5).map(d => ({
+      const oppData = (deals_summary.top_opportunities || []).slice(0, 5).map((d: any) => ({
         name: d.deal_name.length > 14 ? d.deal_name.substring(0, 12) + '…' : d.deal_name,
         Value: Number((d.deal_value / 10000000).toFixed(2))
       }));
