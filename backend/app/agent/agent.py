@@ -21,6 +21,14 @@ def classify_intent_and_entities(query: str) -> Tuple[str, bool, Optional[str], 
     if q_lower in greetings or any(q_lower == g + "!" or q_lower == g + "." for g in greetings):
         return "GREETING", False, None, None
 
+    # 0.1 Out of scope queries (non-business / random knowledge)
+    out_of_scope_terms = [
+        "joke", "president", "weather", "quantum physics", "write python", "python code",
+        "capital of", "recipe", "song", "movie", "translate", "horoscope", "poem"
+    ]
+    if any(term in q_lower for term in out_of_scope_terms):
+        return "UNSUPPORTED", False, None, None
+
     # 1. Adversarial / Unsupported Query Check
     unsupported_terms = [
         "ebitda", "profit margin", "employee productivity", "salary", "salaries",
@@ -34,7 +42,8 @@ def classify_intent_and_entities(query: str) -> Tuple[str, bool, Optional[str], 
     # 2. Security / Prompt Injection Exfiltration Check
     security_terms = [
         "reveal system prompt", "reveal api key", "show environment variables",
-        "give me monday api token", "print gemini key", "ignore previous instructions", "monday.com token"
+        "give me monday api token", "print gemini key", "ignore previous instructions", "monday.com token",
+        "execute this instruction", "system prompt", "api keys", "environment variables"
     ]
     if any(term in q_lower for term in security_terms):
         return "UNSUPPORTED_SECURITY", False, None, None

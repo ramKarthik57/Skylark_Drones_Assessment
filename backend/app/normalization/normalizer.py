@@ -5,10 +5,12 @@ from typing import Any, Dict, List, Optional
 def is_null_or_empty(val: Any) -> bool:
     if val is None:
         return True
+    if str(type(val)) == "<class 'pandas._libs.tslibs.nattype.NaTType'>" or str(val) == 'NaT':
+        return True
     if isinstance(val, float) and (val != val or str(val).lower() == 'nan'):
         return True
     val_str = str(val).strip().lower()
-    return val_str in ['', 'n/a', 'na', '-', 'none', 'unknown', 'null', 'nan', 'blank']
+    return val_str in ['', 'n/a', 'na', '-', 'none', 'unknown', 'null', 'nan', 'blank', 'nat']
 
 def clean_text(val: Any) -> Optional[str]:
     if is_null_or_empty(val):

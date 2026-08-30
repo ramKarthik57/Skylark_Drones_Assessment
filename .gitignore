@@ -26,3 +26,6 @@ Thumbs.db
 
 # Zip Archives
 *.zip
+
+.vercel
+.env*
