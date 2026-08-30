@@ -1,41 +1,28 @@
 import { useState, useEffect } from 'react';
 import { 
   MessageSquarePlus, 
-  LayoutDashboard,
   Database, 
   Info, 
   Sparkles,
   FileText,
-  ChevronRight,
-  ShieldAlert,
-  CheckSquare,
-  ShieldCheck,
-  Sliders
+  ChevronRight
 } from 'lucide-react';
 import { ChatInterface } from './components/ChatInterface';
-import { CommandCenterView } from './components/CommandCenterView';
-import { RiskRadarView } from './components/RiskRadarView';
-import { ActionCenterView } from './components/ActionCenterView';
-import { DataTrustView } from './components/DataTrustView';
-import { ScenarioModal } from './components/ScenarioModal';
 import { LeadershipModal } from './components/LeadershipModal';
 import { DataLineageModal } from './components/DataLineageModal';
 import { fetchBoardStatus, sendChatMessage, fetchLeadershipUpdate, generateLocalChatResponse } from './services/api';
-import type { BoardStatus, BIData, ChatMessage, LeadershipUpdate, RiskSignal, DataTrust } from './types';
+import type { BoardStatus, BIData, ChatMessage, LeadershipUpdate, DataTrust } from './types';
 
 export function App() {
-  const [activeNav, setActiveNav] = useState<'overview' | 'chat' | 'risks' | 'actions' | 'trust' | 'data' | 'about'>('chat');
+  const [activeNav, setActiveNav] = useState<'chat' | 'data' | 'about'>('chat');
   const [boardStatus, setBoardStatus] = useState<BoardStatus | null>(null);
   const [biData, setBIData] = useState<BIData | null>(null);
-  const [riskRadar, setRiskRadar] = useState<RiskSignal[]>([]);
   const [dataTrust, setDataTrust] = useState<DataTrust | null>(null);
-  const [dataQualityNotes, setDataQualityNotes] = useState<string[]>([]);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [loading, setLoading] = useState(false);
   const [leadershipModalOpen, setLeadershipModalOpen] = useState(false);
   const [leadershipData, setLeadershipData] = useState<LeadershipUpdate | null>(null);
   const [leadershipLoading, setLeadershipLoading] = useState(false);
-  const [scenarioModalOpen, setScenarioModalOpen] = useState(false);
   const [lineageModalOpen, setLineageModalOpen] = useState(false);
   const [selectedLineageInfo, setSelectedLineageInfo] = useState<any>(null);
 
@@ -45,15 +32,12 @@ export function App() {
     try {
       const status = await fetchBoardStatus();
       setBoardStatus(status);
-      if (status.risk_radar) setRiskRadar(status.risk_radar);
       if (status.data_trust) setDataTrust(status.data_trust);
 
       // Perform initial query for baseline metrics
       const initRes = await sendChatMessage('How is our pipeline looking this quarter?');
       if (initRes.bi_data) setBIData(initRes.bi_data);
-      if (initRes.risk_radar) setRiskRadar(initRes.risk_radar);
       if (initRes.data_trust) setDataTrust(initRes.data_trust);
-      if (initRes.data_quality_notes) setDataQualityNotes(initRes.data_quality_notes);
 
       const isLive = status.connected_live_monday && !status.is_mock_data;
       const welcomeSource = isLive
@@ -64,7 +48,7 @@ export function App() {
         {
           id: 'welcome-1',
           sender: 'assistant',
-          text: `Welcome to **Skylark Executive Intelligence**.\n\n${welcomeSource}\n\nAsk me any question regarding active commercial pipeline, forecast calculations, sector performance, work order execution status, or data quality caveats.`,
+          text: `Welcome to Skylark Executive Intelligence.\n\n${welcomeSource}\n\nAsk me any question regarding active commercial pipeline, forecast calculations, sector performance, work order execution status, or data quality caveats.`,
           timestamp: new Date().toLocaleTimeString(),
           biData: initRes.bi_data,
           dataQualityNotes: initRes.data_quality_notes
@@ -201,14 +185,14 @@ export function App() {
         <div className="p-5 space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="h-8 w-8 rounded-lg bg-[#007a5a] flex items-center justify-center text-white font-bold text-xs tracking-wider shadow-sm">
+              <div className="h-8 w-8 rounded-lg bg-[#007a5a] flex items-center justify-center text-white font-bold text-xs tracking-wider shadow-xs">
                 SK
               </div>
               <div>
-                <h1 className="text-base font-editorial font-semibold text-[#191919] tracking-tight">
+                <h1 className="text-base font-serif font-semibold text-[#191919] tracking-tight">
                   Skylark
                 </h1>
-                <p className="text-[10px] text-[#737373] tracking-wide uppercase font-medium">Executive Intelligence</p>
+                <p className="text-[10px] text-[#737373] tracking-wide uppercase font-mono font-medium">Executive Intelligence</p>
               </div>
             </div>
           </div>
@@ -220,7 +204,7 @@ export function App() {
           >
             <div className="flex items-center gap-2">
               <MessageSquarePlus className="h-4 w-4 text-[#007a5a]" />
-              <span>New Analysis</span>
+              <span>New Conversation</span>
             </div>
             <span className="text-[10px] text-[#737373] font-mono bg-[#f4f2eb] px-1.5 py-0.5 rounded border border-[#dcd7cb]">⌘N</span>
           </button>
@@ -229,26 +213,12 @@ export function App() {
         {/* Navigation Sections */}
         <div className="flex-1 px-3 py-2 space-y-1 overflow-y-auto no-scrollbar">
           <div className="text-[10px] uppercase font-mono tracking-wider text-[#8c8577] px-3 py-1 font-semibold">
-            Intelligence Suite
+            WORKSPACE
           </div>
 
           <button
-            onClick={() => setActiveNav('overview')}
-            className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${
-              activeNav === 'overview'
-                ? 'bg-[#ffffff] text-[#191919] border border-[#dcd7cb] shadow-xs font-semibold'
-                : 'text-[#595959] hover:text-[#191919] hover:bg-[#eae7dc]/60'
-            }`}
-          >
-            <div className="flex items-center gap-2.5">
-              <LayoutDashboard className="h-4 w-4 text-[#007a5a]" />
-              <span>Executive Overview</span>
-            </div>
-          </button>
-
-          <button
             onClick={() => setActiveNav('chat')}
-            className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${
+            className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all ${
               activeNav === 'chat'
                 ? 'bg-[#ffffff] text-[#191919] border border-[#dcd7cb] shadow-xs font-semibold'
                 : 'text-[#595959] hover:text-[#191919] hover:bg-[#eae7dc]/60'
@@ -262,112 +232,50 @@ export function App() {
           </button>
 
           <button
-            onClick={() => setActiveNav('risks')}
-            className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${
-              activeNav === 'risks'
-                ? 'bg-[#ffffff] text-[#191919] border border-[#dcd7cb] shadow-xs font-semibold'
-                : 'text-[#595959] hover:text-[#191919] hover:bg-[#eae7dc]/60'
-            }`}
-          >
-            <div className="flex items-center gap-2.5">
-              <ShieldAlert className="h-4 w-4 text-[#d97706]" />
-              <span>Risk Radar</span>
-            </div>
-            {riskRadar.length > 0 && (
-              <span className="text-[10px] font-mono font-bold text-[#d97706] bg-amber-50 px-1.5 py-0.2 rounded border border-amber-200">
-                {riskRadar.length}
-              </span>
-            )}
-          </button>
-
-          <button
-            onClick={() => setActiveNav('actions')}
-            className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${
-              activeNav === 'actions'
-                ? 'bg-[#ffffff] text-[#191919] border border-[#dcd7cb] shadow-xs font-semibold'
-                : 'text-[#595959] hover:text-[#191919] hover:bg-[#eae7dc]/60'
-            }`}
-          >
-            <div className="flex items-center gap-2.5">
-              <CheckSquare className="h-4 w-4 text-[#007a5a]" />
-              <span>Action Directives</span>
-            </div>
-            <span className="text-[10px] font-mono text-[#007a5a] bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-200">
-              3 Directives
-            </span>
-          </button>
-
-          <button
-            onClick={() => setActiveNav('trust')}
-            className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${
-              activeNav === 'trust'
-                ? 'bg-[#ffffff] text-[#191919] border border-[#dcd7cb] shadow-xs font-semibold'
-                : 'text-[#595959] hover:text-[#191919] hover:bg-[#eae7dc]/60'
-            }`}
-          >
-            <div className="flex items-center gap-2.5">
-              <ShieldCheck className="h-4 w-4 text-[#0284c7]" />
-              <span>Data Trust Center</span>
-            </div>
-          </button>
-
-          <button
             onClick={() => setActiveNav('data')}
-            className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${
+            className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all ${
               activeNav === 'data'
                 ? 'bg-[#ffffff] text-[#191919] border border-[#dcd7cb] shadow-xs font-semibold'
                 : 'text-[#595959] hover:text-[#191919] hover:bg-[#eae7dc]/60'
             }`}
           >
             <div className="flex items-center gap-2.5">
-              <Database className="h-4 w-4 text-[#595959]" />
-              <span>Data Governance</span>
+              <Database className="h-4 w-4 text-[#007a5a]" />
+              <span>Data & Governance</span>
             </div>
-            {boardStatus && (
-              <span className="text-[10px] font-mono text-[#737373]">{boardStatus.deals_count + boardStatus.work_orders_count} rows</span>
-            )}
+            <span className="text-[10px] font-mono text-[#737373]">
+              519 Recs
+            </span>
+          </button>
+
+          <div className="pt-4 pb-1 text-[10px] uppercase font-mono tracking-wider text-[#8c8577] px-3 font-semibold">
+            UTILITIES
+          </div>
+
+          <button
+            onClick={handleOpenLeadership}
+            className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium text-[#595959] hover:text-[#191919] hover:bg-[#eae7dc]/60 transition-all cursor-pointer"
+          >
+            <div className="flex items-center gap-2.5">
+              <FileText className="h-4 w-4 text-[#007a5a]" />
+              <span>Leadership Brief</span>
+            </div>
+            <ChevronRight className="h-3 w-3 text-[#8c8577]" />
           </button>
 
           <button
             onClick={() => setActiveNav('about')}
-            className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${
+            className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all ${
               activeNav === 'about'
                 ? 'bg-[#ffffff] text-[#191919] border border-[#dcd7cb] shadow-xs font-semibold'
                 : 'text-[#595959] hover:text-[#191919] hover:bg-[#eae7dc]/60'
             }`}
           >
             <div className="flex items-center gap-2.5">
-              <Info className="h-4 w-4 text-[#595959]" />
-              <span>Methodology & Lineage</span>
+              <Info className="h-4 w-4 text-[#007a5a]" />
+              <span>Methodology & Audit</span>
             </div>
           </button>
-
-          {/* Quick Leadership Brief & Scenario Lab Commands */}
-          <div className="pt-3 mt-2 border-t border-[#e5e2d8] space-y-1">
-            <div className="text-[10px] uppercase font-mono tracking-wider text-[#8c8577] px-3 py-1 font-semibold">
-              Executive Modals
-            </div>
-            <button
-              onClick={() => setScenarioModalOpen(true)}
-              className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs text-[#404040] hover:text-[#191919] hover:bg-[#eae7dc] border border-[#dcd7cb] transition-all bg-[#ffffff]"
-            >
-              <div className="flex items-center gap-2.5">
-                <Sliders className="h-3.5 w-3.5 text-[#007a5a]" />
-                <span>Scenario Simulation</span>
-              </div>
-              <ChevronRight className="h-3 w-3 text-[#737373]" />
-            </button>
-            <button
-              onClick={handleOpenLeadership}
-              className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs text-[#404040] hover:text-[#191919] hover:bg-[#eae7dc] border border-[#dcd7cb] transition-all bg-[#ffffff]"
-            >
-              <div className="flex items-center gap-2.5">
-                <FileText className="h-3.5 w-3.5 text-[#d97706]" />
-                <span>Executive Briefing</span>
-              </div>
-              <ChevronRight className="h-3 w-3 text-[#737373]" />
-            </button>
-          </div>
         </div>
 
         {/* Source Connection Badge */}
@@ -390,12 +298,8 @@ export function App() {
         <header className="h-14 border-b border-[#e5e2d8] bg-[#ffffff] flex items-center justify-between px-8 shrink-0">
           <div className="flex items-center gap-3">
             <h2 className="text-sm font-semibold text-[#191919] tracking-tight">
-              {activeNav === 'overview' && 'Executive Overview & Reconciled Metrics'}
               {activeNav === 'chat' && 'Conversational Decision Intelligence'}
-              {activeNav === 'risks' && 'Executive Risk Radar & Vulnerability Assessment'}
-              {activeNav === 'actions' && 'Action Center: Priority Recovery Directives'}
-              {activeNav === 'trust' && 'Data Trust & Completeness Center'}
-              {activeNav === 'data' && 'Reconciled Data & Provenance'}
+              {activeNav === 'data' && 'Reconciled Data & Governance Center'}
               {activeNav === 'about' && 'System Architecture & Mathematical Derivations'}
             </h2>
           </div>
@@ -413,21 +317,6 @@ export function App() {
 
         {/* View Switcher */}
         <div className="flex-1 overflow-hidden p-4 md:p-6 flex flex-col">
-          {activeNav === 'overview' && (
-            <div className="flex-1 overflow-y-auto">
-              <CommandCenterView
-                biData={biData}
-                riskRadar={riskRadar}
-                dataQualityNotes={dataQualityNotes}
-                onNavigateToAskAI={(q) => {
-                  setActiveNav('chat');
-                  if (q) handleSendMessage(q);
-                }}
-                onOpenLineage={handleOpenLineage}
-              />
-            </div>
-          )}
-
           {activeNav === 'chat' && (
             <ChatInterface
               messages={messages}
@@ -435,30 +324,6 @@ export function App() {
               loading={loading}
               onSelectSuggested={handleSendMessage}
             />
-          )}
-
-          {activeNav === 'risks' && (
-            <div className="flex-1 overflow-y-auto">
-              <RiskRadarView
-                riskRadar={riskRadar}
-                onNavigateToAskAI={(q) => {
-                  setActiveNav('chat');
-                  if (q) handleSendMessage(q);
-                }}
-              />
-            </div>
-          )}
-
-          {activeNav === 'actions' && (
-            <div className="flex-1 overflow-y-auto">
-              <ActionCenterView />
-            </div>
-          )}
-
-          {activeNav === 'trust' && (
-            <div className="flex-1 overflow-y-auto">
-              <DataTrustView dataTrust={dataTrust} />
-            </div>
           )}
 
           {activeNav === 'data' && (
@@ -558,11 +423,7 @@ export function App() {
         </div>
       </div>
 
-      {/* Scenario Lab Modal */}
-      <ScenarioModal
-        isOpen={scenarioModalOpen}
-        onClose={() => setScenarioModalOpen(false)}
-      />
+
 
       {/* Leadership Update Modal */}
       <LeadershipModal

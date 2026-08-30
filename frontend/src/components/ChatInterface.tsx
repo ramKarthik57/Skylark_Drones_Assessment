@@ -22,6 +22,7 @@ import {
   Cell,
   CartesianGrid
 } from 'recharts';
+import { FormattedResponse } from './FormattedResponse';
 import type { ChatMessage } from '../types';
 
 interface ChatInterfaceProps {
@@ -289,10 +290,14 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
                 </div>
               )}
 
-              {/* Message Content (Clean Editorial Format) */}
-              <div className="whitespace-pre-wrap font-sans text-[15px] space-y-3 leading-relaxed text-[#262626]">
-                {msg.text}
-              </div>
+              {/* Message Content with Structured FormattedResponse Component */}
+              {msg.sender === 'assistant' ? (
+                <FormattedResponse text={msg.text} />
+              ) : (
+                <div className="font-sans text-[15px] leading-relaxed text-[#ffffff] font-medium">
+                  {msg.text}
+                </div>
+              )}
 
               {/* Contextual Visual Chart */}
               {renderContextualChart(msg)}
