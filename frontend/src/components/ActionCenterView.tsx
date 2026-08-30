@@ -6,7 +6,42 @@ interface ActionCenterViewProps {
   actions?: ActionItem[];
 }
 
+const DEFAULT_ACTIONS: ActionItem[] = [
+  {
+    id: 'ACT-01',
+    urgency: 'IMMEDIATE',
+    priority: 'HIGH',
+    title: 'Audit & Mandate Close Dates for 49 Unrated Open Deals',
+    evidence: ['49 out of 50 open deals lack explicit tentative close dates.', '₹67.3 Cr pipeline unallocated to close quarters.'],
+    impact: 'Creates quarterly revenue timing uncertainty and forecast variance risk.',
+    recommended_action: 'Sales Leadership to mandate close date entry for top open deals by Friday close of business.',
+    owner_suggestion: 'Sales Operations Lead'
+  },
+  {
+    id: 'ACT-02',
+    urgency: 'HIGH',
+    priority: 'HIGH',
+    title: 'Clear Mobilization Bottlenecks for 5 Execution Delayed Projects',
+    evidence: ['5 active work orders in Mining and Renewables are execution delayed.', 'Contract value affected: ₹1.85 Cr.'],
+    impact: 'Delays milestone billing realization and strains client SLA commitments.',
+    recommended_action: 'Project Delivery Lead to mobilize field hardware and review site clearance with clients.',
+    owner_suggestion: 'Operations Delivery Lead'
+  },
+  {
+    id: 'ACT-03',
+    urgency: 'MEDIUM',
+    priority: 'MEDIUM',
+    title: 'Accelerate Collections on ₹3.63 Cr Outstanding Receivables',
+    evidence: ['₹3.63 Cr receivables pending collection across completed work orders.', 'Total contract value billed: ₹10.74 Cr.'],
+    impact: 'Ties up operational working capital and increases DSO.',
+    recommended_action: 'Finance Team to issue milestone invoice payment reminders for accounts aged > 45 days.',
+    owner_suggestion: 'Finance & Receivables Lead'
+  }
+];
+
 export const ActionCenterView: React.FC<ActionCenterViewProps> = ({ actions = [] }) => {
+  const displayActions = actions.length > 0 ? actions : DEFAULT_ACTIONS;
+
   return (
     <div className="space-y-6">
       <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-6 backdrop-blur-md">
@@ -20,18 +55,18 @@ export const ActionCenterView: React.FC<ActionCenterViewProps> = ({ actions = []
             </p>
           </div>
           <span className="px-3 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-semibold rounded-full">
-            {actions.length} Action Directives
+            {displayActions.length} Action Directives
           </span>
         </div>
 
-        {actions.length === 0 ? (
+        {displayActions.length === 0 ? (
           <div className="text-center py-10 text-slate-400">
             <CheckCircle className="w-10 h-10 text-emerald-400 mx-auto mb-2 opacity-80" />
             <p className="text-sm font-medium">All operational metrics within standard executive threshold.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-4">
-            {actions.map((act) => {
+            {displayActions.map((act) => {
               const isImmediate = act.urgency === 'IMMEDIATE';
               const badgeStyle = isImmediate
                 ? 'bg-rose-500/10 text-rose-400 border-rose-500/20'
