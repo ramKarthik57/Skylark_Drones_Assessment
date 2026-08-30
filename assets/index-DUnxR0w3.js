@@ -230,10 +230,10 @@ We have **58 Active Work Orders**, of which **53 are Ongoing** and **5 are Execu
 The 5 delayed projects block **₹1.85 Cr** in milestone billing and strain client SLA commitments.
 
 #### DATA QUALITY CAVEAT
-Delayed status reasons cite site access restrictions and heavy monsoon weather.
+Delayed status is recorded in source tracker; specific site or client reasons are unrecorded in the dataset.
 
 #### RECOMMENDED ACTION
-Operations Lead to review site clearance with clients for the 5 delayed projects to resume field surveys immediately.`}:t.includes(`faster`)||t.includes(`selling`)||t.includes(`velocity`)||t.includes(`relationship`)?{intent:`CROSS_BOARD_ANALYSIS`,is_ambiguous:!1,text:`### ⏱️ Sales Velocity vs. Execution Capacity Analysis
+Investigate the 5 execution delayed work order records to identify operational bottlenecks; no external deadline is specified in source data.`}:t.includes(`faster`)||t.includes(`selling`)||t.includes(`velocity`)||t.includes(`relationship`)?{intent:`CROSS_BOARD_ANALYSIS`,is_ambiguous:!1,text:`### ⏱️ Sales Velocity vs. Execution Capacity Analysis
 
 #### ANSWER
 Based on static dataset snapshots, active sales deal volume (**50 open deals, ₹68.82 Cr**) currently exceeds active operational work order capacity (**58 active projects, 5 delayed**).

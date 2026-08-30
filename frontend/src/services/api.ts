@@ -427,10 +427,10 @@ We have **58 Active Work Orders**, of which **53 are Ongoing** and **5 are Execu
 The 5 delayed projects block **₹1.85 Cr** in milestone billing and strain client SLA commitments.
 
 #### DATA QUALITY CAVEAT
-Delayed status reasons cite site access restrictions and heavy monsoon weather.
+Delayed status is recorded in source tracker; specific site or client reasons are unrecorded in the dataset.
 
 #### RECOMMENDED ACTION
-Operations Lead to review site clearance with clients for the 5 delayed projects to resume field surveys immediately.`
+Investigate the 5 execution delayed work order records to identify operational bottlenecks; no external deadline is specified in source data.`
     };
   }
 
