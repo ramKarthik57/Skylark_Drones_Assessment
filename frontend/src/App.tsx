@@ -302,11 +302,11 @@ export function App() {
         <div className="p-3 border-t border-[#2d2d32] bg-[#18181b]/60">
           <div className="flex items-center justify-between text-[11px] text-[#a1a1aa]">
             <div className="flex items-center gap-1.5">
-              <span className="h-2 w-2 rounded-full bg-emerald-500" />
-              <span>Monday.com</span>
+              <span className={`h-2 w-2 rounded-full ${boardStatus?.connected_live_monday && !boardStatus?.is_mock_data ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+              <span>{boardStatus?.connected_live_monday && !boardStatus?.is_mock_data ? 'Live Monday.com' : 'Assignment dataset snapshot'}</span>
             </div>
             <span className="text-[10px] font-mono text-[#71717a]">
-              {boardStatus?.connected_live_monday && !boardStatus?.is_mock_data ? 'Live API' : 'Snapshot'}
+              {boardStatus?.connected_live_monday && !boardStatus?.is_mock_data ? 'Active' : 'Reconciled'}
             </span>
           </div>
         </div>

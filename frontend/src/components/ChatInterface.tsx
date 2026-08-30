@@ -86,22 +86,22 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
     // 1. Top Opportunity / Forecast Exposure Horizontal/Vertical Bar Chart
     if (type === 'TOP_OPPORTUNITY_BAR') {
       return (
-        <div className="mt-4 pt-3 border-t border-[#1f2536] bg-[#0c0e15] p-3.5 rounded-lg border border-[#1f2536]">
-          <div className="flex items-center gap-1.5 mb-2.5 text-[11px] font-mono text-slate-400">
-            <BarChart2 className="h-3.5 w-3.5 text-amber-400" />
-            <span className="font-semibold text-slate-300">{title}</span>
+        <div className="mt-5 pt-3.5 border-t border-[#2d2d32] bg-[#18181b] p-4 rounded-xl border border-[#333338] shadow-inner">
+          <div className="flex items-center gap-2 mb-3 text-xs font-mono text-[#a1a1aa]">
+            <BarChart2 className="h-4 w-4 text-[#d97706]" />
+            <span className="font-semibold text-[#f4f4f5]">{title}</span>
           </div>
-          <div className="h-32 w-full">
+          <div className="h-40 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={data} margin={{ top: 2, right: 10, left: -20, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="2 2" stroke="#1f2536" vertical={false} />
-                <XAxis dataKey="name" stroke="#64748b" fontSize={10} tickLine={false} />
-                <YAxis stroke="#64748b" fontSize={10} tickLine={false} />
+              <BarChart data={data} margin={{ top: 4, right: 15, left: -15, bottom: 4 }}>
+                <CartesianGrid strokeDasharray="2 2" stroke="#2d2d32" vertical={false} />
+                <XAxis dataKey="name" stroke="#71717a" fontSize={11} tickLine={false} />
+                <YAxis stroke="#71717a" fontSize={11} tickLine={false} />
                 <Tooltip
-                  contentStyle={{ backgroundColor: '#10131d', borderColor: '#2b334a', borderRadius: '6px', fontSize: '11px' }}
+                  contentStyle={{ backgroundColor: '#202024', borderColor: '#3f3f46', borderRadius: '8px', fontSize: '12px', color: '#fafafa' }}
                   formatter={(val: any) => [`₹${val} Cr`, 'Value / Forecast Contribution']}
                 />
-                <Bar dataKey="Value" fill="#f59e0b" radius={[3, 3, 0, 0]} />
+                <Bar dataKey="Value" fill="#d97706" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -112,22 +112,22 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
     // 2. Forecast Derivation Waterfall
     if (type === 'FORECAST_WATERFALL') {
       return (
-        <div className="mt-4 pt-3 border-t border-[#1f2536] bg-[#0c0e15] p-3.5 rounded-lg border border-[#1f2536]">
-          <div className="flex items-center gap-1.5 mb-2.5 text-[11px] font-mono text-slate-400">
-            <BarChart2 className="h-3.5 w-3.5 text-sky-400" />
-            <span className="font-semibold text-slate-300">{title}</span>
+        <div className="mt-5 pt-3.5 border-t border-[#2d2d32] bg-[#18181b] p-4 rounded-xl border border-[#333338] shadow-inner">
+          <div className="flex items-center gap-2 mb-3 text-xs font-mono text-[#a1a1aa]">
+            <BarChart2 className="h-4 w-4 text-[#10b981]" />
+            <span className="font-semibold text-[#f4f4f5]">{title}</span>
           </div>
-          <div className="h-32 w-full">
+          <div className="h-40 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={data} margin={{ top: 2, right: 10, left: -20, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="2 2" stroke="#1f2536" vertical={false} />
-                <XAxis dataKey="category" stroke="#64748b" fontSize={10} tickLine={false} />
-                <YAxis stroke="#64748b" fontSize={10} tickLine={false} />
+              <BarChart data={data} margin={{ top: 4, right: 15, left: -15, bottom: 4 }}>
+                <CartesianGrid strokeDasharray="2 2" stroke="#2d2d32" vertical={false} />
+                <XAxis dataKey="category" stroke="#71717a" fontSize={11} tickLine={false} />
+                <YAxis stroke="#71717a" fontSize={11} tickLine={false} />
                 <Tooltip
-                  contentStyle={{ backgroundColor: '#10131d', borderColor: '#2b334a', borderRadius: '6px', fontSize: '11px' }}
+                  contentStyle={{ backgroundColor: '#202024', borderColor: '#3f3f46', borderRadius: '8px', fontSize: '12px', color: '#fafafa' }}
                   formatter={(val: any) => [`₹${val} Cr`, 'Contribution']}
                 />
-                <Bar dataKey="Contribution" fill="#0284c7" radius={[3, 3, 0, 0]} />
+                <Bar dataKey="Contribution" fill="#10b981" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -138,23 +138,23 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
     // 3. Multi-Dimension Sector Comparison Chart
     if (type === 'SECTOR_COMPARISON') {
       return (
-        <div className="mt-4 pt-3 border-t border-[#1f2536] bg-[#0c0e15] p-3.5 rounded-lg border border-[#1f2536]">
-          <div className="flex items-center gap-1.5 mb-2.5 text-[11px] font-mono text-slate-400">
-            <BarChart2 className="h-3.5 w-3.5 text-sky-400" />
-            <span className="font-semibold text-slate-300">{title}</span>
+        <div className="mt-5 pt-3.5 border-t border-[#2d2d32] bg-[#18181b] p-4 rounded-xl border border-[#333338] shadow-inner">
+          <div className="flex items-center gap-2 mb-3 text-xs font-mono text-[#a1a1aa]">
+            <BarChart2 className="h-4 w-4 text-[#38bdf8]" />
+            <span className="font-semibold text-[#f4f4f5]">{title}</span>
           </div>
-          <div className="h-36 w-full">
+          <div className="h-44 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={data} margin={{ top: 2, right: 10, left: -20, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="2 2" stroke="#1f2536" vertical={false} />
-                <XAxis dataKey="sector" stroke="#64748b" fontSize={10} tickLine={false} />
-                <YAxis stroke="#64748b" fontSize={10} tickLine={false} />
+              <BarChart data={data} margin={{ top: 4, right: 15, left: -15, bottom: 4 }}>
+                <CartesianGrid strokeDasharray="2 2" stroke="#2d2d32" vertical={false} />
+                <XAxis dataKey="sector" stroke="#71717a" fontSize={11} tickLine={false} />
+                <YAxis stroke="#71717a" fontSize={11} tickLine={false} />
                 <Tooltip
-                  contentStyle={{ backgroundColor: '#10131d', borderColor: '#2b334a', borderRadius: '6px', fontSize: '11px' }}
+                  contentStyle={{ backgroundColor: '#202024', borderColor: '#3f3f46', borderRadius: '8px', fontSize: '12px', color: '#fafafa' }}
                   formatter={(val: any, name: any) => [`₹${val} Cr`, name]}
                 />
-                <Bar dataKey="Pipeline" fill="#0284c7" name="Pipeline" radius={[3, 3, 0, 0]} />
-                <Bar dataKey="Billed" fill="#10b981" name="Billed" radius={[3, 3, 0, 0]} />
+                <Bar dataKey="Pipeline" fill="#0284c7" name="Pipeline" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="Billed" fill="#10b981" name="Billed" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -165,13 +165,13 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
     // 4. Work Order Execution Status Donut
     if (type === 'EXECUTION_STATUS_DONUT') {
       return (
-        <div className="mt-4 pt-3 border-t border-[#1f2536] bg-[#0c0e15] p-3.5 rounded-lg border border-[#1f2536] flex items-center justify-between">
+        <div className="mt-5 pt-3.5 border-t border-[#2d2d32] bg-[#18181b] p-4 rounded-xl border border-[#333338] shadow-inner flex items-center justify-between">
           <div>
-            <div className="flex items-center gap-1.5 text-[11px] font-mono text-slate-400 mb-2">
-              <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
-              <span className="font-semibold text-slate-300">{title}</span>
+            <div className="flex items-center gap-2 text-xs font-mono text-[#a1a1aa] mb-2.5">
+              <ShieldCheck className="h-4 w-4 text-emerald-400" />
+              <span className="font-semibold text-[#f4f4f5]">{title}</span>
             </div>
-            <div className="text-xs text-slate-300 space-y-1">
+            <div className="text-xs text-[#d4d4d8] space-y-1.5 font-medium">
               {data.map((item: any, i: number) => (
                 <div key={i} className="flex items-center gap-2">
                   <span className="h-2 w-2 rounded-full" style={{ backgroundColor: item.color }} />
@@ -181,10 +181,10 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
               ))}
             </div>
           </div>
-          <div className="h-24 w-28">
+          <div className="h-28 w-32">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
-                <Pie data={data} cx="50%" cy="50%" innerRadius={22} outerRadius={38} dataKey="value">
+                <Pie data={data} cx="50%" cy="50%" innerRadius={26} outerRadius={44} dataKey="value">
                   {data.map((e: any, idx: number) => <Cell key={idx} fill={e.color} />)}
                 </Pie>
               </PieChart>
@@ -197,22 +197,22 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
     // 5. Concentration Pareto Chart
     if (type === 'CONCENTRATION_PARETO') {
       return (
-        <div className="mt-4 pt-3 border-t border-[#1f2536] bg-[#0c0e15] p-3.5 rounded-lg border border-[#1f2536]">
-          <div className="flex items-center gap-1.5 mb-2.5 text-[11px] font-mono text-slate-400">
-            <BarChart2 className="h-3.5 w-3.5 text-rose-400" />
-            <span className="font-semibold text-slate-300">{title}</span>
+        <div className="mt-5 pt-3.5 border-t border-[#2d2d32] bg-[#18181b] p-4 rounded-xl border border-[#333338] shadow-inner">
+          <div className="flex items-center gap-2 mb-3 text-xs font-mono text-[#a1a1aa]">
+            <BarChart2 className="h-4 w-4 text-rose-400" />
+            <span className="font-semibold text-[#f4f4f5]">{title}</span>
           </div>
-          <div className="h-32 w-full">
+          <div className="h-40 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={data} margin={{ top: 2, right: 10, left: -20, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="2 2" stroke="#1f2536" vertical={false} />
-                <XAxis dataKey="name" stroke="#64748b" fontSize={10} tickLine={false} />
-                <YAxis stroke="#64748b" fontSize={10} tickLine={false} />
+              <BarChart data={data} margin={{ top: 4, right: 15, left: -15, bottom: 4 }}>
+                <CartesianGrid strokeDasharray="2 2" stroke="#2d2d32" vertical={false} />
+                <XAxis dataKey="name" stroke="#71717a" fontSize={11} tickLine={false} />
+                <YAxis stroke="#71717a" fontSize={11} tickLine={false} />
                 <Tooltip
-                  contentStyle={{ backgroundColor: '#10131d', borderColor: '#2b334a', borderRadius: '6px', fontSize: '11px' }}
+                  contentStyle={{ backgroundColor: '#202024', borderColor: '#3f3f46', borderRadius: '8px', fontSize: '12px', color: '#fafafa' }}
                   formatter={(val: any, name: any) => [name === 'Share' ? `${val}%` : `₹${val} Cr`, name]}
                 />
-                <Bar dataKey="Value" fill="#f43f5e" radius={[3, 3, 0, 0]} />
+                <Bar dataKey="Value" fill="#f43f5e" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -223,22 +223,22 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
     // 6. Risk Evidence Strength Bar Chart
     if (type === 'RISK_EVIDENCE_BAR') {
       return (
-        <div className="mt-4 pt-3 border-t border-[#1f2536] bg-[#0c0e15] p-3.5 rounded-lg border border-[#1f2536]">
-          <div className="flex items-center gap-1.5 mb-2.5 text-[11px] font-mono text-slate-400">
-            <AlertTriangle className="h-3.5 w-3.5 text-rose-400" />
-            <span className="font-semibold text-slate-300">{title}</span>
+        <div className="mt-5 pt-3.5 border-t border-[#2d2d32] bg-[#18181b] p-4 rounded-xl border border-[#333338] shadow-inner">
+          <div className="flex items-center gap-2 mb-3 text-xs font-mono text-[#a1a1aa]">
+            <AlertTriangle className="h-4 w-4 text-rose-400" />
+            <span className="font-semibold text-[#f4f4f5]">{title}</span>
           </div>
-          <div className="h-32 w-full">
+          <div className="h-40 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={data} layout="vertical" margin={{ top: 2, right: 10, left: 10, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="2 2" stroke="#1f2536" horizontal={false} />
-                <XAxis type="number" stroke="#64748b" fontSize={10} tickLine={false} />
-                <YAxis type="category" dataKey="risk" stroke="#64748b" fontSize={10} tickLine={false} width={140} />
+              <BarChart data={data} layout="vertical" margin={{ top: 4, right: 15, left: 15, bottom: 4 }}>
+                <CartesianGrid strokeDasharray="2 2" stroke="#2d2d32" horizontal={false} />
+                <XAxis type="number" stroke="#71717a" fontSize={11} tickLine={false} />
+                <YAxis type="category" dataKey="risk" stroke="#71717a" fontSize={11} tickLine={false} width={150} />
                 <Tooltip
-                  contentStyle={{ backgroundColor: '#10131d', borderColor: '#2b334a', borderRadius: '6px', fontSize: '11px' }}
+                  contentStyle={{ backgroundColor: '#202024', borderColor: '#3f3f46', borderRadius: '8px', fontSize: '12px', color: '#fafafa' }}
                   formatter={(val: any) => [`₹${val} Cr`, 'Financial Exposure']}
                 />
-                <Bar dataKey="Exposure" fill="#ef4444" radius={[0, 3, 3, 0]} />
+                <Bar dataKey="Exposure" fill="#ef4444" radius={[0, 4, 4, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>

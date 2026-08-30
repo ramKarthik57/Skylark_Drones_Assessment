@@ -73,8 +73,8 @@ def test_issue_6_q32_pipeline_pressure():
 def test_issue_7_q33_opportunity_capacity_alignment():
     res = process_agent_query("Do our biggest sales opportunities align with our current work order capacity?")
     assert res.intent == "OPPORTUNITY_ALIGNMENT"
-    assert "Coal India" in res.text
-    assert "Adani Solar" in res.text
+    assert "Sakura" in res.text
+    assert "Luffy" in res.text
 
 def test_issue_8_q40_owner_role_suggestions():
     res = process_agent_query("Where should management intervene immediately?")

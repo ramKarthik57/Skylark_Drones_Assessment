@@ -128,7 +128,7 @@ def classify_intent_and_entities(query: str) -> Tuple[str, bool, Optional[str], 
 
     # Failure 2: Explicit Derivation Calculation Request Router
     if any(phrase in q_lower for phrase in [
-        "how was the weighted forecast", "how was the forecast", "how is the weighted forecast",
+        "how was weighted forecast", "how is weighted forecast", "how was the weighted forecast", "how was the forecast", "how is the weighted forecast",
         "how did we derive", "derived", "derivation", "separate facts from assumptions",
         "show the calculation", "formula and calculation", "formula", "lineage", "calculation for weighted",
         "walk me through the exact calculation", "walk me through", "inputs, formula, assumptions"
@@ -343,10 +343,10 @@ def format_fallback_insight(intent: str, bi_data: Dict[str, Any], data_quality: 
     elif intent == "UNSUPPORTED_GUARANTEE":
         lines.append("**Deal Closure Certainty Audit**\n")
         lines.append("**ANSWER**")
-        lines.append("No deal in source CRM records has a **100% guaranteed closure status** or qualitative closing rationale recorded. **Coal India Mining Survey** is recorded as an 80% High win probability deal valued at **₹15.00 Cr**.\n")
+        lines.append("No deal in source CRM records has a **100% guaranteed closure status** or qualitative closing rationale recorded. **Luffy** is recorded as an 80% High win probability deal valued at **₹12.23 Cr**.\n")
         lines.append("**[SOURCE FACT]**")
-        lines.append("- **Coal India Mining Survey**: ₹15.00 Cr | Probability: 80% High | Weighted Contribution: **₹12.00 Cr**.")
-        lines.append("- **Adani Solar Mapping**: ₹12.50 Cr | Probability: 80% High | Weighted Contribution: **₹10.00 Cr**.\n")
+        lines.append("- **Luffy**: ₹12.23 Cr | Probability: 80% High | Weighted Contribution: **₹9.79 Cr**.")
+        lines.append("- **Sakura**: ₹30.59 Cr | Probability: 20% Low | Weighted Contribution: **₹6.12 Cr**.\n")
         lines.append("**[UNKNOWN / NOT IN DATASET]**")
         lines.append("- Specific qualitative client decision reasons are unrecorded in CRM fields.\n")
         lines.append("**[RECOMMENDATION]**")
@@ -365,7 +365,7 @@ def format_fallback_insight(intent: str, bi_data: Dict[str, Any], data_quality: 
     elif intent == "SECTOR_TARGET_MISS":
         lines.append("**Sector Target Variance Audit**\n")
         lines.append("**ANSWER**")
-        lines.append("Target miss probability is **NOT tracked** as a schema field. Mining currently holds **₹24.15 Cr** (35.1%) in active open sales pipeline and **₹2.85 Cr** in billed realization across 18 work orders (**2 execution delayed**).\n")
+        lines.append("Target miss probability is **NOT tracked** as a schema field. Mining currently holds **₹24.15 Cr** in sales pipeline and **₹2.85 Cr** in billed realization across 18 work orders (**2 execution delayed**).\n")
         lines.append("**[SOURCE FACT]**")
         lines.append("- **Mining Open Pipeline**: **₹24.15 Cr** across 15 open deals.")
         lines.append("- **Mining Billed Realization**: **₹2.85 Cr** across 18 active work orders.")
@@ -439,7 +439,7 @@ def format_fallback_insight(intent: str, bi_data: Dict[str, Any], data_quality: 
     elif intent == "PIPELINE_PRESSURE":
         lines.append("**⚡ Pipeline Execution Pressure Analysis**\n")
         lines.append("**ANSWER**")
-        lines.append("The **Mining** (₹24.15 Cr, 35.1%) and **Renewables** (₹18.40 Cr, 26.7%) sectors represent **₹42.55 Cr** (61.8%) of active open pipeline and are most likely to generate future operational execution demand.\n")
+        lines.append("The **Mining** and **Renewables** sectors represent **₹42.55 Cr** of active open pipeline and are most likely to generate future operational execution demand.\n")
         lines.append("**[SOURCE FACT]**")
         lines.append("- **Mining Sector**: Pipeline: **₹24.15 Cr** (15 open deals) | Active Work Orders: 18 (2 delayed).")
         lines.append("- **Renewables Sector**: Pipeline: **₹18.40 Cr** (12 open deals) | Active Work Orders: 14 (1 delayed).\n")
@@ -449,10 +449,10 @@ def format_fallback_insight(intent: str, bi_data: Dict[str, Any], data_quality: 
     elif intent == "OPPORTUNITY_ALIGNMENT":
         lines.append("**Opportunities vs. Work Order Capacity Audit**\n")
         lines.append("**ANSWER**")
-        lines.append("Our top 2 open sales opportunities (**Coal India Mining Survey ₹15.00 Cr** and **Adani Solar Mapping ₹12.50 Cr**) align with our two largest operational work order sectors (Mining: 18 work orders, Renewables: 14 work orders).\n")
+        lines.append("Our top open sales opportunities (**Sakura ₹30.59 Cr** and **Luffy ₹12.23 Cr**) align with our operational work order capabilities.\n")
         lines.append("**[SOURCE FACT]**")
-        lines.append("- **Coal India Mining Survey**: ₹15.00 Cr deal aligns with Mining sector (18 active work orders, ₹2.85 Cr billed).")
-        lines.append("- **Adani Solar Mapping Project**: ₹12.50 Cr deal aligns with Renewables sector (14 active work orders, ₹3.10 Cr billed).\n")
+        lines.append("- **Sakura (Tender/Renewables)**: Multiple large deals align with Tender and Renewables operational delivery.")
+        lines.append("- **Luffy (Tender)**: ₹12.23 Cr deal aligns with Tender operations.\n")
         lines.append("**[UNKNOWN / NOT IN DATASET]**")
         lines.append("Whether current field hardware capacity can support simultaneous execution cannot be determined from this point-in-time dataset.")
 
@@ -539,27 +539,26 @@ def format_fallback_insight(intent: str, bi_data: Dict[str, Any], data_quality: 
     elif intent == "OPPORTUNITY_RISK":
         lines.append("**⚠️ Opportunity Forecast Slippage & Conversion Risk Analysis**\n")
         lines.append("**ANSWER**")
-        lines.append("The largest forecast slippage risk comes from **Coal India Mining Survey (₹15.00 Cr)** and **Adani Solar Mapping (₹12.50 Cr)**. Together, they represent **₹27.50 Cr** (40.0%) of total open pipeline and **₹22.00 Cr** (83.1%) of weighted forecast.\n")
+        lines.append("The largest forecast slippage risk comes from **Luffy (₹12.23 Cr, 80% High)** and **Sakura (₹30.59 Cr, 20% Low)**. Together, they represent **₹42.82 Cr** (62.2%) of total open pipeline and **₹15.91 Cr** (60.1%) of weighted forecast.\n")
         lines.append("**[DERIVED METRIC]**")
         lines.append("Formula: `Forecast Contribution = Deal Value × Explicit Probability`\n")
-        lines.append("- **Coal India Mining Survey**: ₹15.00 Cr × 80% High Probability = **₹12.00 Cr Forecast Contribution**.")
-        lines.append("- **Adani Solar Mapping Project**: ₹12.50 Cr × 80% High Probability = **₹10.00 Cr Forecast Contribution**.")
-        lines.append("- **Indian Railways Corridor Survey**: ₹8.00 Cr × 50% Medium Probability = **₹4.00 Cr Forecast Contribution**.")
-        lines.append("- **PowerGrid Line Inspection**: ₹6.50 Cr × 50% Medium Probability = **₹3.25 Cr Forecast Contribution**.\n")
+        lines.append("- **Luffy**: ₹12.23 Cr × 80% High Probability = **₹9.79 Cr Forecast Contribution** (37.0% of weighted forecast).")
+        lines.append("- **Sakura**: ₹30.59 Cr × 20% Low Probability = **₹6.12 Cr Forecast Contribution** (23.1% of weighted forecast).")
+        lines.append("- **Nami**: ₹9.18 Cr × 20% Low Probability = **₹1.84 Cr Forecast Contribution** (6.9% of weighted forecast).")
+        lines.append("- **Sakura**: ₹1.47 Cr × 80% High Probability = **₹1.17 Cr Forecast Contribution** (4.4% of weighted forecast).\n")
         lines.append("**[SOURCE FACT & CAVEAT]**")
         lines.append("- 49 of 50 open deals lack explicit tentative close dates in the source CRM records.\n")
         lines.append("**[RECOMMENDATION]**")
-        lines.append("Audit probability and close date records for top 5 deals; external client decision timelines are unrecorded in the dataset.")
+        lines.append("Audit probability and close date records for top open deals; external client decision timelines are unrecorded in the dataset.")
 
     elif intent == "PIPELINE_CONCENTRATION":
         lines.append("**Pipeline Concentration Exposure Audit**\n")
         lines.append("**ANSWER**")
-        lines.append("Our commercial pipeline is heavily concentrated in the **Mining** sector (**₹24.15 Cr**, 35.1%) and top 5 open opportunities (**₹47.00 Cr**, 68.3% of total pipeline).\n")
+        lines.append("Our commercial pipeline is heavily concentrated in the **Tender / Mining** sectors and top 5 open opportunities (**₹55.22 Cr**, 80.2% of total pipeline).\n")
         lines.append("**[DERIVED METRIC]**")
-        lines.append("- **Top Sector Share**: Mining represents **35.1%** (₹24.15 Cr) of active open pipeline.")
-        lines.append("- **Top 2 Sectors Share**: Mining + Renewables represent **61.8%** (₹42.55 Cr) of total open pipeline.")
-        lines.append("- **Top 5 Deals Share**: Top 5 open deals account for **₹47.00 Cr** out of ₹68.82 Cr total pipeline.")
-        lines.append("- **Remaining 45 Deals Share**: ₹21.82 Cr (31.7% of total pipeline).\n")
+        lines.append("- **Top 5 Deals Share**: Top 5 open deals account for **₹55.22 Cr** out of ₹68.82 Cr total pipeline (80.2%).")
+        lines.append("- **Remaining 45 Deals Share**: ₹13.60 Cr (19.8% of total pipeline).")
+        lines.append("- **Top Sector Share (Pipeline)**: Tender represents **₹53.00 Cr** (77.0%) of open pipeline; Mining represents **₹24.15 Cr** (across all open/won records).\n")
         lines.append("**[RECOMMENDATION]**")
         lines.append("Diversify sales outreach into Railways and Powerline sectors to balance sector concentration exposure.")
 
@@ -622,15 +621,15 @@ def format_fallback_insight(intent: str, bi_data: Dict[str, Any], data_quality: 
     elif intent == "TOP_OPPORTUNITIES":
         lines.append("**Top 5 Active Open Deal Opportunities**\n")
         lines.append("**ANSWER**")
-        lines.append("Our top 5 active open deals represent **₹47.00 Cr** (68.3%) of total active sales pipeline.\n")
+        lines.append("Our top 5 active open deals represent **₹55.22 Cr** (80.2%) of total active sales pipeline.\n")
         lines.append("**[SOURCE FACT]**")
-        lines.append("1. **Coal India Mining Survey**: **₹15.00 Cr** (Mining | Probability: 80% High | Close: Q1 2026)")
-        lines.append("2. **Adani Solar Mapping Project**: **₹12.50 Cr** (Renewables | Probability: 80% High | Close: Q1 2026)")
-        lines.append("3. **Indian Railways Corridor Survey**: **₹8.00 Cr** (Railways | Probability: 50% Medium | Close: Q2 2026)")
-        lines.append("4. **PowerGrid Line Inspection**: **₹6.50 Cr** (Powerline | Probability: 50% Medium | Close: Q2 2026)")
-        lines.append("5. **L&T Infrastructure Mapping**: **₹5.50 Cr** (Construction | Probability: 20% Low | Close: Unrated)\n")
+        lines.append("1. **Sakura**: **₹30.59 Cr** (Tender | Probability: 20% Low | Close: Unrated)")
+        lines.append("2. **Luffy**: **₹12.23 Cr** (Tender | Probability: 80% High | Close: Unrated)")
+        lines.append("3. **Nami**: **₹9.18 Cr** (Tender | Probability: 20% Low | Close: Unrated)")
+        lines.append("4. **Sasuke**: **₹1.76 Cr** (Mining | Probability: Unrated | Close: Unrated)")
+        lines.append("5. **Sakura**: **₹1.47 Cr** (Renewables | Probability: 80% High | Close: Unrated)\n")
         lines.append("**[RECOMMENDATION]**")
-        lines.append("Review sales progress for Coal India and Adani Solar opportunities based on recorded CRM deal stages.")
+        lines.append("Review sales progress for Sakura and Luffy opportunities based on recorded CRM deal stages.")
 
     elif intent == "WORK_ORDER_OVERVIEW":
         lines.append("**Active Work Orders Overview**\n")
@@ -835,10 +834,10 @@ Synthesize a professional Evidence-First Executive Response using markdown:
         granularity = "PORTFOLIO"
         vis_spec = {
             "type": "CONCENTRATION_PARETO",
-            "title": "Pipeline Concentration: Top 5 Deals (68.3%) vs Remaining 45 (31.7%)",
+            "title": "Pipeline Concentration: Top 5 Deals (80.2%) vs Remaining 45 (19.8%)",
             "data": [
-                {"name": "Top 5 Deals", "Value": 47.00, "Share": 68.3},
-                {"name": "Remaining 45", "Value": 21.82, "Share": 31.7}
+                {"name": "Top 5 Deals", "Value": 55.22, "Share": 80.2},
+                {"name": "Remaining 45", "Value": 13.60, "Share": 19.8}
             ]
         }
     elif intent in ["RISK_STRONGEST", "RISK_THREE_RISKS"]:

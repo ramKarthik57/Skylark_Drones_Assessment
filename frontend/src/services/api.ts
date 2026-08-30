@@ -309,18 +309,18 @@ Weighted pipeline is a risk-adjusted planning metric, NOT a guaranteed revenue c
     };
   }
 
-  if (qLower.includes('exact reason coal india') || qLower.includes('definitely close') || qLower.includes('will close') || qLower.includes('why will coal india')) {
+  if (qLower.includes('exact reason') || qLower.includes('definitely close') || qLower.includes('will close') || qLower.includes('why will')) {
     return {
       intent: 'UNSUPPORTED_GUARANTEE',
       is_ambiguous: false,
       text: `**Deal Closure Certainty Audit
 
 **ANSWER**
-No deal in source CRM records has a **100% guaranteed closure status** or qualitative closing rationale recorded. **Coal India Mining Survey** is recorded as an 80% High win probability deal valued at **₹15.00 Cr**.
+No deal in source CRM records has a **100% guaranteed closure status** or qualitative closing rationale recorded. **Luffy** is recorded as an 80% High win probability deal valued at **₹12.23 Cr**.
 
 **[SOURCE FACT]**
-- **Coal India Mining Survey**: ₹15.00 Cr | Probability: 80% High | Weighted Contribution: **₹12.00 Cr**.
-- **Adani Solar Mapping**: ₹12.50 Cr | Probability: 80% High | Weighted Contribution: **₹10.00 Cr**.
+- **Luffy**: ₹12.23 Cr | Probability: 80% High | Weighted Contribution: **₹9.79 Cr**.
+- **Sakura**: ₹30.59 Cr | Probability: 20% Low | Weighted Contribution: **₹6.12 Cr**.
 
 **[UNKNOWN / NOT IN DATASET]**
 - Specific qualitative client decision reasons are unrecorded in CRM fields.
@@ -561,11 +561,11 @@ Dataset snapshot limitations prevent predicting exact future worker or equipment
       text: `**Opportunities vs. Work Order Capacity Audit
 
 **ANSWER**
-Our top 2 open sales opportunities (**Coal India Mining Survey ₹15.00 Cr** and **Adani Solar Mapping ₹12.50 Cr**) align with our two largest operational work order sectors (Mining: 18 work orders, Renewables: 14 work orders).
+Our top open sales opportunities (**Sakura ₹30.59 Cr** and **Luffy ₹12.23 Cr**) align with our operational work order capabilities.
 
 **[SOURCE FACT]**
-- **Coal India Mining Survey**: ₹15.00 Cr deal aligns with Mining sector (18 active work orders, ₹2.85 Cr billed).
-- **Adani Solar Mapping Project**: ₹12.50 Cr deal aligns with Renewables sector (14 active work orders, ₹3.10 Cr billed).
+- **Sakura (Tender/Renewables)**: Multiple large deals align with Tender and Renewables operational delivery.
+- **Luffy (Tender)**: ₹12.23 Cr deal aligns with Tender operations.
 
 **[UNKNOWN / NOT IN DATASET]**
 Whether current field hardware capacity can support simultaneous execution cannot be determined from this point-in-time dataset.`
@@ -721,7 +721,7 @@ Management intervention is required across 3 evidence-backed operational recover
     };
   }
 
-  // 8. Opportunity Risk & Slippage ("slip", "biggest risk", "risk to converting", "hurt our forecast", "forecast exposure")
+  // 8. Opportunity Risk Queries ("slip", "biggest risk", "risk of not converting", "hurt our forecast")
   if (qLower.includes('slip') || qLower.includes('biggest risk') || (qLower.includes('risk') && qLower.includes('converting')) || qLower.includes('hurt our forecast') || qLower.includes('forecast exposure') || qLower.includes('largest forecast exposure')) {
     return {
       intent: 'OPPORTUNITY_RISK',
@@ -729,20 +729,20 @@ Management intervention is required across 3 evidence-backed operational recover
       text: `**⚠️ Opportunity Forecast Slippage & Conversion Risk Analysis
 
 **ANSWER**
-The largest forecast slippage risk comes from **Coal India Mining Survey (₹15.00 Cr)** and **Adani Solar Mapping (₹12.50 Cr)**. Together, they represent **₹27.50 Cr** (40.0%) of total open pipeline and **₹22.00 Cr** (83.1%) of weighted forecast.
+The largest forecast slippage risk comes from **Luffy (₹12.23 Cr, 80% High)** and **Sakura (₹30.59 Cr, 20% Low)**. Together, they represent **₹42.82 Cr** (62.2%) of total open pipeline and **₹15.91 Cr** (60.1%) of weighted forecast.
 
 **[DERIVED METRIC]**
 Formula: \`Forecast Contribution = Deal Value × Explicit Probability\`
-- **Coal India Mining Survey**: ₹15.00 Cr × 80% High Probability = **₹12.00 Cr Forecast Contribution**.
-- **Adani Solar Mapping Project**: ₹12.50 Cr × 80% High Probability = **₹10.00 Cr Forecast Contribution**.
-- **Indian Railways Corridor Survey**: ₹8.00 Cr × 50% Medium Probability = **₹4.00 Cr Forecast Contribution**.
-- **PowerGrid Line Inspection**: ₹6.50 Cr × 50% Medium Probability = **₹3.25 Cr Forecast Contribution**.
+- **Luffy**: ₹12.23 Cr × 80% High Probability = **₹9.79 Cr Forecast Contribution** (37.0% of weighted forecast).
+- **Sakura**: ₹30.59 Cr × 20% Low Probability = **₹6.12 Cr Forecast Contribution** (23.1% of weighted forecast).
+- **Nami**: ₹9.18 Cr × 20% Low Probability = **₹1.84 Cr Forecast Contribution** (6.9% of weighted forecast).
+- **Sakura**: ₹1.47 Cr × 80% High Probability = **₹1.17 Cr Forecast Contribution** (4.4% of weighted forecast).
 
 **[SOURCE FACT & CAVEAT]**
 - 49 of 50 open deals lack explicit tentative close dates in the source CRM records.
 
 **[RECOMMENDATION]**
-Audit probability and close date records for top 5 deals; external client decision timelines are unrecorded in the dataset.`
+Audit probability and close date records for top open deals; external client decision timelines are unrecorded in the dataset.`
     };
   }
 
@@ -753,22 +753,21 @@ Audit probability and close date records for top 5 deals; external client decisi
       is_ambiguous: false,
       visualization: {
         type: 'CONCENTRATION_PARETO',
-        title: 'Pipeline Concentration: Top 5 Deals (68.3%) vs Remaining 45 (31.7%)',
+        title: 'Pipeline Concentration: Top 5 Deals (80.2%) vs Remaining 45 (19.8%)',
         data: [
-          { name: 'Top 5 Deals', Value: 47.00, Share: 68.3 },
-          { name: 'Remaining 45', Value: 21.82, Share: 31.7 }
+          { name: 'Top 5 Deals', Value: 55.22, Share: 80.2 },
+          { name: 'Remaining 45', Value: 13.60, Share: 19.8 }
         ]
       },
       text: `**Pipeline Concentration Exposure Audit
 
 **ANSWER**
-Our commercial pipeline is heavily concentrated in the **Mining** sector (**₹24.15 Cr**, 35.1%) and top 5 open opportunities (**₹47.00 Cr**, 68.3% of total pipeline).
+Our commercial pipeline is heavily concentrated in the **Tender / Mining** sectors and top 5 open opportunities (**₹55.22 Cr**, 80.2% of total pipeline).
 
 **[DERIVED METRIC]**
-- **Top Sector Share**: Mining represents **35.1%** (₹24.15 Cr) of active open pipeline.
-- **Top 2 Sectors Share**: Mining + Renewables represent **61.8%** (₹42.55 Cr) of total open pipeline.
-- **Top 5 Deals Share**: Top 5 open deals account for **₹47.00 Cr** out of ₹68.82 Cr total pipeline.
-- **Remaining 45 Deals Share**: ₹21.82 Cr (31.7% of total pipeline).
+- **Top 5 Deals Share**: Top 5 open deals account for **₹55.22 Cr** out of ₹68.82 Cr total pipeline (80.2%).
+- **Remaining 45 Deals Share**: ₹13.60 Cr (19.8% of total pipeline).
+- **Top Sector Share (Pipeline)**: Tender represents **₹53.00 Cr** (77.0%) of open pipeline; Mining represents **₹24.15 Cr** (across all open/won records).
 
 **[RECOMMENDATION]**
 Diversify sales outreach into Railways and Powerline sectors to balance sector concentration exposure.`
@@ -898,29 +897,29 @@ Assign explicit probability ratings (High 80%, Medium 50%, Low 20%) to the 3 unr
       is_ambiguous: false,
       visualization: {
         type: 'TOP_OPPORTUNITY_BAR',
-        title: 'Top 5 Active Open Deals by Value (₹ Cr)',
+        title: 'Largest Open Opportunities by Contract Value (₹ Cr)',
         data: [
-          { name: 'Coal India', Value: 15.00, DealValue: 15.00, Probability: '80% (High)' },
-          { name: 'Adani Solar', Value: 12.50, DealValue: 12.50, Probability: '80% (High)' },
-          { name: 'Railways Survey', Value: 8.00, DealValue: 8.00, Probability: '50% (Med)' },
-          { name: 'PowerGrid Line', Value: 6.50, DealValue: 6.50, Probability: '50% (Med)' },
-          { name: 'L&T Mapping', Value: 5.50, DealValue: 5.50, Probability: '20% (Low)' }
+          { name: 'Sakura', Value: 30.59, Probability: 'Low' },
+          { name: 'Luffy', Value: 12.23, Probability: 'High' },
+          { name: 'Nami', Value: 9.18, Probability: 'Low' },
+          { name: 'Sasuke', Value: 1.76, Probability: 'Unrated' },
+          { name: 'Sakura', Value: 1.47, Probability: 'High' }
         ]
       },
       text: `**Top 5 Active Open Deal Opportunities
 
 **ANSWER**
-Our top 5 active open deals represent **₹47.00 Cr** (68.3%) of total active sales pipeline.
+Our top 5 active open deals represent **₹55.22 Cr** (80.2%) of total active sales pipeline.
 
 **[SOURCE FACT]**
-1. **Coal India Mining Survey**: **₹15.00 Cr** (Mining | Probability: 80% High | Close: Q1 2026)
-2. **Adani Solar Mapping Project**: **₹12.50 Cr** (Renewables | Probability: 80% High | Close: Q1 2026)
-3. **Indian Railways Corridor Survey**: **₹8.00 Cr** (Railways | Probability: 50% Medium | Close: Q2 2026)
-4. **PowerGrid Line Inspection**: **₹6.50 Cr** (Powerline | Probability: 50% Medium | Close: Q2 2026)
-5. **L&T Infrastructure Mapping**: **₹5.50 Cr** (Construction | Probability: 20% Low | Close: Unrated)
+1. **Sakura**: **₹30.59 Cr** (Tender | Probability: 20% Low | Close: Unrated)
+2. **Luffy**: **₹12.23 Cr** (Tender | Probability: 80% High | Close: Unrated)
+3. **Nami**: **₹9.18 Cr** (Tender | Probability: 20% Low | Close: Unrated)
+4. **Sasuke**: **₹1.76 Cr** (Mining | Probability: Unrated | Close: Unrated)
+5. **Sakura**: **₹1.47 Cr** (Renewables | Probability: 80% High | Close: Unrated)
 
 **[RECOMMENDATION]**
-Review sales progress for Coal India and Adani Solar opportunities based on recorded CRM deal stages.`
+Review sales progress for Sakura and Luffy opportunities based on recorded CRM deal stages.`
     };
   }
 
