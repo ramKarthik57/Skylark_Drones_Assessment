@@ -11,5 +11,5 @@ def test_unsupported_adversarial_intents():
 def test_unsupported_query_response():
     res = process_agent_query("What is our EBITDA?")
     assert res.intent == "unsupported"
-    assert "Data Unavailable" in res.text
+    assert "Data Unavailability Notice" in res.text
     assert "EBITDA" in res.text

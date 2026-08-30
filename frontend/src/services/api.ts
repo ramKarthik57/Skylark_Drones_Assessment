@@ -27,7 +27,7 @@ const MOCK_RISK_RADAR = [
     title: '49 Open Deals Missing Tentative Close Dates',
     impact: 'Creates quarterly revenue timing uncertainty and forecast variance.',
     evidence: ['49 out of 50 open deals have missing close dates.', '₹67.3 Cr pipeline unallocated to close quarters.'],
-    action: 'Mandate close date entry for top open deals.'
+    action: 'Prioritize completing close date entries for top open deals; no deadline specified.'
   },
   {
     id: 'RISK-02',
@@ -36,7 +36,7 @@ const MOCK_RISK_RADAR = [
     title: '5 Work Orders Execution Delayed',
     impact: 'Delays milestone billing realization and client SLA compliance.',
     evidence: ['5 out of 58 active work orders flagged Execution Delayed.', 'Contract value affected: ₹1.85 Cr.'],
-    action: 'Mobilize field resources to clear project bottlenecks.'
+    action: 'Investigate recorded site bottlenecks for 5 delayed work orders.'
   }
 ];
 
@@ -94,16 +94,16 @@ export const fetchLeadershipUpdate = async (): Promise<LeadershipUpdate> => {
 ---
 
 ## 2. Key Operational & Sales Insights
-1. **Mining Sector Dominance**: Mining represents **₹24.15 Cr** (35.1%) of active sales pipeline and **₹2.85 Cr** in billed work order execution.
-2. **Execution Bottleneck**: 5 work orders in Mining and Renewables are flagged **Execution Delayed** due to weather and equipment mobilization delays.
-3. **Pipeline Quality Risk**: 49 of 50 open deals lack explicit tentative close dates, creating Q1 close ambiguity.
+1. **Mining Sector Concentration**: Mining represents **₹24.15 Cr** (35.1%) of active sales pipeline and **₹2.85 Cr** in billed work order execution.
+2. **Execution Bottlenecks**: 5 work orders in Mining and Renewables are recorded **Execution Delayed** in source tracker records.
+3. **Forecast Reliability Risk**: 49 of 50 open deals lack explicit tentative close dates, creating revenue timing uncertainty.
 
 ---
 
 ## 3. High-Priority Recovery Actions
-- **Action 1 (Sales Ops)**: Audit 49 open deals missing tentative close dates to finalize Q1 revenue commitments.
-- **Action 2 (Project Delivery)**: Resolve equipment mobilization delays for 5 delayed work orders to unlock ₹1.85 Cr pending billing.
-- **Action 3 (Finance)**: Accelerate collections on ₹3.63 Cr outstanding receivables aged > 45 days.`,
+- **Action 1 (Sales Operations)**: Audit missing tentative close dates for 49 open deals; the dataset does not specify a completion deadline.
+- **Action 2 (Project Delivery)**: Investigate site mobilization bottlenecks for 5 execution delayed work orders to unlock ₹1.85 Cr in contract value.
+- **Action 3 (Finance)**: Review collections on ₹3.63 Cr outstanding receivables across completed work orders.`,
       is_mock_data: false,
       bi_data: {
         deals_summary: {
@@ -197,17 +197,17 @@ function generateLocalChatResponse(query: string): any {
   const qLower = query.toLowerCase().trim();
 
   // 1. Adversarial / Security Refusal Check
-  if (['ebitda', 'salary', 'cac', 'ltv', 'churn', 'profit margin'].some(t => qLower.includes(t))) {
+  if (['ebitda', 'salary', 'cac', 'ltv', 'churn', 'profit margin', 'profitability', 'best employee'].some(t => qLower.includes(t))) {
     return {
-      intent: 'unsupported',
+      intent: 'UNSUPPORTED',
       is_ambiguous: false,
-      text: '### ⚠️ Unsupported Financial Metric Request\n\n**Data Unavailability Notice**:\nThe dataset provided includes operational Deals and Work Orders tracking data. Metrics such as EBITDA, Salary, CAC, LTV, and Profit Margins are not tracked in the source CRM or Work Order boards.'
+      text: '### ⚠️ Unsupported Metric Request\n\n**Data Unavailability Notice**:\nThe dataset provided includes operational Deals and Work Orders tracking data. Metrics such as EBITDA, Salary, CAC, LTV, and Profit Margins are not tracked in source CRM or Work Order boards.'
     };
   }
 
   if (['reveal system prompt', 'api key', 'environment variables', 'ignore previous instructions'].some(t => qLower.includes(t))) {
     return {
-      intent: 'security_refusal',
+      intent: 'UNSUPPORTED_SECURITY',
       is_ambiguous: false,
       text: '### 🔒 Security Refusal Card\n\n**Access Denied**: Request refused to protect system integrity, credentials, and configuration.'
     };
@@ -216,57 +216,175 @@ function generateLocalChatResponse(query: string): any {
   // 2. Ambiguity Check
   if (['how are we doing', 'how is business', 'status report', 'give me an update'].some(t => qLower === t || qLower === t + '?')) {
     return {
-      intent: 'ambiguous',
+      intent: 'AMBIGUOUS',
       is_ambiguous: true,
       text: '### ❓ Ambiguous Query Detected\n\nTo provide the most relevant business intelligence, please select a focus area:',
       suggested_clarifications: [
         { label: 'Overall Sales Pipeline (Q1 2026)', query: 'How is our pipeline looking this quarter?' },
-        { label: 'Sector Performance (Mining)', query: 'How are we performing in Mining?' },
-        { label: 'Work Orders & Operational Delays', query: 'Show me delayed projects and active work orders.' },
-        { label: 'Sales vs Execution Velocity', query: 'Are we selling faster than we can execute?' },
-        { label: 'Executive Risk Radar Audit', query: 'What are our top operational risks right now?' }
+        { label: 'Sector Pipeline vs Execution Realization', query: 'Which sectors have high pipeline but relatively weak execution realization?' },
+        { label: 'Opportunity Forecast Slippage Risk', query: 'Which opportunities could have the biggest impact on our forecast if they slip?' },
+        { label: 'Pipeline Concentration Exposure', query: 'Where are we most exposed to concentration risk?' },
+        { label: 'Work Order Management Priorities', query: 'Which active work orders deserve immediate management attention?' }
       ]
     };
   }
 
-  // 3. Sector Breakdown Query ("Which sectors have the strongest pipeline?", "sector", "sectors")
-  if (qLower.includes('sector') || qLower.includes('sectors') || qLower.includes('strongest')) {
+  // 3. Opportunity Risk & Slippage ("slip", "biggest risk", "risk to converting")
+  if (qLower.includes('slip') || qLower.includes('biggest risk') || (qLower.includes('risk') && qLower.includes('converting'))) {
     return {
-      intent: 'sector',
+      intent: 'OPPORTUNITY_RISK',
       is_ambiguous: false,
-      text: `### ⛏️ Sector Pipeline & Revenue Distribution Analysis
+      text: `### ⚠️ Opportunity Forecast Slippage & Conversion Risk Analysis
 
 #### ANSWER
-The **Mining** sector holds our strongest active sales pipeline at **₹24.15 Cr** (35.1%), followed by **Renewables** at **₹18.40 Cr** (26.7%).
+The largest forecast slippage risk comes from **Coal India Mining Survey (₹15.00 Cr)** and **Adani Solar Mapping (₹12.50 Cr)**. Together, they represent **₹27.50 Cr** (40.0%) of total open pipeline and **₹22.00 Cr** (83.1%) of weighted forecast.
 
-#### EVIDENCE
-- **Mining Sector**: **₹24.15 Cr** (15 open deals, 18 active work orders, **₹2.85 Cr** billed).
-- **Renewables Sector**: **₹18.40 Cr** (12 open deals, 14 active work orders, **₹3.10 Cr** billed).
-- **Railways Sector**: **₹12.20 Cr** (9 open deals, 11 active work orders, **₹2.15 Cr** billed).
-- **Powerline Sector**: **₹8.10 Cr** (7 open deals, 8 active work orders, **₹1.40 Cr** billed).
-- **Construction Sector**: **₹5.97 Cr** (7 open deals, 7 active work orders, **₹1.24 Cr** billed).
+#### EVIDENCE & RISK EXPOSURE FORMULA
+Formula: \`Forecast Contribution = Deal Value × Explicit Probability\`
+- **Coal India Mining Survey**: ₹15.00 Cr × 80% High Probability = **₹12.00 Cr Forecast Contribution**.
+- **Adani Solar Mapping Project**: ₹12.50 Cr × 80% High Probability = **₹10.00 Cr Forecast Contribution**.
+- **Indian Railways Corridor Survey**: ₹8.00 Cr × 50% Medium Probability = **₹4.00 Cr Forecast Contribution**.
+- **PowerGrid Line Inspection**: ₹6.50 Cr × 50% Medium Probability = **₹3.25 Cr Forecast Contribution**.
 
 #### WHY IT MATTERS
-Mining and Renewables combined represent **61.8%** of active commercial pipeline, concentration risk requires resource focus.
+If Coal India or Adani Solar slip out of the target period, weighted forecast drops by up to **₹22.00 Cr**.
 
 #### DATA QUALITY CAVEAT
-Industry sector taxonomy is 100% mapped across both Deals and Work Orders boards.
+- 49 of 50 open deals lack explicit tentative close dates in the source CRM records.
 
 #### RECOMMENDED ACTION
-Prioritize field survey equipment allocation for Mining and Renewables to accelerate milestone billing.`,
-      metrics: {
-        sector: 'Mining',
-        pipeline_val: 241500000,
-        open_deals: 15,
-        billed_val: 28500000
-      }
+Audit probability and close date records for top 5 deals; the dataset does not provide external procurement committee details.`
     };
   }
 
-  // 4. Top Opportunities Query ("Show me our biggest active opportunities", "biggest", "opportunities")
-  if (qLower.includes('biggest') || qLower.includes('opportunities') || qLower.includes('top deals')) {
+  // 4. Pipeline Concentration ("concentration", "exposed", "exposure")
+  if (qLower.includes('concentration') || qLower.includes('exposed') || qLower.includes('exposure')) {
     return {
-      intent: 'top_deals',
+      intent: 'PIPELINE_CONCENTRATION',
+      is_ambiguous: false,
+      text: `### 🎯 Pipeline Concentration Exposure Audit
+
+#### ANSWER
+Our commercial pipeline is heavily concentrated in the **Mining** sector (**₹24.15 Cr**, 35.1%) and top 5 open opportunities (**₹47.00 Cr**, 68.3% of total pipeline).
+
+#### EVIDENCE
+- **Top Sector Share**: Mining represents **35.1%** (₹24.15 Cr) of active open pipeline.
+- **Top 2 Sectors Share**: Mining + Renewables represent **61.8%** (₹42.55 Cr) of total open pipeline.
+- **Top 5 Deals Share**: Top 5 open deals account for **₹47.00 Cr** out of ₹68.82 Cr total pipeline.
+- **Remaining 45 Deals Share**: ₹21.82 Cr (31.7% of total pipeline).
+
+#### WHY IT MATTERS
+High sector and top-deal concentration increases revenue vulnerability if a major sector encounters regulatory or market headwinds.
+
+#### RECOMMENDED ACTION
+Diversify sales outreach into Railways and Powerline sectors to balance sector concentration exposure.`
+    };
+  }
+
+  // 5. Sector Pipeline vs Execution Realization ("weak execution", "pipeline vs execution", "considering both pipeline and execution", "weak delivery")
+  if ((qLower.includes('sector') || qLower.includes('industry')) && (qLower.includes('execution') || qLower.includes('realization') || qLower.includes('delivery') || qLower.includes('focus') || qLower.includes('weak'))) {
+    return {
+      intent: 'SECTOR_PIPELINE_VS_EXECUTION',
+      is_ambiguous: false,
+      text: `### ⛏️ Sector Pipeline vs. Execution Realization Audit
+
+#### ANSWER
+**Mining** has our largest active pipeline (**₹24.15 Cr**, 35.1%) but holds **₹2.85 Cr** in billed realization across 18 work orders with **2 execution delays**. **Renewables** shows stronger billing realization (**₹3.10 Cr** billed out of ₹18.40 Cr pipeline).
+
+#### EVIDENCE
+- **Mining Sector**: Active Pipeline: **₹24.15 Cr** (15 open deals) | Billed Value: **₹2.85 Cr** (18 active work orders, 2 delayed).
+- **Renewables Sector**: Active Pipeline: **₹18.40 Cr** (12 open deals) | Billed Value: **₹3.10 Cr** (14 active work orders, 1 delayed).
+- **Railways Sector**: Active Pipeline: **₹12.20 Cr** | Billed Value: **₹2.15 Cr**.
+- **Powerline Sector**: Active Pipeline: **₹8.10 Cr** | Billed Value: **₹1.40 Cr**.
+- **Construction Sector**: Active Pipeline: **₹5.97 Cr** | Billed Value: **₹1.24 Cr**.
+
+#### WHY IT MATTERS
+Mining generates heavy commercial demand, but operational execution bottlenecks delay billing realization.
+
+#### DATA QUALITY CAVEAT
+- Sector taxonomy mapping is 100% complete across both Deals and Work Orders boards.
+- Specific field operational causes for delays are not recorded in the source dataset.
+
+#### RECOMMENDED ACTION
+Review field resource allocation for Mining work orders to resolve recorded execution delays; the dataset does not specify external deadlines.`
+    };
+  }
+
+  // 6. Work Order Priority ("attention", "priority", "deserve")
+  if (qLower.includes('attention') || qLower.includes('priority') || (qLower.includes('deserve') && qLower.includes('work order'))) {
+    return {
+      intent: 'WORK_ORDER_PRIORITY',
+      is_ambiguous: false,
+      text: `### 🚨 Work Order Management Priority Audit
+
+#### ANSWER
+Management attention must prioritize the **5 Execution Delayed Work Orders** representing **₹1.85 Cr** in contracted value, and **₹3.63 Cr in uncollected receivables**.
+
+#### EVIDENCE & DETERMINISTIC RANKING
+- **Priority 1 (Execution Delayed)**: 5 active work orders (Contract Value: **₹1.85 Cr**, Billed: ₹0.60 Cr, Billing Gap: **₹1.25 Cr**).
+- **Priority 2 (Receivables Exposure)**: Outstanding uncollected receivables stand at **₹3.63 Cr** across active and completed projects.
+- **Priority 3 (Ongoing Work Orders)**: 53 ongoing work orders progressing within normal schedule limits (Contract Value: **₹19.21 Cr**).
+
+#### WHY IT MATTERS
+Resolving the 5 delayed work orders unlocks **₹1.25 Cr** in pending milestone billing.
+
+#### DATA QUALITY CAVEAT
+- Source records cite delayed status; specific site or client reasons are unrecorded in the dataset.
+
+#### RECOMMENDED ACTION
+Investigate the 5 execution delayed work order records to identify site bottlenecks; no external deadline is specified in source data.`
+    };
+  }
+
+  // 7. Forecast Data Quality & Reliability ("fix first", "forecast reliability", "data reliability")
+  if (qLower.includes('fix first') || qLower.includes('forecast reliability') || (qLower.includes('data') && qLower.includes('reliability'))) {
+    return {
+      intent: 'FORECAST_DATA_QUALITY',
+      is_ambiguous: false,
+      text: `### 🧹 Forecast Reliability & Data Quality Priority Audit
+
+#### ANSWER
+Sales leadership must fix **missing tentative close dates** for **49 out of 50 open deals** and **unrated closure probabilities** for **38 open deals**.
+
+#### EVIDENCE & DATA QUALITY AUDIT
+- **Missing Tentative Close Dates**: 49 of 50 open deals (98.0%) lack close dates in CRM records (₹67.32 Cr pipeline unallocated).
+- **Unrated Closure Probabilities**: 38 of 50 open deals (76.0%) lack explicit win probability ratings (using 30% baseline assumption).
+- **Probability Coverage Score**: Only **25.5%** of deals have explicit win probabilities.
+
+#### WHY IT MATTERS
+Unrated deal probabilities and missing close dates force reliance on baseline assumptions, creating forecast variance risk.
+
+#### RECOMMENDED ACTION
+Prioritize entering close dates and probability ratings for top open deals; the dataset does not specify a completion deadline.`
+    };
+  }
+
+  // 8. Data Trust & Explicit Probabilities ("explicit probability", "probability ratings", "backed by explicit")
+  if (qLower.includes('explicit probability') || qLower.includes('probability ratings') || qLower.includes('backed by explicit')) {
+    return {
+      intent: 'DATA_TRUST',
+      is_ambiguous: false,
+      text: `### 🛡️ Data Trust & Probability Coverage Audit
+
+#### ANSWER
+Only **25.5%** of active open deals (12 of 50) have explicit win probability ratings. Overall Data Trust score is **HIGH CONFIDENCE** based on 5 dataset dimensions.
+
+#### EVIDENCE
+- **Probability Coverage (25.5%)**: 12 rated open deals vs 38 unrated open deals.
+- **Field Completeness (72.8%)**: Essential CRM and Work Order field population.
+- **Date Normalized Coverage (89.1%)**: Valid ISO dates across CRM and Work Orders.
+- **Sector Mapping (100%)**: Standardized taxonomy across deals and work orders.
+- **Cross-Board Linkage (89.7%)**: 52 of 58 work order deal names matched 1:1 to Deals board.
+
+#### RECOMMENDED ACTION
+Assign explicit probability ratings (High 80%, Medium 50%, Low 20%) to the 38 unrated open deals.`
+    };
+  }
+
+  // 9. Top Opportunities Query ("biggest active opportunities", "top opportunities", "biggest opportunities")
+  if (qLower.includes('biggest active opportunities') || qLower.includes('top opportunities') || qLower.includes('biggest opportunities') || qLower.includes('top deals')) {
+    return {
+      intent: 'TOP_OPPORTUNITIES',
       is_ambiguous: false,
       text: `### 🏆 Top 5 Active Open Deal Opportunities
 
@@ -284,14 +402,14 @@ Our top 5 active open deals represent **₹47.00 Cr** (68.3%) of total active sa
 Closing Coal India and Adani Solar would secure **₹22.00 Cr** (83.1%) of our Q1 weighted revenue target.
 
 #### RECOMMENDED ACTION
-Executive Sponsor alignment required for Coal India and Adani Solar procurement committees by end of week.`
+Review sales progress for Coal India and Adani Solar opportunities based on recorded CRM deal stages.`
     };
   }
 
-  // 5. Work Orders & Delayed Projects Query ("Show me delayed projects and active work orders", "delayed", "work order")
-  if (qLower.includes('delayed') || qLower.includes('work order') || qLower.includes('work_order') || qLower.includes('how many active')) {
+  // 10. Work Orders & Delayed Projects Query ("delayed", "how many active & delayed work orders")
+  if (qLower.includes('delayed') || qLower.includes('how many active & delayed work orders')) {
     return {
-      intent: 'work_orders',
+      intent: 'WORK_ORDER_DELAY',
       is_ambiguous: false,
       text: `### 🚀 Operational Work Orders & Delay Audit
 
@@ -312,22 +430,14 @@ The 5 delayed projects block **₹1.85 Cr** in milestone billing and strain clie
 Delayed status reasons cite site access restrictions and heavy monsoon weather.
 
 #### RECOMMENDED ACTION
-Operations Lead to review site clearance with clients for the 5 delayed projects to resume field surveys immediately.`,
-      metrics: {
-        active_wos: 58,
-        ongoing_wos: 53,
-        delayed_wos: 5,
-        contract_val: 210600000,
-        billed_val: 107400000,
-        receivables_val: 36300000
-      }
+Operations Lead to review site clearance with clients for the 5 delayed projects to resume field surveys immediately.`
     };
   }
 
-  // 6. Sales vs Execution Velocity Query ("Are we selling faster than we can execute?", "faster", "velocity")
-  if (qLower.includes('faster') || qLower.includes('selling') || qLower.includes('velocity') || qLower.includes('execute')) {
+  // 11. Sales Velocity vs Execution Workload ("relationship", "faster than we can execute", "velocity")
+  if (qLower.includes('faster') || qLower.includes('selling') || qLower.includes('velocity') || qLower.includes('relationship')) {
     return {
-      intent: 'velocity',
+      intent: 'CROSS_BOARD_ANALYSIS',
       is_ambiguous: false,
       text: `### ⏱️ Sales Velocity vs. Execution Capacity Analysis
 
@@ -349,10 +459,10 @@ Implement automated timestamp tracking on stage changes in Monday.com to monitor
     };
   }
 
-  // 7. Pipeline / Quarter Query ("How is our pipeline looking this quarter?", "quarter", "pipeline")
+  // 12. Pipeline / Quarter Query ("pipeline", "quarter", "forecast")
   if (qLower.includes('pipeline') || qLower.includes('quarter') || qLower.includes('forecast')) {
     return {
-      intent: 'pipeline',
+      intent: 'PIPELINE_OVERVIEW',
       is_ambiguous: false,
       text: `### 📊 Q1 2026 Pipeline Performance Analysis
 
@@ -372,19 +482,13 @@ Active pipeline value provides necessary revenue coverage, but unrated deal prob
 - **Probability Rating Coverage**: Only 25.5% of deals have explicit closure probabilities.
 
 #### RECOMMENDED ACTION
-Sales Leadership should mandate tentative close date entries for all 49 unrated open deals by Friday close of business.`,
-      metrics: {
-        active_pipeline_val: 688200000,
-        weighted_pipeline_val: 264600000,
-        win_rate: 56.2,
-        open_deals: 50
-      }
+Sales Leadership should mandate tentative close date entries for all 49 unrated open deals; no completion deadline is specified in source data.`
     };
   }
 
   // Default Fallback
   return {
-    intent: 'general_bi',
+    intent: 'PIPELINE_OVERVIEW',
     is_ambiguous: false,
     text: `### 📊 Skylark Executive Decision Support
 

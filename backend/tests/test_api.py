@@ -43,7 +43,7 @@ def test_chat_endpoint():
     response = client.post("/api/chat", json={"message": "How is our pipeline looking this quarter?"})
     assert response.status_code == 200
     data = response.json()
-    assert data["intent"] == "pipeline"
+    assert data["intent"] == "PIPELINE_OVERVIEW"
     assert "text" in data
     assert data["bi_data"] is not None
 
@@ -52,4 +52,4 @@ def test_leadership_update_endpoint():
     assert response.status_code == 200
     data = response.json()
     assert "markdown_report" in data
-    assert "Executive Leadership Update" in data["markdown_report"]
+    assert "LEADERSHIP BRIEFING" in data["markdown_report"]
