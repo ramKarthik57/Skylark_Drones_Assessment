@@ -23,7 +23,7 @@ def classify_intent_and_entities(query: str) -> Tuple[str, bool, Optional[str], 
 
     # 0.1 Out of scope queries (non-business / random knowledge)
     out_of_scope_terms = [
-        "joke", "president", "weather", "quantum physics", "write python", "python code",
+        "joke", "president", "weather", "quantum physics", "write python", "python function", "python code",
         "capital of", "recipe", "song", "movie", "translate", "horoscope", "poem"
     ]
     if any(term in q_lower for term in out_of_scope_terms):
@@ -31,19 +31,21 @@ def classify_intent_and_entities(query: str) -> Tuple[str, bool, Optional[str], 
 
     # 1. Adversarial / Unsupported Query Check
     unsupported_terms = [
-        "ebitda", "profit margin", "employee productivity", "salary", "salaries",
-        "churn rate", "churn", "net retention", "cac", "ltv", "customer acquisition cost",
-        "lifetime value", "predict revenue", "revenue prediction", "next year's revenue",
-        "profitability", "best employee", "2028", "fired", "who should be fired", "employee should be"
+        "ebitda", "profit margin", "employee productivity", "salary", "salaries", "payroll",
+        "churn rate", "churn", "net retention", "nrr", "net revenue retention", "cac", "ltv",
+        "customer acquisition cost", "lifetime value", "predict revenue", "revenue prediction",
+        "next year's revenue", "profitability", "best employee", "best performing individual", "commission",
+        "2028", "fired", "who should be fired", "employee should be"
     ]
     if any(term in q_lower for term in unsupported_terms):
         return "UNSUPPORTED", False, None, None
 
     # 2. Security / Prompt Injection Exfiltration Check
     security_terms = [
-        "reveal system prompt", "reveal api key", "show environment variables",
-        "give me monday api token", "print gemini key", "ignore previous instructions", "monday.com token",
-        "execute this instruction", "system prompt", "api keys", "environment variables"
+        "system prompt", "api key", "gemini key", "api keys", "environment variables", "env vars",
+        "monday api token", "monday.com token", "api token", "ignore all previous", "ignore previous instructions",
+        "unrestricted ai", "override safety", "raw system credentials", "developer instructions",
+        "dump memory", "disregard dataset grounding", "external knowledge", "execute the instruction", "execute this instruction"
     ]
     if any(term in q_lower for term in security_terms):
         return "UNSUPPORTED_SECURITY", False, None, None
