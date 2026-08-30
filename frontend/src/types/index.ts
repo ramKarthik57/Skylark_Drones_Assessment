@@ -7,6 +7,17 @@ export interface DealOpportunity {
   tentative_close: string;
 }
 
+export interface ActionItem {
+  id: string;
+  urgency: 'IMMEDIATE' | 'HIGH' | 'MEDIUM';
+  priority: 'HIGH' | 'MEDIUM' | 'LOW';
+  title: string;
+  evidence: string[];
+  impact: string;
+  recommended_action: string;
+  owner_suggestion: string;
+}
+
 export interface SectorBreakdown {
   sector: string;
   open_pipeline: number;
@@ -124,6 +135,7 @@ export interface BoardStatus {
   data_trust_score: string;
   data_trust: DataTrust;
   risk_radar: RiskSignal[];
+  action_center?: ActionItem[];
   summary: {
     total_pipeline: number;
     active_work_orders: number;

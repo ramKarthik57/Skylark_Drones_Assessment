@@ -4,22 +4,26 @@ import { CommandCenterView } from './components/CommandCenterView';
 import { ChatInterface } from './components/ChatInterface';
 import { RiskRadarView } from './components/RiskRadarView';
 import { DataTrustView } from './components/DataTrustView';
+import { ActionCenterView } from './components/ActionCenterView';
+import { ScenarioModal } from './components/ScenarioModal';
 import { LeadershipModal } from './components/LeadershipModal';
 import { fetchBoardStatus, sendChatMessage, fetchLeadershipUpdate } from './services/api';
-import type { BoardStatus, BIData, ChatMessage, LeadershipUpdate, RiskSignal, DataTrust } from './types';
+import type { BoardStatus, BIData, ChatMessage, LeadershipUpdate, RiskSignal, DataTrust, ActionItem } from './types';
 
 export function App() {
-  const [activeTab, setActiveTab] = useState<'command_center' | 'ask_ai' | 'risk_radar' | 'data_trust'>('command_center');
+  const [activeTab, setActiveTab] = useState<'command_center' | 'ask_ai' | 'risk_radar' | 'data_trust' | 'action_center'>('command_center');
   const [boardStatus, setBoardStatus] = useState<BoardStatus | null>(null);
   const [biData, setBIData] = useState<BIData | null>(null);
   const [riskRadar, setRiskRadar] = useState<RiskSignal[]>([]);
   const [dataTrust, setDataTrust] = useState<DataTrust | null>(null);
+  const [actionCenter, setActionCenter] = useState<ActionItem[]>([]);
   const [dataQualityNotes, setDataQualityNotes] = useState<string[]>([]);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [loading, setLoading] = useState(false);
   const [leadershipModalOpen, setLeadershipModalOpen] = useState(false);
   const [leadershipData, setLeadershipData] = useState<LeadershipUpdate | null>(null);
   const [leadershipLoading, setLeadershipLoading] = useState(false);
+  const [scenarioModalOpen, setScenarioModalOpen] = useState(false);
 
   // Load initial board status and initial conversation greeting
   const loadStatusAndInitialData = async () => {
@@ -29,6 +33,7 @@ export function App() {
       setBoardStatus(status);
       if (status.risk_radar) setRiskRadar(status.risk_radar);
       if (status.data_trust) setDataTrust(status.data_trust);
+      if (status.action_center) setActionCenter(status.action_center);
 
       // Perform initial system query to populate initial Dashboard BI data & metrics
       const initRes = await sendChatMessage('How is our pipeline looking this quarter?');
@@ -135,6 +140,7 @@ export function App() {
         activeTab={activeTab}
         onTabChange={setActiveTab}
         onOpenLeadershipModal={handleOpenLeadership}
+        onOpenScenarioModal={() => setScenarioModalOpen(true)}
         onRefresh={loadStatusAndInitialData}
         loading={loading}
       />
@@ -166,10 +172,20 @@ export function App() {
           />
         )}
 
+        {activeTab === 'action_center' && (
+          <ActionCenterView actions={actionCenter} />
+        )}
+
         {activeTab === 'data_trust' && (
           <DataTrustView dataTrust={dataTrust} />
         )}
       </main>
+
+      {/* Scenario Analysis Modal */}
+      <ScenarioModal
+        isOpen={scenarioModalOpen}
+        onClose={() => setScenarioModalOpen(false)}
+      />
 
       {/* Leadership Update Modal */}
       <LeadershipModal

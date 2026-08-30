@@ -17,3 +17,10 @@ export const fetchLeadershipUpdate = async (): Promise<LeadershipUpdate> => {
   const response = await axios.get<LeadershipUpdate>(`${API_BASE}/leadership-update`);
   return response.data;
 };
+
+export const fetchScenarioSimulation = async (scenarioType: string, deltaPct: number = 10.0): Promise<any> => {
+  const response = await axios.get(`${API_BASE}/scenario`, {
+    params: { scenario_type: scenarioType, delta_pct: deltaPct }
+  });
+  return response.data;
+};
