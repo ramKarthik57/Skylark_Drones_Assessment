@@ -56,9 +56,25 @@ This document outlines the architectural milestones and engineering rationale be
 
 ---
 
-## Milestone 7: Testing & Release Hardening
-- **Objective**: Validate full system reliability with 37 PyTest unit and integration tests (`tests/`).
+## Milestone 7: Testing & CI/CD Pipeline Hardening
+- **Objective**: Validate full system reliability with PyTest unit and integration tests (`tests/`) and GitHub Actions CI (`ci.yml`).
 - **Key Decisions**:
-  - Achieved 100% test pass rate across normalizer, BI engine, data quality auditor, risk engine, data trust, agent router, prompt injection security, and FastAPI endpoints.
-  - Created GitHub Actions CI workflow (`.github/workflows/ci.yml`) for automated PyTest and Vite build validation.
-  - Packaged final release archive `skylark-bi-agent-submission.zip` containing 66 clean source files.
+  - Configured GitHub Actions workflow running automated PyTest suite and Vite production builds on Python 3.12 and Node 20.
+  - Configured `pytest.ini` and `.gitattributes` for zero warning execution across OS environments.
+
+---
+
+## Milestone 8: Executive Action Center & Priorities Engine (V3 Upgrade)
+- **Objective**: Convert deterministic risk signals into prioritized executive recovery directives (`action_center.py`).
+- **Key Decisions**:
+  - Built automated prioritization logic mapping delayed work orders to immediate recovery plans, owner suggestions, and business impact summaries.
+  - Implemented `/api/action-center` endpoint and `ActionCenterView.tsx` tab.
+
+---
+
+## Milestone 9: Deterministic Scenario Analysis Engine & Provenance Audit (V3 Upgrade)
+- **Objective**: Enable interactive what-if pipeline simulations and metric provenance transparency (`scenario_engine.py`).
+- **Key Decisions**:
+  - Built 100% deterministic scenario simulation for win probability shifts (+10%, +20%) and open pipeline conversion without mutating underlying production records.
+  - Added `/api/scenario` endpoint, `ScenarioModal.tsx`, and `DataLineageModal.tsx` provenance audit trail.
+  - Expanded test suite to **42 PyTest unit & integration tests**.
