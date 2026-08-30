@@ -45,10 +45,10 @@ export const fetchBoardStatus = async (): Promise<BoardStatus> => {
     const response = await axios.get<BoardStatus>(`${API_BASE}/boards/status`);
     return response.data;
   } catch (err) {
-    console.warn('API connection unavailable. Utilizing local deterministic BI engine.');
+    console.warn('API connection unavailable. Utilizing local deterministic BI engine with cached snapshot.');
     return {
-      connected_live_monday: true,
-      is_mock_data: false,
+      connected_live_monday: false,
+      is_mock_data: true,
       deals_count: 344,
       work_orders_count: 175,
       data_quality_warnings_count: 5,
@@ -104,7 +104,7 @@ export const fetchLeadershipUpdate = async (): Promise<LeadershipUpdate> => {
 - **Action 1 (Suggested Role — not assigned in source data: Sales Operations Lead)**: Audit missing tentative close dates for 49 open deals; the dataset does not specify a completion deadline.
 - **Action 2 (Suggested Role — not assigned in source data: Project Delivery Lead)**: Review project tracker records for 5 execution delayed work orders to unlock ₹1.85 Cr in contract value.
 - **Action 3 (Suggested Role — not assigned in source data: Finance Lead)**: Review collections on ₹3.63 Cr outstanding receivables across completed work orders.`,
-      is_mock_data: false,
+      is_mock_data: true,
       bi_data: {
         deals_summary: {
           total_deal_count: 344,

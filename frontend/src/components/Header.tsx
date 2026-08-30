@@ -98,16 +98,24 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Status Badges & Quick Actions */}
         <div className="flex items-center flex-wrap gap-2">
-          {/* Connection Status Badge */}
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg border text-xs font-semibold bg-emerald-950/60 border-emerald-500/40 text-emerald-300">
-            <Database className="h-3.5 w-3.5" />
-            <div className="flex items-center gap-1.5">
-              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>
-                Connected — Monday.com Boards
-              </span>
+          {/* Dynamic Connection Status Badge */}
+          {status?.connected_live_monday && !status?.is_mock_data ? (
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg border text-xs font-semibold bg-emerald-950/60 border-emerald-500/40 text-emerald-300">
+              <Database className="h-3.5 w-3.5" />
+              <div className="flex items-center gap-1.5">
+                <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span>● LIVE — Monday.com</span>
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg border text-xs font-semibold bg-amber-950/60 border-amber-500/40 text-amber-300">
+              <Database className="h-3.5 w-3.5" />
+              <div className="flex items-center gap-1.5">
+                <span className="h-2 w-2 rounded-full bg-amber-400 animate-pulse" />
+                <span>● DEMO — Cached Snapshot</span>
+              </div>
+            </div>
+          )}
 
           {/* Scenario Modal Trigger Button */}
           <button
