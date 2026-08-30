@@ -2,31 +2,35 @@
 
 @layer base {
   :root {
-    --bg-primary: #18181b;
-    --bg-secondary: #202024;
-    --bg-surface: #27272a;
-    --bg-elevated: #2e2e33;
-    --bg-hover: #38383e;
+    --bg-primary: #0b0517;
+    --bg-secondary: #130a2a;
+    --bg-surface: #1a0e38;
+    --bg-elevated: #24134d;
+    --bg-hover: #2f1963;
     
-    --border-subtle: #2d2d32;
-    --border-default: #3b3b42;
-    --border-strong: #4e4e57;
+    --border-subtle: #2d1854;
+    --border-default: #412275;
+    --border-strong: #6b21a8;
 
-    --text-primary: #fafafa;
-    --text-secondary: #a1a1aa;
-    --text-muted: #71717a;
-    --text-disabled: #52525b;
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --text-disabled: #64748b;
 
-    --accent-primary: #d97706;
-    --accent-hover: #b45309;
-    --accent-soft: rgba(217, 119, 6, 0.12);
+    --accent-primary: #a855f7;
+    --accent-hover: #9333ea;
+    --accent-soft: rgba(168, 85, 247, 0.15);
+
+    --gradient-hero: linear-gradient(135deg, #7e22ce 0%, #4338ca 50%, #1e1b4b 100%);
+    --gradient-card: linear-gradient(180deg, rgba(36, 19, 77, 0.8) 0%, rgba(19, 10, 42, 0.9) 100%);
+    --gradient-purple: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
 
     --success: #10b981;
-    --success-soft: rgba(16, 185, 129, 0.12);
+    --success-soft: rgba(16, 185, 129, 0.15);
     --warning: #f59e0b;
-    --warning-soft: rgba(245, 158, 11, 0.12);
+    --warning-soft: rgba(245, 158, 11, 0.15);
     --danger: #ef4444;
-    --danger-soft: rgba(239, 68, 68, 0.12);
+    --danger-soft: rgba(239, 68, 68, 0.15);
   }
 
   body {

@@ -40,36 +40,38 @@ export const LeadershipModal: React.FC<LeadershipModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75">
-      <div className="bg-[#10121a] w-full max-w-3xl max-h-[85vh] rounded-lg border border-[#1e2333] shadow-2xl flex flex-col overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+      <div className="bg-[#1a0e38] w-full max-w-3xl max-h-[85vh] rounded-3xl border border-[#412275] shadow-2xl shadow-purple-950 flex flex-col overflow-hidden text-white relative">
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-3.5 border-b border-[#1e2333] bg-[#141722]">
-          <div className="flex items-center gap-2.5">
-            <FileText className="h-4 w-4 text-sky-400" />
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#2d1854] bg-[#130a2a]">
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-xl bg-purple-950/80 text-purple-300 border border-purple-700/50">
+              <FileText className="h-4 w-4 text-amber-400" />
+            </div>
             <div>
-              <h2 className="text-xs font-semibold text-slate-100 uppercase tracking-wider">
+              <h2 className="text-xs md:text-sm font-bold text-white uppercase tracking-wider">
                 Leadership Intelligence Brief
               </h2>
-              <p className="text-[10px] text-slate-500">Executive strategy briefing generated from live board data</p>
+              <p className="text-[10px] text-purple-300/70">Executive strategy briefing generated from reconciled board data</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2.5">
             {updateData && (
               <>
                 <button
                   onClick={handleCopy}
-                  className="flex items-center gap-1 px-2.5 py-1 rounded bg-[#1e2333] hover:bg-[#282f44] text-slate-300 text-[11px] font-medium transition-colors"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-950 hover:bg-purple-900 text-purple-200 text-xs font-medium border border-purple-700/50 transition-colors"
                 >
-                  {copied ? <Check className="h-3 w-3 text-emerald-400" /> : <Copy className="h-3 w-3 text-slate-400" />}
+                  {copied ? <Check className="h-3.5 w-3.5 text-emerald-400" /> : <Copy className="h-3.5 w-3.5 text-purple-400" />}
                   <span>{copied ? 'Copied' : 'Copy'}</span>
                 </button>
 
                 <button
                   onClick={handleDownload}
-                  className="flex items-center gap-1 px-2.5 py-1 rounded bg-sky-700 hover:bg-sky-600 text-white text-[11px] font-medium transition-colors"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-semibold shadow-md shadow-purple-950 border border-purple-400/40 transition-all cursor-pointer"
                 >
-                  <Download className="h-3 w-3" />
+                  <Download className="h-3.5 w-3.5" />
                   <span>Download .md</span>
                 </button>
               </>
@@ -77,7 +79,7 @@ export const LeadershipModal: React.FC<LeadershipModalProps> = ({
 
             <button
               onClick={onClose}
-              className="p-1 text-slate-400 hover:text-slate-200 transition-colors ml-1"
+              className="p-1.5 rounded-xl text-purple-300 hover:text-white bg-purple-950 hover:bg-purple-900 border border-purple-700/50 transition-colors"
             >
               <X className="h-4 w-4" />
             </button>
@@ -85,19 +87,22 @@ export const LeadershipModal: React.FC<LeadershipModalProps> = ({
         </div>
 
         {/* Content Body */}
-        <div className="p-5 overflow-y-auto flex-1 text-xs">
+        <div className="flex-1 overflow-y-auto p-6 space-y-4">
           {loading ? (
-            <div className="py-16 flex flex-col items-center justify-center text-slate-400 gap-2">
-              <Loader2 className="h-6 w-6 text-sky-400 animate-spin" />
-              <p className="text-xs">Synthesizing executive briefing from dataset evidence...</p>
+            <div className="py-20 flex flex-col items-center justify-center gap-3">
+              <Loader2 className="h-8 w-8 animate-spin text-purple-400" />
+              <p className="text-xs text-purple-300">Synthesizing executive briefing from CRM & Operations tracker records...</p>
             </div>
           ) : updateData ? (
-            <div className="text-slate-200 text-xs leading-relaxed whitespace-pre-wrap font-sans bg-[#090a0f] p-4 rounded border border-[#1e2333]">
-              {updateData.markdown_report}
+            <div className="space-y-4">
+              {/* Formatted Markdown Render */}
+              <div className="bg-[#130a2a] p-6 rounded-2xl border border-[#2d1854] text-xs font-mono text-purple-200/90 whitespace-pre-wrap leading-relaxed">
+                {updateData.markdown_report}
+              </div>
             </div>
           ) : (
-            <div className="text-center py-12 text-slate-500 text-xs">
-              No report data available.
+            <div className="text-center py-12 text-purple-400 text-xs">
+              No leadership briefing generated. Click Generate Briefing to create one.
             </div>
           )}
         </div>
