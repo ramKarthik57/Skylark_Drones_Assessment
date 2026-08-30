@@ -72,37 +72,33 @@ export const KPICards: React.FC<KPICardsProps> = ({ biData, onOpenLineage }) => 
         <div
           key={idx}
           onClick={() => onOpenLineage && onOpenLineage(card.label)}
-          className={`bg-gradient-to-b from-[#1c103c] to-[#130a2a] border rounded-2xl p-4 flex flex-col justify-between cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:border-purple-400/60 shadow-lg shadow-purple-950/20 ${
+          className={`bg-[#ffffff] border rounded-xl p-4 flex flex-col justify-between cursor-pointer transition-all hover:border-[#007a5a] shadow-xs ${
             card.highlight 
-              ? 'border-amber-500/60 bg-gradient-to-b from-amber-950/30 via-[#1c103c] to-[#130a2a]' 
-              : 'border-[#2d1854] hover:shadow-purple-900/30'
+              ? 'border-amber-300 bg-amber-50/30' 
+              : 'border-[#e5e2d8]'
           }`}
           title="Click to view metric data lineage & provenance"
         >
           <div>
             <div className="flex items-center justify-between mb-2">
-              <span className="text-[10px] font-bold tracking-wider text-purple-300/80 uppercase">
+              <span className="text-[10px] uppercase font-mono tracking-wider text-[#737373] font-semibold">
                 {card.label}
               </span>
-              {card.highlight ? (
-                <span className="h-2 w-2 rounded-full bg-amber-400 animate-pulse shadow-sm shadow-amber-400" />
-              ) : (
-                <span className="text-[9px] font-mono text-purple-400/60 px-1 py-0.2 rounded bg-purple-950/60 border border-purple-800/40">LINEAGE</span>
-              )}
+              <span className={`h-1.5 w-1.5 rounded-full ${card.highlight ? 'bg-amber-500' : 'bg-[#007a5a]'}`} />
             </div>
 
-            <div className="text-xl font-bold text-white tracking-tight">
+            <div className="text-xl font-bold text-[#191919] tracking-tight font-sans">
               {card.value}
             </div>
 
-            <div className="text-[11px] text-purple-200/80 mt-1 truncate">
+            <div className="text-[11px] text-[#595959] mt-1 font-medium leading-tight line-clamp-1">
               {card.context}
             </div>
           </div>
 
-          <div className="text-[10px] text-purple-400/80 pt-2.5 mt-2.5 border-t border-[#2d1854] flex items-center justify-between font-mono">
+          <div className="pt-2.5 mt-2 border-t border-[#f4f2eb] flex items-center justify-between text-[10px] text-[#737373] font-mono">
             <span className="truncate">{card.source}</span>
-            <span className="text-purple-400 font-bold text-xs">→</span>
+            <span className="text-[#007a5a] font-sans font-semibold">Lineage →</span>
           </div>
         </div>
       ))}

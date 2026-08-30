@@ -28,38 +28,36 @@ export const ScenarioModal: React.FC<ScenarioModalProps> = ({ isOpen, onClose })
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-      <div className="bg-[#1a0e38] border border-[#412275] rounded-3xl w-full max-w-lg p-6 md:p-8 text-white shadow-2xl shadow-purple-950 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl pointer-events-none" />
-        
+    <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4">
+      <div className="bg-[#ffffff] border border-[#e5e2d8] rounded-2xl w-full max-w-lg p-6 md:p-8 text-[#191919] shadow-2xl relative">
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 p-2 rounded-xl text-purple-300 hover:text-white bg-purple-950/60 hover:bg-purple-900 border border-purple-700/50 transition-colors"
+          className="absolute top-5 right-5 p-2 rounded-lg text-[#737373] hover:text-[#191919] hover:bg-[#f4f2eb] transition-colors cursor-pointer"
         >
           <X className="w-4 h-4" />
         </button>
 
-        <div className="mb-6 relative z-10">
+        <div className="mb-6">
           <div className="flex items-center gap-2.5">
-            <h2 className="text-sm md:text-base font-bold text-white uppercase tracking-wider">
+            <h2 className="text-sm md:text-base font-bold text-[#191919] uppercase tracking-wider font-mono">
               Executive Scenario Laboratory
             </h2>
-            <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 font-mono font-semibold">
+            <span className="text-[10px] px-2 py-0.5 rounded bg-amber-50 text-[#d97706] border border-amber-200 font-mono font-semibold">
               WHAT-IF MODEL
             </span>
           </div>
-          <p className="text-xs text-purple-300/70 mt-1">
+          <p className="text-xs text-[#737373] mt-1">
             Explore deterministic commercial simulations without altering underlying production records
           </p>
         </div>
 
-        <div className="space-y-4 mb-6 relative z-10">
+        <div className="space-y-4 mb-6">
           <div>
-            <label className="block text-xs font-semibold text-purple-200 mb-1.5">Simulation Strategy</label>
+            <label className="block text-xs font-semibold text-[#191919] mb-1.5 font-mono uppercase">Simulation Strategy</label>
             <select
               value={scenarioType}
               onChange={(e) => setScenarioType(e.target.value)}
-              className="w-full bg-[#130a2a] border border-[#412275] rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-purple-400 font-medium cursor-pointer"
+              className="w-full bg-[#f4f2eb] border border-[#dcd7cb] rounded-lg px-4 py-2.5 text-xs text-[#191919] focus:outline-none font-medium cursor-pointer"
             >
               <option value="probability_increase">Probability Uplift (+10% / +20% on open deals)</option>
               <option value="pipeline_conversion">Open Pipeline Conversion (% converted to Won)</option>
@@ -67,9 +65,9 @@ export const ScenarioModal: React.FC<ScenarioModalProps> = ({ isOpen, onClose })
           </div>
 
           <div>
-            <div className="flex justify-between items-center text-xs text-purple-300/80 mb-2">
-              <span className="font-medium">Simulation Delta:</span>
-              <span className="font-mono text-amber-300 font-bold bg-purple-950 px-2 py-0.5 rounded border border-purple-800">+{deltaPct}%</span>
+            <div className="flex justify-between items-center text-xs text-[#595959] mb-2 font-mono">
+              <span>Simulation Delta Parameter</span>
+              <span className="font-bold text-[#007a5a]">+{deltaPct}%</span>
             </div>
             <input
               type="range"
@@ -78,45 +76,45 @@ export const ScenarioModal: React.FC<ScenarioModalProps> = ({ isOpen, onClose })
               step="5"
               value={deltaPct}
               onChange={(e) => setDeltaPct(Number(e.target.value))}
-              className="w-full accent-purple-500 bg-[#130a2a] cursor-pointer"
+              className="w-full accent-[#007a5a] bg-[#e5e2d8] cursor-pointer"
             />
           </div>
 
           <button
             onClick={handleRunSimulation}
             disabled={loading}
-            className="w-full py-3 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 font-bold text-xs text-white rounded-xl shadow-lg shadow-purple-950/50 border border-purple-400/40 transition-all cursor-pointer"
+            className="w-full py-3 bg-[#007a5a] hover:bg-[#006046] font-bold text-xs text-white rounded-lg shadow-xs transition-all cursor-pointer"
           >
             {loading ? "Calculating Deterministic Simulation..." : "Run Scenario Simulation"}
           </button>
         </div>
 
         {result && (
-          <div className="bg-[#130a2a] rounded-2xl p-5 border border-[#412275] space-y-3 relative z-10 shadow-inner">
-            <div className="flex items-center justify-between text-xs pb-2 border-b border-[#2d1854]">
-              <span className="text-purple-300/80 font-medium">{result.title || "Simulation Outcome"}</span>
-              <span className="font-mono font-bold text-emerald-400 text-sm">
+          <div className="bg-[#f4f2eb] rounded-xl p-5 border border-[#e5e2d8] space-y-3 shadow-xs">
+            <div className="flex items-center justify-between text-xs pb-2 border-b border-[#e5e2d8]">
+              <span className="text-[#191919] font-bold">{result.title || "Simulation Outcome"}</span>
+              <span className="font-mono font-bold text-[#007a5a] text-sm">
                 {result.diff_formatted || `₹${(result.simulated_value / 10000000).toFixed(2)} Cr`}
               </span>
             </div>
 
             <div className="grid grid-cols-2 gap-2.5 text-center">
-              <div className="bg-[#0d061f] p-3 rounded-xl border border-[#2d1854]">
-                <div className="text-purple-400 text-[10px] uppercase font-mono">BASELINE FORECAST</div>
-                <div className="text-xs font-bold text-white mt-1">{result.baseline_formatted || "₹26.46 Cr"}</div>
+              <div className="bg-[#ffffff] p-3 rounded-lg border border-[#e5e2d8]">
+                <div className="text-[#737373] text-[10px] uppercase font-mono">BASELINE FORECAST</div>
+                <div className="text-xs font-bold text-[#191919] mt-1">{result.baseline_formatted || "₹26.46 Cr"}</div>
               </div>
-              <div className="bg-[#0d061f] p-3 rounded-xl border border-[#2d1854]">
-                <div className="text-purple-400 text-[10px] uppercase font-mono">SIMULATED VALUE</div>
-                <div className="text-xs font-bold text-emerald-400 mt-1">{result.scenario_formatted || `₹${(result.simulated_value / 10000000).toFixed(2)} Cr`}</div>
+              <div className="bg-[#ffffff] p-3 rounded-lg border border-[#e5e2d8]">
+                <div className="text-[#737373] text-[10px] uppercase font-mono">SIMULATED VALUE</div>
+                <div className="text-xs font-bold text-[#007a5a] mt-1">{result.scenario_formatted || `₹${(result.simulated_value / 10000000).toFixed(2)} Cr`}</div>
               </div>
             </div>
 
-            <div className="text-xs text-purple-200/90 leading-relaxed pt-1">
+            <div className="text-xs text-[#404040] leading-relaxed pt-1">
               {result.explanation}
             </div>
 
-            <div className="flex items-start gap-1.5 text-[10px] text-amber-300 font-mono pt-1 border-t border-[#2d1854]">
-              <AlertCircle className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+            <div className="flex items-start gap-1.5 text-[10px] text-amber-800 font-mono pt-1 border-t border-[#e5e2d8]">
+              <AlertCircle className="w-3.5 h-3.5 shrink-0 mt-0.5 text-[#d97706]" />
               <span>{result.caveat || "Sensitivity modeling output — does not alter underlying CRM records."}</span>
             </div>
           </div>

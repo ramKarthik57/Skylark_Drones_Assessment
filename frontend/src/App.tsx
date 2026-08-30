@@ -194,88 +194,87 @@ export function App() {
   };
 
   return (
-    <div className="h-screen w-full bg-[#0b0517] text-[#f8fafc] flex overflow-hidden font-sans">
+    <div className="h-screen w-full bg-[#faf9f6] text-[#191919] flex overflow-hidden font-sans">
       {/* 1. Skylark Conversational Workspace Left Sidebar */}
-      <aside className="w-64 bg-[#130a2a]/95 border-r border-[#2d1854] flex flex-col justify-between shrink-0 select-none backdrop-blur-xl">
+      <aside className="w-64 bg-[#f4f2eb] border-r border-[#e5e2d8] flex flex-col justify-between shrink-0 select-none">
         {/* Brand & New Chat */}
-        <div className="p-4 space-y-3">
+        <div className="p-5 space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="h-8 w-8 rounded-xl bg-gradient-to-tr from-purple-600 via-indigo-600 to-fuchsia-500 flex items-center justify-center text-white font-bold text-xs tracking-wider shadow-lg shadow-purple-900/40 border border-purple-400/30">
+              <div className="h-8 w-8 rounded-lg bg-[#007a5a] flex items-center justify-center text-white font-bold text-xs tracking-wider shadow-sm">
                 SK
               </div>
               <div>
-                <h1 className="text-sm font-bold text-white tracking-tight flex items-center gap-1.5">
-                  <span>Skylark</span>
-                  <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-purple-500/20 text-purple-300 font-normal border border-purple-500/30">AI</span>
+                <h1 className="text-base font-editorial font-semibold text-[#191919] tracking-tight">
+                  Skylark
                 </h1>
-                <p className="text-[10px] text-purple-300/70 font-mono">Executive Intelligence</p>
+                <p className="text-[10px] text-[#737373] tracking-wide uppercase font-medium">Executive Intelligence</p>
               </div>
             </div>
           </div>
 
-          {/* New Chat Button */}
+          {/* New Analysis Button */}
           <button
             onClick={handleNewChat}
-            className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-gradient-to-r from-purple-900/60 via-purple-800/40 to-indigo-900/60 hover:from-purple-800 hover:to-indigo-800 border border-purple-500/30 hover:border-purple-400 text-white text-xs font-semibold transition-all shadow-md shadow-purple-950/50 group"
+            className="w-full flex items-center justify-between px-4 py-2.5 rounded-lg bg-[#ffffff] hover:bg-[#eae7dc] border border-[#dcd7cb] text-[#191919] text-xs font-semibold transition-all shadow-xs group cursor-pointer"
           >
             <div className="flex items-center gap-2">
-              <MessageSquarePlus className="h-4 w-4 text-purple-300 group-hover:text-white transition-colors" />
+              <MessageSquarePlus className="h-4 w-4 text-[#007a5a]" />
               <span>New Analysis</span>
             </div>
-            <span className="text-[10px] text-purple-300/80 font-mono bg-purple-950/80 px-1.5 py-0.5 rounded border border-purple-700/50">⌘N</span>
+            <span className="text-[10px] text-[#737373] font-mono bg-[#f4f2eb] px-1.5 py-0.5 rounded border border-[#dcd7cb]">⌘N</span>
           </button>
         </div>
 
         {/* Navigation Sections */}
         <div className="flex-1 px-3 py-2 space-y-1 overflow-y-auto no-scrollbar">
-          <div className="text-[10px] uppercase font-mono tracking-wider text-purple-300/60 px-3 py-1.5 font-semibold">
+          <div className="text-[10px] uppercase font-mono tracking-wider text-[#8c8577] px-3 py-1 font-semibold">
             Intelligence Suite
           </div>
 
           <button
             onClick={() => setActiveNav('overview')}
-            className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-all ${
+            className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${
               activeNav === 'overview'
-                ? 'bg-gradient-to-r from-purple-600/30 to-indigo-600/30 text-white border border-purple-500/50 shadow-sm'
-                : 'text-slate-300 hover:text-white hover:bg-purple-950/40'
+                ? 'bg-[#ffffff] text-[#191919] border border-[#dcd7cb] shadow-xs font-semibold'
+                : 'text-[#595959] hover:text-[#191919] hover:bg-[#eae7dc]/60'
             }`}
           >
             <div className="flex items-center gap-2.5">
-              <LayoutDashboard className="h-4 w-4 text-purple-400" />
+              <LayoutDashboard className="h-4 w-4 text-[#007a5a]" />
               <span>Executive Overview</span>
             </div>
           </button>
 
           <button
             onClick={() => setActiveNav('chat')}
-            className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-all ${
+            className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${
               activeNav === 'chat'
-                ? 'bg-gradient-to-r from-purple-600/30 to-indigo-600/30 text-white border border-purple-500/50 shadow-sm'
-                : 'text-slate-300 hover:text-white hover:bg-purple-950/40'
+                ? 'bg-[#ffffff] text-[#191919] border border-[#dcd7cb] shadow-xs font-semibold'
+                : 'text-[#595959] hover:text-[#191919] hover:bg-[#eae7dc]/60'
             }`}
           >
             <div className="flex items-center gap-2.5">
-              <Sparkles className="h-4 w-4 text-fuchsia-400" />
-              <span>Conversational BI</span>
+              <Sparkles className="h-4 w-4 text-[#007a5a]" />
+              <span>Ask Skylark (AI)</span>
             </div>
-            <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/40 font-mono">Agent</span>
+            <span className="text-[9px] px-1.5 py-0.2 rounded bg-[#007a5a]/10 text-[#007a5a] border border-[#007a5a]/20 font-mono font-medium">Agent</span>
           </button>
 
           <button
             onClick={() => setActiveNav('risks')}
-            className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-all ${
+            className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${
               activeNav === 'risks'
-                ? 'bg-gradient-to-r from-purple-600/30 to-indigo-600/30 text-white border border-purple-500/50 shadow-sm'
-                : 'text-slate-300 hover:text-white hover:bg-purple-950/40'
+                ? 'bg-[#ffffff] text-[#191919] border border-[#dcd7cb] shadow-xs font-semibold'
+                : 'text-[#595959] hover:text-[#191919] hover:bg-[#eae7dc]/60'
             }`}
           >
             <div className="flex items-center gap-2.5">
-              <ShieldAlert className="h-4 w-4 text-amber-400" />
+              <ShieldAlert className="h-4 w-4 text-[#d97706]" />
               <span>Risk Radar</span>
             </div>
             {riskRadar.length > 0 && (
-              <span className="text-[10px] font-mono font-bold text-amber-400 bg-amber-950/80 px-1.5 py-0.2 rounded border border-amber-800/60">
+              <span className="text-[10px] font-mono font-bold text-[#d97706] bg-amber-50 px-1.5 py-0.2 rounded border border-amber-200">
                 {riskRadar.length}
               </span>
             )}
@@ -283,116 +282,116 @@ export function App() {
 
           <button
             onClick={() => setActiveNav('actions')}
-            className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-all ${
+            className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${
               activeNav === 'actions'
-                ? 'bg-gradient-to-r from-purple-600/30 to-indigo-600/30 text-white border border-purple-500/50 shadow-sm'
-                : 'text-slate-300 hover:text-white hover:bg-purple-950/40'
+                ? 'bg-[#ffffff] text-[#191919] border border-[#dcd7cb] shadow-xs font-semibold'
+                : 'text-[#595959] hover:text-[#191919] hover:bg-[#eae7dc]/60'
             }`}
           >
             <div className="flex items-center gap-2.5">
-              <CheckSquare className="h-4 w-4 text-emerald-400" />
+              <CheckSquare className="h-4 w-4 text-[#007a5a]" />
               <span>Action Directives</span>
             </div>
-            <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/80 px-1.5 py-0.2 rounded border border-emerald-800/60">
+            <span className="text-[10px] font-mono text-[#007a5a] bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-200">
               3 Directives
             </span>
           </button>
 
           <button
             onClick={() => setActiveNav('trust')}
-            className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-all ${
+            className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${
               activeNav === 'trust'
-                ? 'bg-gradient-to-r from-purple-600/30 to-indigo-600/30 text-white border border-purple-500/50 shadow-sm'
-                : 'text-slate-300 hover:text-white hover:bg-purple-950/40'
+                ? 'bg-[#ffffff] text-[#191919] border border-[#dcd7cb] shadow-xs font-semibold'
+                : 'text-[#595959] hover:text-[#191919] hover:bg-[#eae7dc]/60'
             }`}
           >
             <div className="flex items-center gap-2.5">
-              <ShieldCheck className="h-4 w-4 text-sky-400" />
+              <ShieldCheck className="h-4 w-4 text-[#0284c7]" />
               <span>Data Trust Center</span>
             </div>
           </button>
 
           <button
             onClick={() => setActiveNav('data')}
-            className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-all ${
+            className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${
               activeNav === 'data'
-                ? 'bg-gradient-to-r from-purple-600/30 to-indigo-600/30 text-white border border-purple-500/50 shadow-sm'
-                : 'text-slate-300 hover:text-white hover:bg-purple-950/40'
+                ? 'bg-[#ffffff] text-[#191919] border border-[#dcd7cb] shadow-xs font-semibold'
+                : 'text-[#595959] hover:text-[#191919] hover:bg-[#eae7dc]/60'
             }`}
           >
             <div className="flex items-center gap-2.5">
-              <Database className="h-4 w-4 text-indigo-300" />
+              <Database className="h-4 w-4 text-[#595959]" />
               <span>Data Governance</span>
             </div>
             {boardStatus && (
-              <span className="text-[10px] font-mono text-purple-300/80">{boardStatus.deals_count + boardStatus.work_orders_count} rows</span>
+              <span className="text-[10px] font-mono text-[#737373]">{boardStatus.deals_count + boardStatus.work_orders_count} rows</span>
             )}
           </button>
 
           <button
             onClick={() => setActiveNav('about')}
-            className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-all ${
+            className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${
               activeNav === 'about'
-                ? 'bg-gradient-to-r from-purple-600/30 to-indigo-600/30 text-white border border-purple-500/50 shadow-sm'
-                : 'text-slate-300 hover:text-white hover:bg-purple-950/40'
+                ? 'bg-[#ffffff] text-[#191919] border border-[#dcd7cb] shadow-xs font-semibold'
+                : 'text-[#595959] hover:text-[#191919] hover:bg-[#eae7dc]/60'
             }`}
           >
             <div className="flex items-center gap-2.5">
-              <Info className="h-4 w-4 text-purple-300" />
-              <span>Formulas & Methodology</span>
+              <Info className="h-4 w-4 text-[#595959]" />
+              <span>Methodology & Lineage</span>
             </div>
           </button>
 
           {/* Quick Leadership Brief & Scenario Lab Commands */}
-          <div className="pt-3 mt-2 border-t border-[#2d1854] space-y-1">
-            <div className="text-[10px] uppercase font-mono tracking-wider text-purple-300/60 px-3 py-1 font-semibold">
+          <div className="pt-3 mt-2 border-t border-[#e5e2d8] space-y-1">
+            <div className="text-[10px] uppercase font-mono tracking-wider text-[#8c8577] px-3 py-1 font-semibold">
               Executive Modals
             </div>
             <button
               onClick={() => setScenarioModalOpen(true)}
-              className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs text-purple-200 hover:text-white hover:bg-purple-950/60 border border-purple-800/40 transition-all"
+              className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs text-[#404040] hover:text-[#191919] hover:bg-[#eae7dc] border border-[#dcd7cb] transition-all bg-[#ffffff]"
             >
               <div className="flex items-center gap-2.5">
-                <Sliders className="h-3.5 w-3.5 text-fuchsia-400" />
+                <Sliders className="h-3.5 w-3.5 text-[#007a5a]" />
                 <span>Scenario Simulation</span>
               </div>
-              <ChevronRight className="h-3 w-3 text-purple-400" />
+              <ChevronRight className="h-3 w-3 text-[#737373]" />
             </button>
             <button
               onClick={handleOpenLeadership}
-              className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs text-purple-200 hover:text-white hover:bg-purple-950/60 border border-purple-800/40 transition-all"
+              className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs text-[#404040] hover:text-[#191919] hover:bg-[#eae7dc] border border-[#dcd7cb] transition-all bg-[#ffffff]"
             >
               <div className="flex items-center gap-2.5">
-                <FileText className="h-3.5 w-3.5 text-amber-400" />
+                <FileText className="h-3.5 w-3.5 text-[#d97706]" />
                 <span>Executive Briefing</span>
               </div>
-              <ChevronRight className="h-3 w-3 text-purple-400" />
+              <ChevronRight className="h-3 w-3 text-[#737373]" />
             </button>
           </div>
         </div>
 
         {/* Source Connection Badge */}
-        <div className="p-3.5 border-t border-[#2d1854] bg-[#0d061f]/80">
-          <div className="flex items-center justify-between text-[11px] text-purple-200">
+        <div className="p-4 border-t border-[#e5e2d8] bg-[#f4f2eb]">
+          <div className="flex items-center justify-between text-[11px] text-[#595959]">
             <div className="flex items-center gap-1.5">
-              <span className={`h-2 w-2 rounded-full ${boardStatus?.connected_live_monday && !boardStatus?.is_mock_data ? 'bg-emerald-400 shadow-sm shadow-emerald-400/50' : 'bg-amber-400 shadow-sm shadow-amber-400/50'}`} />
+              <span className={`h-2 w-2 rounded-full ${boardStatus?.connected_live_monday && !boardStatus?.is_mock_data ? 'bg-emerald-600' : 'bg-amber-500'}`} />
               <span className="font-medium">{boardStatus?.connected_live_monday && !boardStatus?.is_mock_data ? 'Live Monday.com' : 'Assignment dataset snapshot'}</span>
             </div>
-            <span className="text-[10px] font-mono text-purple-300/80 bg-purple-950/90 px-1.5 py-0.5 rounded border border-purple-800/60">
-              {boardStatus?.connected_live_monday && !boardStatus?.is_mock_data ? 'Live API' : 'Reconciled'}
+            <span className="text-[10px] font-mono text-[#737373] bg-[#ffffff] px-1.5 py-0.5 rounded border border-[#dcd7cb]">
+              {boardStatus?.connected_live_monday && !boardStatus?.is_mock_data ? 'Live API' : 'Snapshot'}
             </span>
           </div>
         </div>
       </aside>
 
       {/* 2. Main Content Experience */}
-      <div className="flex-1 flex flex-col h-full overflow-hidden bg-[#0b0517]">
+      <div className="flex-1 flex flex-col h-full overflow-hidden bg-[#faf9f6]">
         {/* Top Minimal Bar */}
-        <header className="h-14 border-b border-[#2d1854] bg-[#130a2a]/80 backdrop-blur-xl flex items-center justify-between px-6 shrink-0">
+        <header className="h-14 border-b border-[#e5e2d8] bg-[#ffffff] flex items-center justify-between px-8 shrink-0">
           <div className="flex items-center gap-3">
-            <h2 className="text-xs md:text-sm font-semibold text-white tracking-tight">
+            <h2 className="text-sm font-semibold text-[#191919] tracking-tight">
               {activeNav === 'overview' && 'Executive Overview & Reconciled Metrics'}
-              {activeNav === 'chat' && 'Executive Decision Intelligence'}
+              {activeNav === 'chat' && 'Conversational Decision Intelligence'}
               {activeNav === 'risks' && 'Executive Risk Radar & Vulnerability Assessment'}
               {activeNav === 'actions' && 'Action Center: Priority Recovery Directives'}
               {activeNav === 'trust' && 'Data Trust & Completeness Center'}
@@ -401,12 +400,12 @@ export function App() {
             </h2>
           </div>
 
-          <div className="flex items-center gap-4 text-xs text-purple-200">
+          <div className="flex items-center gap-4 text-xs text-[#595959]">
             {biData && (
               <div className="flex items-center gap-3 text-[11px] font-mono">
-                <div className="px-2.5 py-1 rounded-lg bg-purple-950/80 border border-purple-800/50">Pipeline: <span className="text-white font-bold">₹68.82 Cr</span></div>
-                <div className="px-2.5 py-1 rounded-lg bg-purple-950/80 border border-purple-800/50">Weighted: <span className="text-amber-400 font-bold">₹26.46 Cr</span></div>
-                <div className="px-2.5 py-1 rounded-lg bg-purple-950/80 border border-purple-800/50">WOs: <span className="text-emerald-400 font-bold">58 Active</span></div>
+                <div className="px-2.5 py-1 rounded bg-[#f4f2eb] border border-[#dcd7cb]">Pipeline: <span className="text-[#191919] font-bold">₹68.82 Cr</span></div>
+                <div className="px-2.5 py-1 rounded bg-[#f4f2eb] border border-[#dcd7cb]">Weighted: <span className="text-[#007a5a] font-bold">₹26.46 Cr</span></div>
+                <div className="px-2.5 py-1 rounded bg-[#f4f2eb] border border-[#dcd7cb]">WOs: <span className="text-[#191919] font-bold">58 Active</span></div>
               </div>
             )}
           </div>
@@ -464,49 +463,49 @@ export function App() {
 
           {activeNav === 'data' && (
             <div className="flex-1 overflow-y-auto max-w-4xl w-full mx-auto space-y-6">
-              <div className="bg-[#1a0e38] rounded-2xl p-6 border border-[#2d1854] shadow-xl shadow-purple-950/30">
-                <h3 className="text-xs font-bold text-white uppercase tracking-wider mb-2">
+              <div className="bg-[#ffffff] rounded-2xl p-6 border border-[#e5e2d8] shadow-xs">
+                <h3 className="text-xs font-bold text-[#191919] uppercase tracking-wider mb-2 font-mono">
                   Dataset Architecture & Audit Summary
                 </h3>
-                <p className="text-xs text-purple-200/80 leading-relaxed">
+                <p className="text-xs text-[#595959] leading-relaxed">
                   Skylark Executive Intelligence operates on two primary boards from Monday.com: the <strong>Deals Funnel</strong> (344 total records, 50 open deals) and the <strong>Work Orders Tracker</strong> (175 total records, 58 active projects).
                 </p>
                 <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3">
-                  <div className="p-4 bg-[#130a2a] rounded-xl border border-[#2d1854]">
-                    <div className="text-[10px] text-purple-300/70 uppercase font-mono">Total Deals</div>
-                    <div className="text-base font-bold text-white mt-0.5">344 Records</div>
-                    <div className="text-[11px] text-purple-300/80 mt-1">50 Open • 163 Won • 127 Dead</div>
+                  <div className="p-4 bg-[#f4f2eb] rounded-xl border border-[#e5e2d8]">
+                    <div className="text-[10px] text-[#737373] uppercase font-mono">Total Deals</div>
+                    <div className="text-base font-bold text-[#191919] mt-0.5">344 Records</div>
+                    <div className="text-[11px] text-[#595959] mt-1">50 Open • 163 Won • 127 Dead</div>
                   </div>
-                  <div className="p-4 bg-[#130a2a] rounded-xl border border-[#2d1854]">
-                    <div className="text-[10px] text-purple-300/70 uppercase font-mono">Total Work Orders</div>
-                    <div className="text-base font-bold text-white mt-0.5">175 Records</div>
-                    <div className="text-[11px] text-purple-300/80 mt-1">117 Completed • 53 Ongoing • 5 Delayed</div>
+                  <div className="p-4 bg-[#f4f2eb] rounded-xl border border-[#e5e2d8]">
+                    <div className="text-[10px] text-[#737373] uppercase font-mono">Total Work Orders</div>
+                    <div className="text-base font-bold text-[#191919] mt-0.5">175 Records</div>
+                    <div className="text-[11px] text-[#595959] mt-1">117 Completed • 53 Ongoing • 5 Delayed</div>
                   </div>
-                  <div className="p-4 bg-[#130a2a] rounded-xl border border-[#2d1854]">
-                    <div className="text-[10px] text-purple-300/70 uppercase font-mono">Cross-Board Match Rate</div>
-                    <div className="text-base font-bold text-amber-400 mt-0.5">89.7% Linked</div>
-                    <div className="text-[11px] text-purple-300/80 mt-1">52 of 58 deal names verified 1:1</div>
+                  <div className="p-4 bg-[#f4f2eb] rounded-xl border border-[#e5e2d8]">
+                    <div className="text-[10px] text-[#737373] uppercase font-mono">Cross-Board Match Rate</div>
+                    <div className="text-base font-bold text-[#007a5a] mt-0.5">89.7% Linked</div>
+                    <div className="text-[11px] text-[#595959] mt-1">52 of 58 deal names verified 1:1</div>
                   </div>
                 </div>
               </div>
 
               {/* Data Trust & Quality Dimensions */}
               {dataTrust && (
-                <div className="bg-[#1a0e38] rounded-2xl p-6 border border-[#2d1854] space-y-4 shadow-xl shadow-purple-950/30">
+                <div className="bg-[#ffffff] rounded-2xl p-6 border border-[#e5e2d8] space-y-4 shadow-xs">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-xs font-bold text-white uppercase tracking-wider">
+                    <h3 className="text-xs font-bold text-[#191919] uppercase tracking-wider font-mono">
                       Data Trust & Governance Dimensions
                     </h3>
-                    <span className="text-[11px] font-mono text-emerald-400 font-semibold">{dataTrust.overall_confidence}</span>
+                    <span className="text-[11px] font-mono text-[#007a5a] font-semibold">{dataTrust.overall_confidence}</span>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     {dataTrust.dimensions.map((dim, idx) => (
-                      <div key={idx} className="p-4 bg-[#130a2a] rounded-xl border border-[#2d1854]">
+                      <div key={idx} className="p-4 bg-[#f4f2eb] rounded-xl border border-[#e5e2d8]">
                         <div className="flex items-center justify-between mb-1">
-                          <span className="text-xs font-medium text-slate-200">{dim.name}</span>
-                          <span className="text-xs font-mono font-bold text-purple-300">{dim.score}%</span>
+                          <span className="text-xs font-medium text-[#191919]">{dim.name}</span>
+                          <span className="text-xs font-mono font-bold text-[#007a5a]">{dim.score}%</span>
                         </div>
-                        <p className="text-[11px] text-purple-300/70">{dim.desc}</p>
+                        <p className="text-[11px] text-[#595959]">{dim.desc}</p>
                       </div>
                     ))}
                   </div>
@@ -517,40 +516,40 @@ export function App() {
 
           {activeNav === 'about' && (
             <div className="flex-1 overflow-y-auto max-w-4xl w-full mx-auto space-y-6">
-              <div className="bg-[#1a0e38] rounded-2xl p-6 border border-[#2d1854] space-y-3 shadow-xl shadow-purple-950/30">
-                <h3 className="text-xs font-bold text-white uppercase tracking-wider">
+              <div className="bg-[#ffffff] rounded-2xl p-6 border border-[#e5e2d8] space-y-3 shadow-xs">
+                <h3 className="text-xs font-bold text-[#191919] uppercase tracking-wider font-mono">
                   About Skylark Executive Intelligence
                 </h3>
-                <p className="text-xs text-purple-200/90 leading-relaxed">
+                <p className="text-xs text-[#404040] leading-relaxed">
                   This system was designed as a production-grade Executive Decision Intelligence agent for Skylark Drones. It transforms messy, unnormalized CRM and operational project tracker exports into deterministic executive intelligence without arithmetic hallucination.
                 </p>
-                <div className="pt-2 text-xs text-purple-300/80 space-y-2">
+                <div className="pt-2 text-xs text-[#595959] space-y-2">
                   <p>• <strong>Deterministic Grounding:</strong> The LLM synthesizes natural language, but arithmetic, rankings, and filters are calculated deterministically by the BI engine.</p>
                   <p>• <strong>Messy Data Resilience:</strong> Automatically normalizes erratic dates, currency typos, duplicate names, and missing close dates.</p>
                   <p>• <strong>Evidence-First Philosophy:</strong> Every claim clearly distinguishes source facts, derived metrics, modeling assumptions, and dataset limitations.</p>
                 </div>
               </div>
 
-              <div className="bg-[#1a0e38] rounded-2xl p-6 border border-[#2d1854] space-y-3 shadow-xl shadow-purple-950/30">
-                <h3 className="text-xs font-bold text-white uppercase tracking-wider">
+              <div className="bg-[#ffffff] rounded-2xl p-6 border border-[#e5e2d8] space-y-3 shadow-xs">
+                <h3 className="text-xs font-bold text-[#191919] uppercase tracking-wider font-mono">
                   Mathematical Formulas & Ground Truth
                 </h3>
-                <div className="space-y-2 text-xs font-mono text-purple-200">
+                <div className="space-y-2 text-xs font-mono text-[#191919]">
                   <div 
                     onClick={() => handleOpenLineage('Weighted Risk-Adjusted Forecast')}
-                    className="p-3.5 bg-[#130a2a] hover:bg-[#24134d] cursor-pointer rounded-xl border border-[#2d1854] transition-colors"
+                    className="p-3.5 bg-[#f4f2eb] hover:bg-[#eae7dc] cursor-pointer rounded-xl border border-[#e5e2d8] transition-colors"
                   >
-                    <div className="text-purple-400 text-[10px] uppercase flex items-center justify-between">
+                    <div className="text-[#007a5a] text-[10px] uppercase flex items-center justify-between font-bold">
                       <span>Weighted Forecast</span>
-                      <span className="text-amber-400 font-sans text-[10px]">Inspect Lineage →</span>
+                      <span className="text-[#007a5a] font-sans text-[10px]">Inspect Lineage →</span>
                     </div>
-                    <div className="mt-1 font-bold text-white">Weighted Forecast = ∑ (Deal Value × Probability)</div>
-                    <div className="text-[11px] text-purple-300/70 mt-1">High (80%): ₹13.35 Cr + Low (20%): ₹8.39 Cr + Med (50%): ₹4.16 Cr + Baseline (30%): ₹0.56 Cr = ₹26.46 Cr</div>
+                    <div className="mt-1 font-bold text-[#191919]">Weighted Forecast = ∑ (Deal Value × Probability)</div>
+                    <div className="text-[11px] text-[#595959] mt-1">High (80%): ₹13.35 Cr + Low (20%): ₹8.39 Cr + Med (50%): ₹4.16 Cr + Baseline (30%): ₹0.56 Cr = ₹26.46 Cr</div>
                   </div>
-                  <div className="p-3.5 bg-[#130a2a] rounded-xl border border-[#2d1854]">
-                    <div className="text-purple-400 text-[10px] uppercase">Billing Realization Rate</div>
-                    <div className="mt-1 font-bold text-white">Realization = (Billed Value / Contract Value) × 100</div>
-                    <div className="text-[11px] text-purple-300/70 mt-1">₹10.74 Cr Billed / ₹21.06 Cr Contracted = 51.0% Realization</div>
+                  <div className="p-3.5 bg-[#f4f2eb] rounded-xl border border-[#e5e2d8]">
+                    <div className="text-[#007a5a] text-[10px] uppercase font-bold">Billing Realization Rate</div>
+                    <div className="mt-1 font-bold text-[#191919]">Realization = (Billed Value / Contract Value) × 100</div>
+                    <div className="text-[11px] text-[#595959] mt-1">₹10.74 Cr Billed / ₹21.06 Cr Contracted = 51.0% Realization</div>
                   </div>
                 </div>
               </div>

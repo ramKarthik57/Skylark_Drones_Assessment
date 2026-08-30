@@ -11,21 +11,21 @@ export const RiskRadarView: React.FC<RiskRadarProps> = ({ riskRadar, onNavigateT
   return (
     <div className="space-y-6 max-w-6xl mx-auto">
       {/* Risk Radar Header */}
-      <div className="bg-[#1a0e38] rounded-2xl p-6 border border-[#2d1854] flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-xl shadow-purple-950/30">
+      <div className="bg-[#ffffff] rounded-2xl p-6 border border-[#e5e2d8] flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-xs">
         <div>
-          <h2 className="text-sm font-bold text-white tracking-wider uppercase">
+          <h2 className="text-sm font-bold text-[#191919] tracking-wider uppercase font-mono">
             Executive Risk Radar
           </h2>
-          <p className="text-xs text-purple-300/70 mt-1">
+          <p className="text-xs text-[#737373] mt-1">
             Deterministic risk signals derived from Deals and Work Orders tracker records
           </p>
         </div>
 
         <div className="flex items-center gap-2.5">
-          <span className="text-xs px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 font-semibold shadow-sm">
+          <span className="text-xs px-3 py-1 rounded bg-amber-50 text-[#d97706] border border-amber-200 font-semibold font-mono">
             {riskRadar.filter(r => r.severity === 'HIGH').length} High Severity
           </span>
-          <span className="text-xs px-3 py-1 rounded-full bg-purple-900/40 text-purple-300 border border-purple-700/40 font-semibold">
+          <span className="text-xs px-3 py-1 rounded bg-[#f4f2eb] text-[#595959] border border-[#dcd7cb] font-semibold font-mono">
             {riskRadar.filter(r => r.severity === 'MEDIUM').length} Medium Severity
           </span>
         </div>
@@ -36,47 +36,47 @@ export const RiskRadarView: React.FC<RiskRadarProps> = ({ riskRadar, onNavigateT
         {riskRadar.map((risk) => (
           <div
             key={risk.id}
-            className={`bg-gradient-to-b from-[#1c103c] to-[#130a2a] rounded-2xl p-6 border flex flex-col justify-between shadow-lg transition-all duration-300 hover:border-purple-500/60 ${
-              risk.severity === 'HIGH' ? 'border-amber-600/50 from-amber-950/20' : 'border-[#2d1854]'
+            className={`bg-[#ffffff] rounded-2xl p-6 border flex flex-col justify-between shadow-xs transition-all ${
+              risk.severity === 'HIGH' ? 'border-amber-300' : 'border-[#e5e2d8]'
             }`}
           >
             <div>
               <div className="flex items-center justify-between mb-3">
-                <span className="text-[10px] font-mono text-purple-400 uppercase tracking-wider font-semibold">
+                <span className="text-[10px] font-mono text-[#737373] uppercase tracking-wider font-semibold">
                   {risk.category}
                 </span>
-                <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full ${
-                  risk.severity === 'HIGH' ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40' : 'bg-purple-900/40 text-purple-300 border border-purple-700/40'
+                <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded ${
+                  risk.severity === 'HIGH' ? 'bg-amber-100 text-[#d97706] border border-amber-300' : 'bg-[#f4f2eb] text-[#595959] border border-[#dcd7cb]'
                 }`}>
                   {risk.severity} SEVERITY
                 </span>
               </div>
 
-              <h3 className="text-sm font-bold text-white mb-2.5">{risk.title}</h3>
+              <h3 className="text-sm font-bold text-[#191919] mb-2.5">{risk.title}</h3>
               
               <div className="mb-3.5">
-                <span className="text-[10px] font-bold text-purple-300/80 uppercase">Impact: </span>
-                <span className="text-xs text-purple-200/90 leading-relaxed">{risk.impact}</span>
+                <span className="text-[10px] font-bold text-[#737373] uppercase font-mono">Impact: </span>
+                <span className="text-xs text-[#404040] leading-relaxed">{risk.impact}</span>
               </div>
 
-              <div className="mb-4 bg-[#0d061f] p-3.5 rounded-xl text-xs border border-[#2d1854] space-y-1.5">
-                <div className="text-[10px] font-bold text-purple-400 uppercase tracking-wider">
+              <div className="mb-4 bg-[#f4f2eb] p-4 rounded-xl text-xs border border-[#e5e2d8] space-y-1.5 font-mono">
+                <div className="text-[10px] font-bold text-[#737373] uppercase tracking-wider">
                   Ground-Truth Evidence
                 </div>
                 {risk.evidence.map((ev, idx) => (
-                  <p key={idx} className="text-purple-200/90 leading-normal">• {ev}</p>
+                  <p key={idx} className="text-[#595959] leading-normal">• {ev}</p>
                 ))}
               </div>
             </div>
 
-            <div className="pt-3.5 border-t border-[#2d1854] flex items-center justify-between">
+            <div className="pt-3.5 border-t border-[#e5e2d8] flex items-center justify-between">
               <div>
-                <span className="text-[10px] font-bold text-purple-400/80 uppercase">Action Directive:</span>
-                <p className="text-xs text-slate-200 mt-0.5">{risk.action}</p>
+                <span className="text-[10px] font-bold text-[#737373] uppercase font-mono">Action Directive:</span>
+                <p className="text-xs text-[#191919] mt-0.5 font-medium">{risk.action}</p>
               </div>
               <button
                 onClick={() => onNavigateToAskAI(`How can we resolve the risk: ${risk.title}?`)}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-950 hover:bg-purple-900 text-purple-300 hover:text-white text-xs font-semibold shrink-0 ml-3 transition-colors border border-purple-800/60"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#007a5a] hover:bg-[#006046] text-white text-xs font-semibold shrink-0 ml-3 transition-colors cursor-pointer"
                 title="Investigate with AI"
               >
                 <span>Investigate</span>

@@ -5,6 +5,7 @@ import type { BIData } from '../types';
 interface PipelineDeepDiveProps {
   biData: BIData | null;
   onNavigateToAskAI: (query: string) => void;
+  onOpenLineage?: (metricName: string) => void;
 }
 
 export const PipelineDeepDive: React.FC<PipelineDeepDiveProps> = ({
@@ -60,80 +61,80 @@ export const PipelineDeepDive: React.FC<PipelineDeepDiveProps> = ({
       {/* Pipeline Concentration Analysis */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
         {/* Top 5 Concentration Card */}
-        <div className="bg-[#10121a] rounded-lg p-4 border border-[#1e2333]">
+        <div className="bg-[#ffffff] rounded-2xl p-5 border border-[#e5e2d8] shadow-xs">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[10px] uppercase font-mono text-slate-400">Opportunity Concentration</span>
-            <span className="text-xs font-mono font-bold text-amber-400">{top5Concentration}%</span>
+            <span className="text-[10px] uppercase font-mono text-[#737373] font-semibold">Opportunity Concentration</span>
+            <span className="text-xs font-mono font-bold text-[#d97706]">{top5Concentration}%</span>
           </div>
-          <div className="text-base font-semibold text-slate-100 mb-1">
+          <div className="text-base font-bold text-[#191919] mb-1">
             Top 5 Deals ({formatINR(top5Total)})
           </div>
-          <p className="text-[11px] text-slate-400 mb-3">
+          <p className="text-xs text-[#595959] mb-3">
             Top 5 active opportunities represent {top5Concentration}% of the ₹68.82 Cr total pipeline.
           </p>
-          <div className="w-full bg-[#090a0f] rounded h-1.5 overflow-hidden border border-[#1e2333]">
+          <div className="w-full bg-[#f4f2eb] rounded h-1.5 overflow-hidden border border-[#e5e2d8]">
             <div className="h-full bg-amber-500 rounded" style={{ width: `${top5Concentration}%` }} />
           </div>
         </div>
 
         {/* Sector Concentration Card */}
-        <div className="bg-[#10121a] rounded-lg p-4 border border-[#1e2333]">
+        <div className="bg-[#ffffff] rounded-2xl p-5 border border-[#e5e2d8] shadow-xs">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[10px] uppercase font-mono text-slate-400">Sector Concentration</span>
-            <span className="text-xs font-mono font-bold text-sky-400">{top2SectorsPct}%</span>
+            <span className="text-[10px] uppercase font-mono text-[#737373] font-semibold">Sector Concentration</span>
+            <span className="text-xs font-mono font-bold text-[#007a5a]">{top2SectorsPct}%</span>
           </div>
-          <div className="text-base font-semibold text-slate-100 mb-1">
+          <div className="text-base font-bold text-[#191919] mb-1">
             Mining + Renewables
           </div>
-          <p className="text-[11px] text-slate-400 mb-3">
+          <p className="text-xs text-[#595959] mb-3">
             Top 2 sectors hold {formatINR(top2SectorsVal)} ({top2SectorsPct}% of active pipeline).
           </p>
-          <div className="w-full bg-[#090a0f] rounded h-1.5 overflow-hidden border border-[#1e2333]">
-            <div className="h-full bg-sky-500 rounded" style={{ width: `${top2SectorsPct}%` }} />
+          <div className="w-full bg-[#f4f2eb] rounded h-1.5 overflow-hidden border border-[#e5e2d8]">
+            <div className="h-full bg-[#007a5a] rounded" style={{ width: `${top2SectorsPct}%` }} />
           </div>
         </div>
 
         {/* Cross-Board Linkage Realization */}
-        <div className="bg-[#10121a] rounded-lg p-4 border border-[#1e2333]">
+        <div className="bg-[#ffffff] rounded-2xl p-5 border border-[#e5e2d8] shadow-xs">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[10px] uppercase font-mono text-slate-400">Operations Linkage</span>
-            <span className="text-xs font-mono font-bold text-emerald-400">89.7%</span>
+            <span className="text-[10px] uppercase font-mono text-[#737373] font-semibold">Operations Linkage</span>
+            <span className="text-xs font-mono font-bold text-[#007a5a]">89.7%</span>
           </div>
-          <div className="text-base font-semibold text-slate-100 mb-1">
+          <div className="text-base font-bold text-[#191919] mb-1">
             52 / 58 Work Orders Matched
           </div>
-          <p className="text-[11px] text-slate-400 mb-3">
+          <p className="text-xs text-[#595959] mb-3">
             Active work orders correspond to CRM deals with high commercial traceability.
           </p>
-          <div className="w-full bg-[#090a0f] rounded h-1.5 overflow-hidden border border-[#1e2333]">
-            <div className="h-full bg-emerald-500 rounded" style={{ width: '89.7%' }} />
+          <div className="w-full bg-[#f4f2eb] rounded h-1.5 overflow-hidden border border-[#e5e2d8]">
+            <div className="h-full bg-[#007a5a] rounded" style={{ width: '89.7%' }} />
           </div>
         </div>
       </div>
 
       {/* Top Opportunities Enterprise Table */}
-      <div className="bg-[#10121a] rounded-lg border border-[#1e2333] overflow-hidden">
+      <div className="bg-[#ffffff] rounded-2xl border border-[#e5e2d8] overflow-hidden shadow-xs">
         {/* Table Controls Header */}
-        <div className="p-4 border-b border-[#1e2333] bg-[#141722] flex flex-col md:flex-row md:items-center justify-between gap-3">
+        <div className="p-5 border-b border-[#e5e2d8] bg-[#faf9f6] flex flex-col md:flex-row md:items-center justify-between gap-3">
           <div>
-            <h3 className="text-xs font-semibold text-slate-200 uppercase tracking-wider">
+            <h3 className="text-xs font-bold text-[#191919] uppercase tracking-wider font-mono">
               Top Active Opportunities Registry
             </h3>
-            <p className="text-[11px] text-slate-500">
+            <p className="text-xs text-[#737373]">
               Sorted by nominal deal value with closure probability and forecast contribution
             </p>
           </div>
 
           <div className="flex items-center gap-2">
             {/* Search Input */}
-            <div className="flex items-center gap-1.5 bg-[#090a0f] border border-[#1e2333] rounded px-2.5 py-1 text-xs">
-              <Search className="h-3 w-3 text-slate-500" />
+            <div className="flex items-center gap-1.5 bg-[#ffffff] border border-[#dcd7cb] rounded-lg px-3 py-1.5 text-xs">
+              <Search className="h-3.5 w-3.5 text-[#8c8577]" />
               <input
                 type="text"
                 placeholder="Search deal, client, sector..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="bg-transparent text-slate-200 placeholder-slate-500 focus:outline-none text-[11px] w-36 md:w-48"
+                className="bg-transparent text-[#191919] placeholder-[#8c8577] focus:outline-none text-xs w-36 md:w-48 font-medium"
               />
             </div>
 
@@ -141,7 +142,7 @@ export const PipelineDeepDive: React.FC<PipelineDeepDiveProps> = ({
             <select
               value={sectorFilter}
               onChange={(e) => setSectorFilter(e.target.value)}
-              className="bg-[#090a0f] border border-[#1e2333] rounded px-2 py-1 text-[11px] text-slate-300 focus:outline-none"
+              className="bg-[#ffffff] border border-[#dcd7cb] rounded-lg px-2.5 py-1.5 text-xs text-[#191919] focus:outline-none font-medium"
             >
               <option value="ALL">All Sectors</option>
               <option value="Mining">Mining</option>
@@ -156,13 +157,13 @@ export const PipelineDeepDive: React.FC<PipelineDeepDiveProps> = ({
         {/* Table */}
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-[#090a0f] text-slate-400 uppercase text-[10px] font-mono border-b border-[#1e2333]">
+            <thead className="bg-[#f4f2eb] text-[#737373] uppercase text-[10px] font-mono border-b border-[#e5e2d8]">
               <tr>
-                <th className="py-2.5 px-4 font-semibold">Opportunity Name</th>
-                <th className="py-2.5 px-4 font-semibold">Client Code</th>
-                <th className="py-2.5 px-4 font-semibold">Sector</th>
+                <th className="py-3 px-4 font-semibold">Opportunity Name</th>
+                <th className="py-3 px-4 font-semibold">Client Code</th>
+                <th className="py-3 px-4 font-semibold">Sector</th>
                 <th 
-                  className="py-2.5 px-4 font-semibold text-right cursor-pointer select-none"
+                  className="py-3 px-4 font-semibold text-right cursor-pointer select-none"
                   onClick={() => {
                     if (sortField === 'deal_value') setSortAsc(!sortAsc);
                     else { setSortField('deal_value'); setSortAsc(false); }
@@ -170,114 +171,75 @@ export const PipelineDeepDive: React.FC<PipelineDeepDiveProps> = ({
                 >
                   <div className="flex items-center justify-end gap-1">
                     <span>Deal Value</span>
-                    <ArrowUpDown className="h-3 w-3 text-slate-500" />
+                    <ArrowUpDown className="h-3 w-3 text-[#737373]" />
                   </div>
                 </th>
-                <th className="py-2.5 px-4 font-semibold text-center">Probability</th>
-                <th className="py-2.5 px-4 font-semibold text-right">Weighted Forecast</th>
-                <th className="py-2.5 px-4 font-semibold text-center">Close Date</th>
-                <th className="py-2.5 px-4 font-semibold text-right">Action</th>
+                <th className="py-3 px-4 font-semibold text-center">Probability</th>
+                <th className="py-3 px-4 font-semibold text-right">Weighted Forecast</th>
+                <th className="py-3 px-4 font-semibold text-center">Close Date</th>
+                <th className="py-3 px-4 font-semibold text-right">Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#1e2333] text-[11px]">
-              {filteredDeals.length === 0 ? (
-                <tr>
-                  <td colSpan={8} className="py-8 text-center text-slate-500">
-                    No active opportunities match the selected criteria.
+            <tbody className="divide-y divide-[#f4f2eb] font-sans">
+              {filteredDeals.map((deal, idx) => (
+                <tr key={idx} className="hover:bg-[#faf9f6] transition-colors">
+                  <td className="py-3 px-4 font-semibold text-[#191919]">{deal.deal_name}</td>
+                  <td className="py-3 px-4 font-mono text-[#595959]">{deal.client_code}</td>
+                  <td className="py-3 px-4 text-[#595959]">{deal.sector}</td>
+                  <td className="py-3 px-4 text-right font-mono font-bold text-[#191919]">{formatINR(deal.deal_value)}</td>
+                  <td className="py-3 px-4 text-center">
+                    <span className={`px-2 py-0.5 rounded text-[10px] font-semibold ${
+                      deal.probability === 'High' ? 'bg-emerald-50 text-[#007a5a] border border-emerald-200' :
+                      deal.probability === 'Low' ? 'bg-rose-50 text-rose-700 border border-rose-200' :
+                      'bg-slate-100 text-slate-700 border border-slate-200'
+                    }`}>
+                      {deal.probability}
+                    </span>
+                  </td>
+                  <td className="py-3 px-4 text-right font-mono font-bold text-[#007a5a]">
+                    {formatINR((deal.deal_value * (deal.probability === 'High' ? 0.8 : deal.probability === 'Low' ? 0.2 : 0.5)))}
+                  </td>
+                  <td className="py-3 px-4 text-center font-mono text-[#737373] text-[11px]">{deal.tentative_close || 'Unrated'}</td>
+                  <td className="py-3 px-4 text-right">
+                    <button
+                      onClick={() => onNavigateToAskAI(`Tell me more about deal ${deal.deal_name}`)}
+                      className="text-[#007a5a] hover:text-[#006046] font-semibold text-xs cursor-pointer"
+                    >
+                      Audit →
+                    </button>
                   </td>
                 </tr>
-              ) : (
-                filteredDeals.map((deal, idx) => {
-                  const probStr = String(deal.probability || '').toLowerCase();
-                  let weightFactor = 0.3;
-                  if (probStr === 'high') weightFactor = 0.8;
-                  else if (probStr === 'medium') weightFactor = 0.5;
-                  else if (probStr === 'low') weightFactor = 0.2;
-                  else if (probStr.includes('80')) weightFactor = 0.8;
-                  else if (probStr.includes('50')) weightFactor = 0.5;
-                  else if (probStr.includes('20')) weightFactor = 0.2;
-
-                  const weightedVal = deal.deal_value * weightFactor;
-
-                  return (
-                    <tr key={idx} className="hover:bg-[#141722] transition-colors">
-                      <td className="py-3 px-4 font-medium text-slate-100">
-                        {deal.deal_name}
-                      </td>
-                      <td className="py-3 px-4 text-slate-400 font-mono text-[10px]">
-                        {deal.client_code}
-                      </td>
-                      <td className="py-3 px-4 text-slate-300">
-                        <span className="px-1.5 py-0.5 rounded bg-[#141722] border border-[#1e2333] text-[10px]">
-                          {deal.sector}
-                        </span>
-                      </td>
-                      <td className="py-3 px-4 text-right font-mono font-semibold text-slate-100">
-                        {formatINR(deal.deal_value)}
-                      </td>
-                      <td className="py-3 px-4 text-center">
-                        <span className={`px-2 py-0.5 rounded text-[10px] font-medium ${
-                          weightFactor === 0.8 
-                            ? 'bg-emerald-950 text-emerald-300 border border-emerald-800' 
-                            : weightFactor === 0.5 
-                            ? 'bg-sky-950 text-sky-300 border border-sky-800' 
-                            : weightFactor === 0.2
-                            ? 'bg-slate-800 text-slate-300'
-                            : 'bg-amber-950 text-amber-300 border border-amber-800'
-                        }`}>
-                          {deal.probability || 'Unrated (30% Baseline)'}
-                        </span>
-                      </td>
-                      <td className="py-3 px-4 text-right font-mono text-slate-300">
-                        {formatINR(weightedVal)}
-                      </td>
-                      <td className="py-3 px-4 text-center text-slate-400 font-mono text-[10px]">
-                        {deal.tentative_close && deal.tentative_close !== 'N/A' 
-                          ? deal.tentative_close 
-                          : <span className="text-amber-500/80">Missing (Risk)</span>}
-                      </td>
-                      <td className="py-3 px-4 text-right">
-                        <button
-                          onClick={() => onNavigateToAskAI(`What is the background and risk analysis for opportunity: ${deal.deal_name}?`)}
-                          className="text-sky-400 hover:text-sky-300 text-[10px] font-medium"
-                        >
-                          Deep Dive →
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })
-              )}
+              ))}
             </tbody>
           </table>
         </div>
       </div>
 
       {/* Sector × Operations Realization Heatmap Table */}
-      <div className="bg-[#10121a] rounded-lg border border-[#1e2333] p-4">
-        <div className="mb-3">
-          <h3 className="text-xs font-semibold text-slate-200 uppercase tracking-wider">
+      <div className="bg-[#ffffff] rounded-2xl border border-[#e5e2d8] p-5 shadow-xs">
+        <div className="mb-4">
+          <h3 className="text-xs font-bold text-[#191919] uppercase tracking-wider font-mono">
             Sector × Execution Matrix
           </h3>
-          <p className="text-[11px] text-slate-500">
+          <p className="text-xs text-[#737373]">
             Cross-functional view comparing pipeline volume against active delivery workloads and billed realization
           </p>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-[#090a0f] text-slate-400 uppercase text-[10px] font-mono border-b border-[#1e2333]">
+            <thead className="bg-[#f4f2eb] text-[#737373] uppercase text-[10px] font-mono border-b border-[#e5e2d8]">
               <tr>
-                <th className="py-2 px-3">Sector</th>
-                <th className="py-2 px-3 text-right">Open Pipeline</th>
-                <th className="py-2 px-3 text-center">Open Deals</th>
-                <th className="py-2 px-3 text-center">Active WOs</th>
-                <th className="py-2 px-3 text-center">Delayed WOs</th>
-                <th className="py-2 px-3 text-right">Billed Realization</th>
-                <th className="py-2 px-3 text-right">Conversion Realization</th>
+                <th className="py-2.5 px-3 font-semibold">Sector</th>
+                <th className="py-2.5 px-3 text-right font-semibold">Open Pipeline</th>
+                <th className="py-2.5 px-3 text-center font-semibold">Open Deals</th>
+                <th className="py-2.5 px-3 text-center font-semibold">Active WOs</th>
+                <th className="py-2.5 px-3 text-center font-semibold">Delayed WOs</th>
+                <th className="py-2.5 px-3 text-right font-semibold">Billed Realization</th>
+                <th className="py-2.5 px-3 text-right font-semibold">Conversion Ratio</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#1e2333] text-[11px]">
+            <tbody className="divide-y divide-[#f4f2eb] font-sans">
               {sectors.map((sec, i) => {
                 const woSec = (work_orders_summary.sector_breakdown || []).find(w => w.sector.toLowerCase() === sec.sector.toLowerCase());
                 const activeWos = woSec ? woSec.active_wos : 0;
@@ -285,23 +247,23 @@ export const PipelineDeepDive: React.FC<PipelineDeepDiveProps> = ({
                 const billedVal = sec.won_revenue || 0;
 
                 return (
-                  <tr key={i} className="hover:bg-[#141722] transition-colors">
-                    <td className="py-2.5 px-3 font-medium text-slate-200">{sec.sector}</td>
-                    <td className="py-2.5 px-3 text-right font-mono text-slate-100">{formatINR(sec.open_pipeline)}</td>
-                    <td className="py-2.5 px-3 text-center text-slate-400">{sec.open_deals}</td>
-                    <td className="py-2.5 px-3 text-center text-slate-300">{activeWos}</td>
+                  <tr key={i} className="hover:bg-[#faf9f6] transition-colors">
+                    <td className="py-2.5 px-3 font-semibold text-[#191919]">{sec.sector}</td>
+                    <td className="py-2.5 px-3 text-right font-mono text-[#191919]">{formatINR(sec.open_pipeline)}</td>
+                    <td className="py-2.5 px-3 text-center text-[#595959]">{sec.open_deals}</td>
+                    <td className="py-2.5 px-3 text-center text-[#595959]">{activeWos}</td>
                     <td className="py-2.5 px-3 text-center">
                       {delayedWos > 0 ? (
-                        <span className="px-1.5 py-0.2 rounded bg-amber-950 text-amber-300 font-bold border border-amber-800 text-[10px]">
+                        <span className="px-2 py-0.5 rounded bg-amber-100 text-[#d97706] font-bold border border-amber-200 text-[10px]">
                           {delayedWos} Delayed
                         </span>
                       ) : (
-                        <span className="text-slate-500 text-[10px]">0</span>
+                        <span className="text-[#8c8577] text-[10px]">0</span>
                       )}
                     </td>
-                    <td className="py-2.5 px-3 text-right font-mono text-emerald-400">{formatINR(billedVal)}</td>
-                    <td className="py-2.5 px-3 text-right font-mono text-slate-400">
-                      {sec.open_pipeline > 0 ? `${Math.round((billedVal / sec.open_pipeline) * 100)}%` : '0%'}
+                    <td className="py-2.5 px-3 text-right font-mono text-[#007a5a] font-bold">{formatINR(billedVal)}</td>
+                    <td className="py-2.5 px-3 text-right font-mono text-[#191919]">
+                      {sec.open_pipeline > 0 ? `${((billedVal / sec.open_pipeline) * 100).toFixed(1)}%` : '—'}
                     </td>
                   </tr>
                 );

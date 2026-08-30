@@ -53,17 +53,17 @@ export const ActionCenterView: React.FC<ActionCenterViewProps> = ({ actions = []
   return (
     <div className="space-y-6 max-w-5xl mx-auto">
       {/* Header */}
-      <div className="bg-[#1a0e38] border border-[#2d1854] rounded-2xl p-6 shadow-xl shadow-purple-950/30">
+      <div className="bg-[#ffffff] border border-[#e5e2d8] rounded-2xl p-6 shadow-xs">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-sm font-bold text-white tracking-wider uppercase">
+            <h2 className="text-sm font-bold text-[#191919] tracking-wider uppercase font-mono">
               Executive Action Directives
             </h2>
-            <p className="text-xs text-purple-300/70 mt-1">
+            <p className="text-xs text-[#737373] mt-1">
               Evidence-backed operational and commercial recovery actions prioritized by impact
             </p>
           </div>
-          <div className="px-3 py-1 bg-purple-950/80 border border-purple-700/50 rounded-full text-purple-300 text-xs font-semibold">
+          <div className="px-3 py-1 bg-[#f4f2eb] border border-[#dcd7cb] rounded text-[#191919] text-xs font-semibold font-mono">
             {displayActions.length} Action Items
           </div>
         </div>
@@ -74,45 +74,48 @@ export const ActionCenterView: React.FC<ActionCenterViewProps> = ({ actions = []
         {displayActions.map((act) => (
           <div 
             key={act.id} 
-            className="bg-gradient-to-b from-[#1c103c] to-[#130a2a] border border-[#2d1854] rounded-2xl p-6 space-y-4 hover:border-purple-500/60 shadow-lg transition-all duration-300"
+            className="bg-[#ffffff] border border-[#e5e2d8] rounded-2xl p-6 space-y-4 hover:border-[#007a5a] shadow-xs transition-all"
           >
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-3">
-                <span className="text-xs font-mono font-bold text-purple-400 bg-purple-950/80 px-2.5 py-1 rounded-lg border border-purple-800/60">
+                <span className="font-mono text-xs font-bold text-white bg-[#007a5a] px-2.5 py-1 rounded">
                   {act.id}
                 </span>
-                <h3 className="text-sm font-bold text-white">{act.title}</h3>
+                <h3 className="text-sm font-bold text-[#191919]">{act.title}</h3>
               </div>
-              <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full ${
-                act.priority === 'HIGH' ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40' : 'bg-purple-900/40 text-purple-300 border border-purple-700/40'
+              <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded font-mono ${
+                act.urgency === 'HIGH' ? 'bg-amber-100 text-[#d97706] border border-amber-300' : 'bg-blue-50 text-blue-700 border border-blue-200'
               }`}>
-                {act.priority} PRIORITY
+                {act.urgency} URGENCY
               </span>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-              <div className="bg-[#0d061f] p-3.5 rounded-xl border border-[#2d1854] space-y-1">
-                <span className="text-[10px] font-bold text-purple-400 uppercase tracking-wider">Ground Truth Evidence</span>
-                {act.evidence.map((ev, idx) => (
-                  <p key={idx} className="text-purple-200/90 leading-normal">• {ev}</p>
-                ))}
+              <div className="bg-[#f4f2eb] p-4 rounded-xl border border-[#e5e2d8]">
+                <div className="text-[10px] uppercase font-mono tracking-wider text-[#737373] font-bold mb-1.5">
+                  GROUND-TRUTH EVIDENCE
+                </div>
+                <ul className="space-y-1 text-[#595959] font-mono">
+                  {act.evidence.map((ev, i) => (
+                    <li key={i}>• {ev}</li>
+                  ))}
+                </ul>
               </div>
-              <div className="bg-[#0d061f] p-3.5 rounded-xl border border-[#2d1854] space-y-1">
-                <span className="text-[10px] font-bold text-purple-400 uppercase tracking-wider">Strategic Impact</span>
-                <p className="text-purple-200/90 leading-relaxed">{act.impact}</p>
+
+              <div className="bg-[#f4f2eb] p-4 rounded-xl border border-[#e5e2d8]">
+                <div className="text-[10px] uppercase font-mono tracking-wider text-[#737373] font-bold mb-1.5">
+                  STRATEGIC IMPACT
+                </div>
+                <p className="text-[#404040] leading-relaxed">{act.impact}</p>
               </div>
             </div>
 
-            <div className="pt-3 border-t border-[#2d1854] flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs">
-              <div>
-                <span className="text-[10px] font-bold text-purple-400/80 uppercase">Recommended Directive:</span>
-                <p className="text-white mt-0.5 font-medium">{act.recommended_action}</p>
+            <div className="pt-3 border-t border-[#e5e2d8] flex flex-col md:flex-row md:items-center justify-between gap-2 text-xs">
+              <div className="text-[#404040]">
+                <strong className="text-[#191919]">Directive:</strong> {act.recommended_action}
               </div>
-              <div className="shrink-0 flex items-center gap-2">
-                <span className="text-[10px] text-purple-400 font-mono">OWNER:</span>
-                <span className="text-xs font-semibold px-3 py-1 rounded-xl bg-purple-950 text-purple-200 border border-purple-700/60">
-                  {act.owner_suggestion}
-                </span>
+              <div className="text-[#737373] shrink-0 font-mono text-[11px]">
+                Owner: <span className="font-semibold text-[#007a5a]">{act.owner_suggestion}</span>
               </div>
             </div>
           </div>
