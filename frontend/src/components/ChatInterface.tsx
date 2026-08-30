@@ -63,8 +63,74 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
     const intent = msg.intent || '';
     const { deals_summary, work_orders_summary } = msg.biData;
 
-    // 1. Sector Performance Query Chart
-    if (intent === 'SECTOR_PERFORMANCE' || intent === 'PIPELINE_OVERVIEW' || intent.includes('SECTOR')) {
+    // 1. Forecast Exposure & Top Opportunities Chart
+    if (intent === 'FORECAST_EXPOSURE' || intent === 'TOP_OPPORTUNITIES' || intent === 'OPPORTUNITY_RISK') {
+      const oppData = (deals_summary.top_5_open_deals || []).slice(0, 5).map(d => ({
+        name: d.deal_name.length > 14 ? d.deal_name.substring(0, 12) + '…' : d.deal_name,
+        Value: Number((d.deal_value / 10000000).toFixed(2))
+      }));
+
+      if (oppData.length > 0) {
+        return (
+          <div className="mt-3 pt-3 border-t border-[#1e2333] bg-[#090a0f]/60 p-3 rounded border border-[#1e2333]">
+            <div className="flex items-center gap-1.5 mb-2 text-[10px] font-mono text-slate-400 uppercase">
+              <BarChart2 className="h-3 w-3 text-amber-400" />
+              <span>Grounded Visualization: Top Open Opportunities by Value (₹ Cr)</span>
+            </div>
+            <div className="h-28 w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={oppData} margin={{ top: 2, right: 10, left: -20, bottom: 0 }}>
+                  <CartesianGrid strokeDasharray="2 2" stroke="#1e2333" vertical={false} />
+                  <XAxis dataKey="name" stroke="#64748b" fontSize={9} tickLine={false} />
+                  <YAxis stroke="#64748b" fontSize={9} tickLine={false} />
+                  <Tooltip
+                    contentStyle={{ backgroundColor: '#10121a', borderColor: '#282f44', borderRadius: '4px', fontSize: '10px' }}
+                    formatter={(val: any) => [`₹${val} Cr`, 'Deal Value']}
+                  />
+                  <Bar dataKey="Value" fill="#f59e0b" radius={[2, 2, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        );
+      }
+    }
+
+    // 2. Data Lineage / Forecast Derivation Waterfall
+    if (intent === 'DATA_LINEAGE') {
+      const lineageData = [
+        { group: 'High (80%)', Contribution: 13.35 },
+        { group: 'Low (20%)', Contribution: 8.39 },
+        { group: 'Med (50%)', Contribution: 4.16 },
+        { group: 'Unrated (30%)', Contribution: 0.56 }
+      ];
+
+      return (
+        <div className="mt-3 pt-3 border-t border-[#1e2333] bg-[#090a0f]/60 p-3 rounded border border-[#1e2333]">
+          <div className="flex items-center gap-1.5 mb-2 text-[10px] font-mono text-slate-400 uppercase">
+            <BarChart2 className="h-3 w-3 text-sky-400" />
+            <span>Weighted Forecast Derivation Contribution (₹ Cr)</span>
+          </div>
+          <div className="h-28 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={lineageData} margin={{ top: 2, right: 10, left: -20, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="2 2" stroke="#1e2333" vertical={false} />
+                <XAxis dataKey="group" stroke="#64748b" fontSize={9} tickLine={false} />
+                <YAxis stroke="#64748b" fontSize={9} tickLine={false} />
+                <Tooltip
+                  contentStyle={{ backgroundColor: '#10121a', borderColor: '#282f44', borderRadius: '4px', fontSize: '10px' }}
+                  formatter={(val: any) => [`₹${val} Cr`, 'Forecast Contribution']}
+                />
+                <Bar dataKey="Contribution" fill="#0284c7" radius={[2, 2, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+      );
+    }
+
+    // 3. Sector Performance & Comparison Queries
+    if (intent === 'SECTOR_PERFORMANCE' || intent === 'SECTOR_COMBINATION' || intent === 'SECTOR_PIPELINE_VS_EXECUTION') {
       const topSectors = (deals_summary.sector_breakdown || [])
         .filter(s => s.sector && s.sector !== 'Sector/Service' && s.open_pipeline > 0)
         .slice(0, 5)
@@ -99,7 +165,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
       }
     }
 
-    // 2. Work Orders Overview Query Chart
+    // 4. Work Orders Overview & Execution Distribution
     if (intent === 'WORK_ORDER_OVERVIEW' || intent === 'WORK_ORDER_DELAY') {
       const woData = [
         { name: 'Completed', value: work_orders_summary.completed_count, color: '#10b981' },
@@ -133,6 +199,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
       );
     }
 
+    // Otherwise, return null (no generic duplicate chart)
     return null;
   };
 

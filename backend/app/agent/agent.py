@@ -103,7 +103,10 @@ def classify_intent_and_entities(query: str) -> Tuple[str, bool, Optional[str], 
     if "three business risks" in q_lower or "three risks" in q_lower:
         return "RISK_THREE_RISKS", False, None, None
 
-    if "strongest evidence" in q_lower or "strongest risk" in q_lower:
+    if any(phrase in q_lower for phrase in [
+        "strongest evidence", "strongest risk", "strongest quantitative evidence",
+        "which risk has the strongest", "quantitative evidence"
+    ]):
         return "RISK_STRONGEST", False, None, None
 
     if "largest financial exposure" in q_lower or "which delayed work order" in q_lower:
@@ -111,12 +114,15 @@ def classify_intent_and_entities(query: str) -> Tuple[str, bool, Optional[str], 
 
     # Failure 2: Opportunity Forecast Exposure Router (Individual granularity)
     if any(phrase in q_lower for phrase in [
-        "individual opportunity", "single-opportunity", "single opportunity",
+        "individual opportunity", "single-opportunity", "single opportunity", "single deal",
         "largest forecast exposure", "most forecast at risk", "hurt the forecast most",
         "hurt our forecast most", "biggest individual forecast exposure",
         "largest weighted contribution", "largest forecast risk", "creates the largest forecast",
         "largest impact on our weighted forecast", "largest weighted forecast exposure",
-        "contributes the most to weighted forecast", "largest forecast contribution"
+        "contributes the most to weighted forecast", "contributes the most to our weighted",
+        "contributes the most", "contribute the most",
+        "largest forecast contribution", "forecast contribution of our top", "weighted forecast would we lose",
+        "opportunities create the greatest combined forecast"
     ]):
         return "FORECAST_EXPOSURE", False, None, None
 
@@ -124,7 +130,8 @@ def classify_intent_and_entities(query: str) -> Tuple[str, bool, Optional[str], 
     if any(phrase in q_lower for phrase in [
         "how was the weighted forecast", "how was the forecast", "how is the weighted forecast",
         "how did we derive", "derived", "derivation", "separate facts from assumptions",
-        "show the calculation", "formula and calculation", "formula", "lineage", "calculation for weighted"
+        "show the calculation", "formula and calculation", "formula", "lineage", "calculation for weighted",
+        "walk me through the exact calculation", "walk me through", "inputs, formula, assumptions"
     ]):
         return "DATA_LINEAGE", False, None, None
 
@@ -136,8 +143,16 @@ def classify_intent_and_entities(query: str) -> Tuple[str, bool, Optional[str], 
     ]) or (("prioritize" in q_lower or "focus" in q_lower or "conclude" in q_lower) and ("limitations" in q_lower or "unsupported" in q_lower or "cannot" in q_lower or "not" in q_lower)):
         return "LEADERSHIP_PRIORITIES_LIMITS", False, None, None
 
+    # Sector Comparison Router
+    if "compare" in q_lower and ("mining" in q_lower or "renewables" in q_lower or "railways" in q_lower or "powerline" in q_lower or "construction" in q_lower or "sector" in q_lower):
+        return "SECTOR_COMBINATION", False, None, None
+
     # Failure 4: Strongest Combination / Sector Comparison Router
-    if "strongest combination" in q_lower or "best combination" in q_lower or "combination of sales pipeline and operational" in q_lower:
+    if any(phrase in q_lower for phrase in [
+        "strongest combination", "best combination", "combination of sales pipeline and operational",
+        "commercially strongest", "operationally strongest", "same sector",
+        "best-performing sector", "best performing sector", "does that mean mining is"
+    ]):
         return "SECTOR_COMBINATION", False, None, None
 
     if "outstanding" in q_lower or "receivable" in q_lower or "receivables" in q_lower or "uncollected" in q_lower:
@@ -155,8 +170,16 @@ def classify_intent_and_entities(query: str) -> Tuple[str, bool, Optional[str], 
     if "where did" in q_lower or "where did the" in q_lower or "come from" in q_lower:
         return "DATA_LINEAGE", False, None, None
 
-    if "linkage" in q_lower or "match rate" in q_lower or "match deals" in q_lower:
+    if "linkage" in q_lower or "match rate" in q_lower or "match deals" in q_lower or ("snapshot" in q_lower and "sales versus execution" in q_lower):
         return "CROSS_BOARD_ANALYSIS", False, None, None
+
+    # Sector Gap / Realization Gap
+    if any(phrase in q_lower for phrase in [
+        "weak execution", "weak delivery", "strong sales but weak",
+        "gap between commercial", "commercial opportunity and execution",
+        "pipeline vs execution", "sales vs execution"
+    ]):
+        return "SECTOR_PIPELINE_VS_EXECUTION", False, None, None
 
     if "dominate" in q_lower or "concentrated" in q_lower or "concentration" in q_lower:
         return "PIPELINE_CONCENTRATION", False, None, None

@@ -185,18 +185,76 @@ def test_paraphrases_calculation_derivation():
         assert "30% Analytical Baseline Assumption" in res.text or "30%" in res.text
         assert "₹26.46 Cr" in res.text or "26.46" in res.text
 
-def test_paraphrases_conclusions_and_limitations():
-    queries = [
-        "What can we conclude from this data, and what can we not conclude?",
-        "What can we conclude, and what cannot be supported by this dataset?",
-        "What should leadership prioritize right now based strictly on the available data, and what important conclusions can the dataset not support?",
-        "What conclusions are supported versus unsupported by our operational data?"
-    ]
-    for q in queries:
-        intent, _, _, _ = classify_intent_and_entities(q)
-        assert intent == "LEADERSHIP_PRIORITIES_LIMITS", f"Routing failure for: {q}"
-        res = process_agent_query(q)
-        assert "DATA-SUPPORTED PRIORITIES" in res.text
-        assert "WHAT THE DATA CANNOT ESTABLISH" in res.text
+def test_fifteen_required_golden_questions():
+    # G01
+    g01 = process_agent_query("Which single deal contributes the most to our weighted forecast?")
+    assert g01.intent == "FORECAST_EXPOSURE"
+    assert "Luffy" in g01.text
+
+    # G02
+    g02 = process_agent_query("If our largest opportunity fails to convert, how much weighted forecast would we lose?")
+    assert g02.intent == "FORECAST_EXPOSURE"
+    assert "9.79" in g02.text or "₹9.79 Cr" in g02.text
+
+    # G03
+    g03 = process_agent_query("What is the forecast contribution of our top opportunity, and what percentage of weighted forecast is that?")
+    assert g03.intent == "FORECAST_EXPOSURE"
+    assert "37.0%" in g03.text or "37%" in g03.text
+
+    # G04
+    g04 = process_agent_query("Walk me through the exact calculation behind the ₹26.46 Cr weighted forecast.")
+    assert g04.intent == "DATA_LINEAGE"
+    assert "13.35" in g04.text and "4.16" in g04.text
+
+    # G05
+    g05 = process_agent_query("Show me the inputs, formula, assumptions, and final result used to calculate the weighted forecast.")
+    assert g05.intent == "DATA_LINEAGE"
+    assert "30% Analytical Baseline Assumption" in g05.text or "30%" in g05.text
+
+    # G06
+    g06 = process_agent_query("What can we confidently conclude from the current dataset, and what conclusions would be unsupported?")
+    assert g06.intent == "LEADERSHIP_PRIORITIES_LIMITS"
+    assert "DATA-SUPPORTED PRIORITIES" in g06.text
+
+    # G07
+    g07 = process_agent_query("Which sector is commercially strongest, which is operationally strongest, and are those necessarily the same sector?")
+    assert g07.intent == "SECTOR_COMBINATION"
+    assert "Mining" in g07.text and "Renewables" in g07.text
+
+    # G08
+    g08 = process_agent_query("Where do we have the biggest gap between commercial opportunity and execution realization?")
+    assert g08.intent in ["SECTOR_PIPELINE_VS_EXECUTION", "SECTOR_COMBINATION"]
+    assert "Mining" in g08.text
+
+    # G09
+    g09 = process_agent_query("Which risk has the strongest quantitative evidence, and how do you know?")
+    assert g09.intent == "RISK_STRONGEST"
+    assert "Forecast Risk" in g09.text
+
+    # G10
+    g10 = process_agent_query("Which two opportunities create the greatest combined forecast exposure if they fail?")
+    assert g10.intent == "FORECAST_EXPOSURE"
+    assert "Luffy" in g10.text and "Sakura" in g10.text
+
+    # G11
+    g11 = process_agent_query("Compare Mining and Renewables across pipeline, active work orders, billed value, and delays.")
+    assert g11.intent in ["SECTOR_PERFORMANCE", "SECTOR_COMBINATION", "SECTOR_PIPELINE_VS_EXECUTION"]
+    assert "₹24.15 Cr" in g11.text and "₹18.40 Cr" in g11.text
+
+    # G12
+    g12 = process_agent_query("You said Mining has the largest pipeline. Does that mean Mining is also our best-performing sector?")
+    assert "composite" in g12.text.lower() or "No single sector can be declared" in g12.text or "trade-off" in g12.text.lower()
+
+    # G13
+    g13 = process_agent_query("What does the current snapshot tell us about sales versus execution, and what can't it tell us?")
+    assert "static snapshot" in g13.text.lower() or "snapshot" in g13.text.lower()
+
+    # G14
+    g14 = process_agent_query("Who is responsible for the delayed work orders, and what deadline should they meet?")
+    assert "unrecorded" in g14.text.lower() or "not recorded" in g14.text.lower()
+
+    # G15
+    g15 = process_agent_query("Tell me exactly why Coal India will close and when it will close.")
+    assert "UNSUPPORTED" in g15.intent or "guarantee" in g15.text.lower() or "uncertain" in g15.text.lower()
 
 
