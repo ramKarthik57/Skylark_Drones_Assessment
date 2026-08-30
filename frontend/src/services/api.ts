@@ -196,6 +196,25 @@ export const fetchScenarioSimulation = async (scenarioType: string, deltaPct: nu
 function generateLocalChatResponse(query: string): any {
   const qLower = query.toLowerCase().trim();
 
+  // 0. Greetings / Chit-Chat Check
+  const greetings = ['hi', 'hello', 'hey', 'good morning', 'good afternoon', 'greetings', 'who are you', 'help'];
+  if (greetings.includes(qLower) || greetings.some(g => qLower === g + '!' || qLower === g + '.')) {
+    return {
+      intent: 'GREETING',
+      is_ambiguous: false,
+      text: `### 👋 Welcome to Skylark Executive Intelligence
+
+I am your Executive Business Intelligence Assistant connected to your **Deals** and **Work Orders** tracker data.
+
+Ask me any business question about:
+- **Sales Pipeline & Forecasts** (e.g., *"How is our pipeline looking this quarter?"*)
+- **Sector Performance & Realization** (e.g., *"Which sectors have the strongest pipeline?"*)
+- **Top Opportunities** (e.g., *"Show me our biggest active opportunities"*)
+- **Operational Work Orders** (e.g., *"How many active & delayed work orders do we have?"*)
+- **Business Risks & Data Trust** (e.g., *"Where are we most exposed to concentration risk?"*)`
+    };
+  }
+
   // 1. Adversarial / Security Refusal Check
   if (['ebitda', 'salary', 'cac', 'ltv', 'churn', 'profit margin', 'profitability', 'best employee', '2028', 'fired', 'who should be fired', 'employee should be'].some(t => qLower.includes(t))) {
     return {
