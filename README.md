@@ -8,15 +8,24 @@ Executive-level AI Business Intelligence workspace querying Monday.com **Deals**
 
 ---
 
-## 🌟 Why This Solution Stands Out
+## 🏛️ Engineering Principles
 
-1. **Live Monday.com Integration & Seeding**: Connects directly to Monday.com v2 GraphQL API (`boards`, `items_page`, `column_values`) with an automated seeder (`seed_monday.py`). Strict `APP_ENV=production` guardrails ensure live Monday API execution without silent mock fallbacks.
-2. **Data Trust Engine (`data_trust.py`)**: Computes multi-dimensional mathematical trust scores (Completeness, Date Coverage, Probability Rating Coverage, Sector Mapping, Cross-Board Linkage Confidence).
-3. **Executive Risk Radar (`risk_engine.py`)**: Deterministic risk signals covering Forecast Risk, Execution Risk, Pipeline Concentration Risk, Data Integrity, and Cross-Board Linkage.
-4. **Deterministic BI Engine (`bi_engine.py`)**: Calculates active pipeline (**₹68.82 Cr**), weighted forecast (**₹26.46 Cr**), win rate (**56.5%** across 292 decided opportunities), active work orders (**58 projects**), delayed work orders (**5 projects**), and billed contract value (**₹10.74 Cr**).
-5. **Adversarial & Unsupported Query Refusal**: Refuses unsupported business questions (e.g. EBITDA, employee productivity) gracefully, preventing LLM hallucinations.
-6. **Evidence-First AI Answers**: Formats AI responses into structured `ANSWER`, `EVIDENCE`, `WHY IT MATTERS`, `DATA QUALITY`, and `RECOMMENDED ACTION`.
-7. **37 PyTest Unit & Integration Tests**: 100% test pass rate covering normalizer, BI engine, data quality auditor, risk engine, data trust, agent router, and FastAPI endpoints.
+1. **Deterministic Computation Over LLM Arithmetic**: 100% of financial, operational, and risk calculations are executed programmatically in Python before LLM synthesis to eliminate hallucinations.
+2. **Evidence Before Inference**: Every AI answer is grounded in explicit metrics (`ANSWER`, `EVIDENCE`, `WHY IT MATTERS`, `DATA QUALITY`, `RECOMMENDED ACTION`).
+3. **Explicit Data-Quality Caveats**:Messy real-world data issues (missing close dates, unrated deals, delayed projects) are surfaced transparently to leadership rather than hidden.
+4. **Secure Server-Side Secret Management**: Credentials and API tokens reside strictly server-side; zero secrets delivered to frontend JavaScript or committed to git.
+5. **Graceful Degradation & Adversarial Safety**: Unsupported financial queries (EBITDA, CAC, LTV, salaries) and prompt injection attempts are refused cleanly with structured warning cards.
+
+---
+
+## 🌟 Engineering Highlights & Differentiators
+
+- **Live Monday.com GraphQL v2 Integration**: Queries `boards`, `items_page`, and `column_values` dynamically with automated board seeder (`seed_monday.py`). Strict `APP_ENV=production` mode enforces live API credentials without silent mock fallbacks.
+- **Mathematical Data Trust Engine (`data_trust.py`)**: Calculates 5 dataset trust dimensions (Field Completeness, Date Coverage, Probability Rating Coverage, Sector Mapping, Cross-Board Linkage Confidence).
+- **Deterministic Executive Risk Radar (`risk_engine.py`)**: Categorizes business risks (Forecast Risk, Execution Risk, Concentration Risk, Linkage Risk) with ground-truth evidence and actionable recommendations.
+- **Cross-Board Linkage Audit**: Quantifies deal name matching across CRM Deals and Work Orders tracker boards at **89.7% match rate** (52/58 matched).
+- **Automated Test Suite**: **37 PyTest unit and integration tests** in `backend/tests/` passing 100% in 1.70s.
+- **Automated CI Workflow**: GitHub Actions workflow (`.github/workflows/ci.yml`) for continuous PyTest validation and Vite production bundle builds.
 
 ---
 
@@ -76,7 +85,7 @@ python app/main.py
 ```
 *(Backend runs at `http://localhost:8000` with Swagger docs at `http://localhost:8000/docs`)*
 
-### 2. Frontend
+### 2. Frontend Workspace
 ```bash
 cd frontend
 npm install
