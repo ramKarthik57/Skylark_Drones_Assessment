@@ -252,32 +252,32 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
   return (
     <div className="flex-1 flex flex-col h-full max-w-4xl w-full mx-auto overflow-hidden">
       {/* Messages Scroll Area */}
-      <div className="flex-1 overflow-y-auto px-2 md:px-4 py-4 space-y-6">
+      <div className="flex-1 overflow-y-auto px-2 md:px-6 py-6 space-y-7">
         {messages.map((msg) => (
           <div
             key={msg.id}
             className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
           >
             <div
-              className={`max-w-[92%] md:max-w-[85%] rounded-xl px-5 py-4 text-sm leading-relaxed transition-all ${
+              className={`max-w-[94%] md:max-w-[88%] rounded-2xl px-6 py-5 text-sm leading-relaxed transition-all ${
                 msg.sender === 'user'
-                  ? 'bg-[#181f30] text-slate-100 border border-[#2a3652] ml-12 shadow-sm'
-                  : 'bg-[#121520] border border-[#1d2334] text-slate-200 mr-8 shadow-sm'
+                  ? 'bg-[#27272a] text-[#fafafa] border border-[#3f3f46] ml-12 shadow-sm'
+                  : 'bg-[#202024] border border-[#2d2d32] text-[#f4f4f5] mr-6 shadow-sm'
               }`}
             >
               {/* Message Header for Assistant */}
               {msg.sender === 'assistant' && (
-                <div className="text-[11px] text-slate-400 font-mono mb-3 pb-2 border-b border-[#1f2536] flex items-center justify-between">
-                  <div className="flex items-center gap-1.5 text-sky-400 font-semibold tracking-wide">
+                <div className="text-[11px] text-[#71717a] font-mono mb-3 pb-2.5 border-b border-[#2d2d32] flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-[#d97706] font-semibold tracking-wide">
                     <Sparkles className="h-3.5 w-3.5" />
                     <span>SKYLARK ANALYST</span>
                   </div>
-                  <span className="text-[10px] text-slate-500">{msg.timestamp}</span>
+                  <span className="text-[10px] text-[#71717a]">{msg.timestamp}</span>
                 </div>
               )}
 
               {/* Message Content (Clean Professional Markdown without hashes) */}
-              <div className="whitespace-pre-wrap font-sans text-sm space-y-3 leading-relaxed text-slate-200">
+              <div className="whitespace-pre-wrap font-sans text-sm space-y-3 leading-relaxed text-[#e4e4e7]">
                 {msg.text}
               </div>
 
@@ -286,8 +286,8 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
 
               {/* Clarification Refinements */}
               {msg.clarificationOptions && msg.clarificationOptions.length > 0 && (
-                <div className="mt-4 pt-3 border-t border-[#1f2536] space-y-2">
-                  <div className="text-amber-400 font-medium text-xs flex items-center gap-1.5">
+                <div className="mt-4 pt-3.5 border-t border-[#2d2d32] space-y-2">
+                  <div className="text-[#d97706] font-medium text-xs flex items-center gap-1.5">
                     <HelpCircle className="h-3.5 w-3.5" />
                     <span>Select a dimension to refine the analysis:</span>
                   </div>
@@ -296,10 +296,10 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
                       <button
                         key={i}
                         onClick={() => onSelectSuggested(opt)}
-                        className="text-left px-3 py-2 rounded-lg bg-[#0c0e15] hover:bg-[#161a27] border border-[#1f2536] text-sky-300 text-xs transition-colors flex items-center justify-between group"
+                        className="text-left px-3.5 py-2.5 rounded-xl bg-[#18181b] hover:bg-[#27272a] border border-[#2d2d32] text-[#fbbf24] text-xs transition-all flex items-center justify-between group"
                       >
                         <span>{opt}</span>
-                        <ArrowRight className="h-3.5 w-3.5 text-slate-500 group-hover:text-sky-400 transition-colors" />
+                        <ArrowRight className="h-3.5 w-3.5 text-[#71717a] group-hover:text-[#fbbf24] transition-colors" />
                       </button>
                     ))}
                   </div>
@@ -308,10 +308,10 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
 
               {/* Expandable Data Quality & Evidence Drawer */}
               {msg.dataQualityNotes && msg.dataQualityNotes.length > 0 && (
-                <div className="mt-3.5 pt-2.5 border-t border-[#1f2536]">
+                <div className="mt-4 pt-3 border-t border-[#2d2d32]">
                   <button
                     onClick={() => toggleCaveat(msg.id)}
-                    className="flex items-center gap-1.5 text-[11px] font-mono text-slate-400 hover:text-slate-200 transition-colors"
+                    className="flex items-center gap-1.5 text-[11px] font-mono text-[#a1a1aa] hover:text-[#fafafa] transition-colors"
                   >
                     <span>Dataset Caveats ({msg.dataQualityNotes.length})</span>
                     {expandedCaveats[msg.id] ? (
@@ -322,9 +322,9 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
                   </button>
 
                   {expandedCaveats[msg.id] && (
-                    <div className="mt-2 p-2.5 bg-[#090b10] rounded border border-[#1a1f2c] text-xs text-slate-400 space-y-1">
+                    <div className="mt-2.5 p-3 bg-[#18181b] rounded-xl border border-[#2d2d32] text-xs text-[#a1a1aa] space-y-1.5">
                       {msg.dataQualityNotes.map((note, idx) => (
-                        <p key={idx} className="leading-relaxed text-[11px] text-amber-300/80">• {note}</p>
+                        <p key={idx} className="leading-relaxed text-[11px] text-[#fcd34d]">• {note}</p>
                       ))}
                     </div>
                   )}
@@ -335,8 +335,8 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
         ))}
 
         {loading && (
-          <div className="flex items-center gap-2.5 text-slate-400 text-xs py-2.5 px-4 bg-[#121520] rounded-xl border border-[#1d2334] max-w-sm">
-            <span className="h-2 w-2 rounded-full bg-sky-400 animate-ping" />
+          <div className="flex items-center gap-2.5 text-[#a1a1aa] text-xs py-3 px-4 bg-[#202024] rounded-2xl border border-[#2d2d32] max-w-sm shadow-sm">
+            <span className="h-2 w-2 rounded-full bg-[#d97706] animate-ping" />
             <span className="text-xs">Analyzing board evidence & computing ground truth…</span>
           </div>
         )}
@@ -345,13 +345,13 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
       </div>
 
       {/* Suggested Questions Horizontal Scroller */}
-      <div className="px-2 md:px-0 py-2 border-t border-[#1a1f2c] bg-[#0b0d13] flex items-center gap-2 overflow-x-auto no-scrollbar">
-        <span className="text-[10px] text-slate-500 uppercase font-mono shrink-0">Explore:</span>
+      <div className="px-2 md:px-0 py-2.5 border-t border-[#2d2d32] bg-[#18181b] flex items-center gap-2 overflow-x-auto no-scrollbar">
+        <span className="text-[10px] text-[#71717a] uppercase font-mono shrink-0">Explore:</span>
         {samplePrompts.map((prompt, idx) => (
           <button
             key={idx}
             onClick={() => onSelectSuggested(prompt)}
-            className="text-xs px-3 py-1.5 rounded-full bg-[#121520] hover:bg-[#181d2a] text-slate-300 hover:text-white border border-[#1f2536] shrink-0 transition-colors"
+            className="text-xs px-3.5 py-1.5 rounded-full bg-[#202024] hover:bg-[#27272a] text-[#d4d4d8] hover:text-white border border-[#2d2d32] hover:border-[#3f3f46] shrink-0 transition-all"
           >
             {prompt}
           </button>
@@ -359,28 +359,28 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
       </div>
 
       {/* Modern Conversational Input Box */}
-      <div className="p-2 md:p-0 pt-2 border-t border-[#1a1f2c] bg-[#0b0d13]">
+      <div className="p-2 md:p-0 pt-2 border-t border-[#2d2d32] bg-[#18181b]">
         <form onSubmit={handleSubmit} className="relative">
-          <div className="flex items-center bg-[#121520] border border-[#232a3b] focus-within:border-sky-600/70 focus-within:ring-1 focus-within:ring-sky-600/30 rounded-xl px-4 py-3 transition-all shadow-md">
+          <div className="flex items-center bg-[#202024] border border-[#2d2d32] focus-within:border-[#d97706]/70 focus-within:ring-1 focus-within:ring-[#d97706]/30 rounded-2xl px-4 py-3.5 transition-all shadow-lg">
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask Skylark about pipeline health, weighted forecast, work orders, or risks..."
               disabled={loading}
-              className="flex-1 bg-transparent text-sm text-slate-100 placeholder-slate-500 focus:outline-none"
+              className="flex-1 bg-transparent text-sm text-[#fafafa] placeholder-[#71717a] focus:outline-none"
             />
             <button
               type="submit"
               disabled={!input.trim() || loading}
-              className="ml-2 p-1.5 rounded-lg bg-sky-600 hover:bg-sky-500 text-white disabled:opacity-20 disabled:hover:bg-sky-600 transition-colors shadow-sm"
+              className="ml-2.5 p-2 rounded-xl bg-[#d97706] hover:bg-[#b45309] text-white disabled:opacity-20 disabled:hover:bg-[#d97706] transition-all shadow-sm"
               title="Send question"
             >
               <Send className="h-4 w-4" />
             </button>
           </div>
         </form>
-        <p className="text-[10px] text-center text-slate-600 font-mono py-1.5">
+        <p className="text-[10px] text-center text-[#71717a] font-mono py-2">
           Grounded strictly in Monday.com Deals (344) & Work Orders (175) records
         </p>
       </div>
