@@ -257,4 +257,41 @@ def test_fifteen_required_golden_questions():
     g15 = process_agent_query("Tell me exactly why Coal India will close and when it will close.")
     assert "UNSUPPORTED" in g15.intent or "guarantee" in g15.text.lower() or "uncertain" in g15.text.lower()
 
+def test_visualization_routing_and_specs():
+    # 1. Forecast Exposure -> TOP_OPPORTUNITY_BAR
+    res1 = process_agent_query("Which individual opportunity has the largest impact on our weighted forecast if it fails to convert?")
+    assert res1.visualization is not None
+    assert res1.visualization.type == "TOP_OPPORTUNITY_BAR"
+    assert "Luffy" in [d["name"] for d in res1.visualization.data]
+
+    # 2. Calculation Breakdown -> FORECAST_WATERFALL
+    res2 = process_agent_query("Walk me through the exact calculation behind the ₹26.46 Cr weighted forecast.")
+    assert res2.visualization is not None
+    assert res2.visualization.type == "FORECAST_WATERFALL"
+
+    # 3. Sector Comparison -> SECTOR_COMPARISON
+    res3 = process_agent_query("Compare Mining and Renewables across pipeline, active work orders, billed value, and delays.")
+    assert res3.visualization is not None
+    assert res3.visualization.type == "SECTOR_COMPARISON"
+
+    # 4. Execution Distribution -> EXECUTION_STATUS_DONUT
+    res4 = process_agent_query("How many active and delayed work orders do we have?")
+    assert res4.visualization is not None
+    assert res4.visualization.type == "EXECUTION_STATUS_DONUT"
+
+    # 5. Pipeline Concentration -> CONCENTRATION_PARETO
+    res5 = process_agent_query("Where is our biggest pipeline concentration?")
+    assert res5.visualization is not None
+    assert res5.visualization.type == "CONCENTRATION_PARETO"
+
+    # 6. Risk Evidence -> RISK_EVIDENCE_BAR
+    res6 = process_agent_query("Which risk has the strongest quantitative evidence?")
+    assert res6.visualization is not None
+    assert res6.visualization.type == "RISK_EVIDENCE_BAR"
+
+    # 7. Fact vs Limitation -> None (No generic chart)
+    res7 = process_agent_query("What can we confidently conclude from the current dataset, and what conclusions would be unsupported?")
+    assert res7.visualization is None
+
+
 

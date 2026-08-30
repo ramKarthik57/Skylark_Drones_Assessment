@@ -56,70 +56,57 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
     "What is our EBITDA?"
   ];
 
-  // Helper to render contextual charts if the message provides biData
+  // Helper to render contextual charts based strictly on the formal VisualizationSpec
   const renderContextualChart = (msg: ChatMessage) => {
-    if (!msg.biData) return null;
-
-    const intent = msg.intent || '';
-    const { deals_summary, work_orders_summary } = msg.biData;
-
-    // 1. Forecast Exposure & Top Opportunities Chart
-    if (intent === 'FORECAST_EXPOSURE' || intent === 'TOP_OPPORTUNITIES' || intent === 'OPPORTUNITY_RISK') {
-      const oppData = (deals_summary.top_opportunities || []).slice(0, 5).map((d: any) => ({
-        name: d.deal_name.length > 14 ? d.deal_name.substring(0, 12) + '…' : d.deal_name,
-        Value: Number((d.deal_value / 10000000).toFixed(2))
-      }));
-
-      if (oppData.length > 0) {
-        return (
-          <div className="mt-3 pt-3 border-t border-[#1e2333] bg-[#090a0f]/60 p-3 rounded border border-[#1e2333]">
-            <div className="flex items-center gap-1.5 mb-2 text-[10px] font-mono text-slate-400 uppercase">
-              <BarChart2 className="h-3 w-3 text-amber-400" />
-              <span>Grounded Visualization: Top Open Opportunities by Value (₹ Cr)</span>
-            </div>
-            <div className="h-28 w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={oppData} margin={{ top: 2, right: 10, left: -20, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="2 2" stroke="#1e2333" vertical={false} />
-                  <XAxis dataKey="name" stroke="#64748b" fontSize={9} tickLine={false} />
-                  <YAxis stroke="#64748b" fontSize={9} tickLine={false} />
-                  <Tooltip
-                    contentStyle={{ backgroundColor: '#10121a', borderColor: '#282f44', borderRadius: '4px', fontSize: '10px' }}
-                    formatter={(val: any) => [`₹${val} Cr`, 'Deal Value']}
-                  />
-                  <Bar dataKey="Value" fill="#f59e0b" radius={[2, 2, 0, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-        );
-      }
+    if (!msg.visualization || !msg.visualization.type || msg.visualization.type === 'NONE') {
+      return null;
     }
 
-    // 2. Data Lineage / Forecast Derivation Waterfall
-    if (intent === 'DATA_LINEAGE') {
-      const lineageData = [
-        { group: 'High (80%)', Contribution: 13.35 },
-        { group: 'Low (20%)', Contribution: 8.39 },
-        { group: 'Med (50%)', Contribution: 4.16 },
-        { group: 'Unrated (30%)', Contribution: 0.56 }
-      ];
+    const { type, title, data } = msg.visualization;
 
+    // 1. Top Opportunity / Forecast Exposure Horizontal/Vertical Bar Chart
+    if (type === 'TOP_OPPORTUNITY_BAR') {
+      return (
+        <div className="mt-3 pt-3 border-t border-[#1e2333] bg-[#090a0f]/60 p-3 rounded border border-[#1e2333]">
+          <div className="flex items-center gap-1.5 mb-2 text-[10px] font-mono text-slate-400 uppercase">
+            <BarChart2 className="h-3 w-3 text-amber-400" />
+            <span>{title}</span>
+          </div>
+          <div className="h-28 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={data} margin={{ top: 2, right: 10, left: -20, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="2 2" stroke="#1e2333" vertical={false} />
+                <XAxis dataKey="name" stroke="#64748b" fontSize={9} tickLine={false} />
+                <YAxis stroke="#64748b" fontSize={9} tickLine={false} />
+                <Tooltip
+                  contentStyle={{ backgroundColor: '#10121a', borderColor: '#282f44', borderRadius: '4px', fontSize: '10px' }}
+                  formatter={(val: any) => [`₹${val} Cr`, 'Forecast Exposure / Value']}
+                />
+                <Bar dataKey="Value" fill="#f59e0b" radius={[2, 2, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+      );
+    }
+
+    // 2. Forecast Derivation Waterfall
+    if (type === 'FORECAST_WATERFALL') {
       return (
         <div className="mt-3 pt-3 border-t border-[#1e2333] bg-[#090a0f]/60 p-3 rounded border border-[#1e2333]">
           <div className="flex items-center gap-1.5 mb-2 text-[10px] font-mono text-slate-400 uppercase">
             <BarChart2 className="h-3 w-3 text-sky-400" />
-            <span>Weighted Forecast Derivation Contribution (₹ Cr)</span>
+            <span>{title}</span>
           </div>
           <div className="h-28 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={lineageData} margin={{ top: 2, right: 10, left: -20, bottom: 0 }}>
+              <BarChart data={data} margin={{ top: 2, right: 10, left: -20, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="2 2" stroke="#1e2333" vertical={false} />
-                <XAxis dataKey="group" stroke="#64748b" fontSize={9} tickLine={false} />
+                <XAxis dataKey="category" stroke="#64748b" fontSize={9} tickLine={false} />
                 <YAxis stroke="#64748b" fontSize={9} tickLine={false} />
                 <Tooltip
                   contentStyle={{ backgroundColor: '#10121a', borderColor: '#282f44', borderRadius: '4px', fontSize: '10px' }}
-                  formatter={(val: any) => [`₹${val} Cr`, 'Forecast Contribution']}
+                  formatter={(val: any) => [`₹${val} Cr`, 'Contribution']}
                 />
                 <Bar dataKey="Contribution" fill="#0284c7" radius={[2, 2, 0, 0]} />
               </BarChart>
@@ -129,68 +116,55 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
       );
     }
 
-    // 3. Sector Performance & Comparison Queries
-    if (intent === 'SECTOR_PERFORMANCE' || intent === 'SECTOR_COMBINATION' || intent === 'SECTOR_PIPELINE_VS_EXECUTION') {
-      const topSectors = (deals_summary.sector_breakdown || [])
-        .filter(s => s.sector && s.sector !== 'Sector/Service' && s.open_pipeline > 0)
-        .slice(0, 5)
-        .map(s => ({
-          name: s.sector,
-          Pipeline: Math.round(s.open_pipeline / 100000)
-        }));
-
-      if (topSectors.length > 0) {
-        return (
-          <div className="mt-3 pt-3 border-t border-[#1e2333] bg-[#090a0f]/60 p-3 rounded border border-[#1e2333]">
-            <div className="flex items-center gap-1.5 mb-2 text-[10px] font-mono text-slate-400 uppercase">
-              <BarChart2 className="h-3 w-3 text-sky-400" />
-              <span>Grounded Visualization: Sector Active Pipeline (₹ Lakhs)</span>
-            </div>
-            <div className="h-28 w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={topSectors} margin={{ top: 2, right: 10, left: -20, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="2 2" stroke="#1e2333" vertical={false} />
-                  <XAxis dataKey="name" stroke="#64748b" fontSize={9} tickLine={false} />
-                  <YAxis stroke="#64748b" fontSize={9} tickLine={false} />
-                  <Tooltip
-                    contentStyle={{ backgroundColor: '#10121a', borderColor: '#282f44', borderRadius: '4px', fontSize: '10px' }}
-                    formatter={(val: any) => [`₹${val} L`, 'Pipeline']}
-                  />
-                  <Bar dataKey="Pipeline" fill="#0284c7" radius={[2, 2, 0, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
+    // 3. Multi-Dimension Sector Comparison Chart
+    if (type === 'SECTOR_COMPARISON') {
+      return (
+        <div className="mt-3 pt-3 border-t border-[#1e2333] bg-[#090a0f]/60 p-3 rounded border border-[#1e2333]">
+          <div className="flex items-center gap-1.5 mb-2 text-[10px] font-mono text-slate-400 uppercase">
+            <BarChart2 className="h-3 w-3 text-sky-400" />
+            <span>{title}</span>
           </div>
-        );
-      }
+          <div className="h-32 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={data} margin={{ top: 2, right: 10, left: -20, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="2 2" stroke="#1e2333" vertical={false} />
+                <XAxis dataKey="sector" stroke="#64748b" fontSize={9} tickLine={false} />
+                <YAxis stroke="#64748b" fontSize={9} tickLine={false} />
+                <Tooltip
+                  contentStyle={{ backgroundColor: '#10121a', borderColor: '#282f44', borderRadius: '4px', fontSize: '10px' }}
+                  formatter={(val: any, name: any) => [`₹${val} Cr`, name]}
+                />
+                <Bar dataKey="Pipeline" fill="#0284c7" name="Pipeline" radius={[2, 2, 0, 0]} />
+                <Bar dataKey="Billed" fill="#10b981" name="Billed" radius={[2, 2, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+      );
     }
 
-    // 4. Work Orders Overview & Execution Distribution
-    if (intent === 'WORK_ORDER_OVERVIEW' || intent === 'WORK_ORDER_DELAY') {
-      const woData = [
-        { name: 'Completed', value: work_orders_summary.completed_count, color: '#10b981' },
-        { name: 'Ongoing', value: work_orders_summary.ongoing_count, color: '#0284c7' },
-        { name: 'Delayed', value: work_orders_summary.delayed_count, color: '#f59e0b' }
-      ].filter(d => d.value > 0);
-
+    // 4. Work Order Execution Status Donut
+    if (type === 'EXECUTION_STATUS_DONUT') {
       return (
         <div className="mt-3 pt-3 border-t border-[#1e2333] bg-[#090a0f]/60 p-3 rounded border border-[#1e2333] flex items-center justify-between">
           <div>
             <div className="flex items-center gap-1.5 text-[10px] font-mono text-slate-400 uppercase mb-1">
               <ShieldCheck className="h-3 w-3 text-emerald-400" />
-              <span>Work Order Execution Distribution</span>
+              <span>{title}</span>
             </div>
             <div className="text-[11px] text-slate-300 space-y-0.5">
-              <p>• Completed: <strong className="text-emerald-400">{work_orders_summary.completed_count}</strong></p>
-              <p>• Ongoing: <strong className="text-sky-400">{work_orders_summary.ongoing_count}</strong></p>
-              <p>• Delayed: <strong className="text-amber-400">{work_orders_summary.delayed_count}</strong></p>
+              {data.map((item: any, i: number) => (
+                <p key={i}>
+                  • {item.name}: <strong style={{ color: item.color }}>{item.value}</strong>
+                </p>
+              ))}
             </div>
           </div>
           <div className="h-20 w-24">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
-                <Pie data={woData} cx="50%" cy="50%" innerRadius={18} outerRadius={32} dataKey="value">
-                  {woData.map((e, idx) => <Cell key={idx} fill={e.color} />)}
+                <Pie data={data} cx="50%" cy="50%" innerRadius={18} outerRadius={32} dataKey="value">
+                  {data.map((e: any, idx: number) => <Cell key={idx} fill={e.color} />)}
                 </Pie>
               </PieChart>
             </ResponsiveContainer>
@@ -199,7 +173,58 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
       );
     }
 
-    // Otherwise, return null (no generic duplicate chart)
+    // 5. Concentration Pareto Chart
+    if (type === 'CONCENTRATION_PARETO') {
+      return (
+        <div className="mt-3 pt-3 border-t border-[#1e2333] bg-[#090a0f]/60 p-3 rounded border border-[#1e2333]">
+          <div className="flex items-center gap-1.5 mb-2 text-[10px] font-mono text-slate-400 uppercase">
+            <BarChart2 className="h-3 w-3 text-rose-400" />
+            <span>{title}</span>
+          </div>
+          <div className="h-28 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={data} margin={{ top: 2, right: 10, left: -20, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="2 2" stroke="#1e2333" vertical={false} />
+                <XAxis dataKey="name" stroke="#64748b" fontSize={9} tickLine={false} />
+                <YAxis stroke="#64748b" fontSize={9} tickLine={false} />
+                <Tooltip
+                  contentStyle={{ backgroundColor: '#10121a', borderColor: '#282f44', borderRadius: '4px', fontSize: '10px' }}
+                  formatter={(val: any, name: any) => [name === 'Share' ? `${val}%` : `₹${val} Cr`, name]}
+                />
+                <Bar dataKey="Value" fill="#f43f5e" radius={[2, 2, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+      );
+    }
+
+    // 6. Risk Evidence Strength Bar Chart
+    if (type === 'RISK_EVIDENCE_BAR') {
+      return (
+        <div className="mt-3 pt-3 border-t border-[#1e2333] bg-[#090a0f]/60 p-3 rounded border border-[#1e2333]">
+          <div className="flex items-center gap-1.5 mb-2 text-[10px] font-mono text-slate-400 uppercase">
+            <AlertTriangle className="h-3 w-3 text-rose-400" />
+            <span>{title}</span>
+          </div>
+          <div className="h-28 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={data} layout="vertical" margin={{ top: 2, right: 10, left: 10, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="2 2" stroke="#1e2333" horizontal={false} />
+                <XAxis type="number" stroke="#64748b" fontSize={9} tickLine={false} />
+                <YAxis type="category" dataKey="risk" stroke="#64748b" fontSize={9} tickLine={false} width={130} />
+                <Tooltip
+                  contentStyle={{ backgroundColor: '#10121a', borderColor: '#282f44', borderRadius: '4px', fontSize: '10px' }}
+                  formatter={(val: any) => [`₹${val} Cr`, 'Financial Exposure']}
+                />
+                <Bar dataKey="Exposure" fill="#ef4444" radius={[0, 2, 2, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+      );
+    }
+
     return null;
   };
 

@@ -111,12 +111,22 @@ export interface BIData {
   };
 }
 
+export interface VisualizationSpec {
+  type: 'TOP_OPPORTUNITY_BAR' | 'FORECAST_WATERFALL' | 'SECTOR_COMPARISON' | 'EXECUTION_STATUS_DONUT' | 'CONCENTRATION_PARETO' | 'RISK_EVIDENCE_BAR' | 'NONE';
+  title: string;
+  data: any[];
+}
+
 export interface ChatMessage {
   id: string;
   sender: 'user' | 'assistant';
   text: string;
   timestamp: string;
   intent?: string;
+  operation?: string;
+  entity?: string;
+  granularity?: string;
+  visualization?: VisualizationSpec | null;
   biData?: BIData;
   riskRadar?: RiskSignal[];
   dataTrust?: DataTrust;

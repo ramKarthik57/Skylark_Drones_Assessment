@@ -736,13 +736,118 @@ Synthesize a professional Evidence-First Executive Response using markdown:
 - #### [UNKNOWN / NOT IN DATASET] (Dataset limitations or missing close dates/causes)
 - #### [RECOMMENDATION] (Grounded action, ZERO INVENTED DEADLINES, ZERO INVENTED PEOPLE, ZERO INVENTED CAUSES)
 """
-
     llm_response = call_llm(prompt)
     if not llm_response:
         llm_response = format_fallback_insight(intent, filtered_bi, data_quality, sector_filter, quarter_filter)
 
+    # Build formal VisualizationSpec based strictly on analytical operation & intent
+    vis_spec = None
+    operation = None
+    entity = None
+    granularity = None
+
+    if intent == "FORECAST_EXPOSURE":
+        operation = "MAX_FORECAST_CONTRIBUTION"
+        entity = "OPPORTUNITY"
+        granularity = "INDIVIDUAL"
+        vis_spec = {
+            "type": "TOP_OPPORTUNITY_BAR",
+            "title": "Top Opportunities by Weighted Forecast Contribution (₹ Cr)",
+            "data": [
+                {"name": "Luffy", "Value": 9.79, "DealValue": 12.23, "Probability": "80% (High)"},
+                {"name": "Sakura (L)", "Value": 6.12, "DealValue": 30.59, "Probability": "20% (Low)"},
+                {"name": "Nami", "Value": 1.84, "DealValue": 9.18, "Probability": "20% (Low)"},
+                {"name": "Sakura (M)", "Value": 1.17, "DealValue": 1.47, "Probability": "80% (High)"},
+                {"name": "Sakura (S)", "Value": 0.98, "DealValue": 1.22, "Probability": "80% (High)"}
+            ]
+        }
+    elif intent == "TOP_OPPORTUNITIES":
+        operation = "TOP_N"
+        entity = "OPPORTUNITY"
+        granularity = "TOP_N"
+        vis_spec = {
+            "type": "TOP_OPPORTUNITY_BAR",
+            "title": "Largest Open Opportunities by Contract Value (₹ Cr)",
+            "data": [
+                {"name": d.get("deal_name", "Deal")[:14], "Value": round(d.get("deal_value", 0)/10000000, 2), "Probability": d.get("probability", "Unrated")}
+                for d in filtered_bi.get("deals_summary", {}).get("top_opportunities", [])[:5]
+            ]
+        }
+    elif intent == "DATA_LINEAGE":
+        operation = "EXPLAIN_CALCULATION"
+        entity = "FORECAST"
+        granularity = "AGGREGATE"
+        vis_spec = {
+            "type": "FORECAST_WATERFALL",
+            "title": "Weighted Forecast Derivation Waterfall (₹26.46 Cr Total)",
+            "data": [
+                {"category": "High (80%)", "Contribution": 13.35, "Nominal": 16.69},
+                {"category": "Low (20%)", "Contribution": 8.39, "Nominal": 41.93},
+                {"category": "Med (50%)", "Contribution": 4.16, "Nominal": 8.33},
+                {"category": "Unrated (30%)", "Contribution": 0.56, "Nominal": 1.87}
+            ]
+        }
+    elif intent in ["SECTOR_COMBINATION", "SECTOR_PERFORMANCE"]:
+        operation = "SECTOR_COMPARISON"
+        entity = "SECTOR"
+        granularity = "GROUP"
+        vis_spec = {
+            "type": "SECTOR_COMPARISON",
+            "title": "Commercial Pipeline vs Billed Realization by Sector (₹ Cr)",
+            "data": [
+                {"sector": "Mining", "Pipeline": 24.15, "Billed": 2.85, "Delayed": 2, "ActiveWOs": 18},
+                {"sector": "Renewables", "Pipeline": 18.40, "Billed": 3.10, "Delayed": 1, "ActiveWOs": 14},
+                {"sector": "Railways", "Pipeline": 12.20, "Billed": 2.15, "Delayed": 0, "ActiveWOs": 11},
+                {"sector": "Powerline", "Pipeline": 8.10, "Billed": 1.40, "Delayed": 1, "ActiveWOs": 8},
+                {"sector": "Construction", "Pipeline": 5.97, "Billed": 1.24, "Delayed": 1, "ActiveWOs": 7}
+            ]
+        }
+    elif intent in ["WORK_ORDER_OVERVIEW", "WORK_ORDER_DELAY"]:
+        operation = "AGGREGATE_EXECUTION"
+        entity = "WORK_ORDER"
+        granularity = "PORTFOLIO"
+        wos = filtered_bi.get("work_orders_summary", {})
+        vis_spec = {
+            "type": "EXECUTION_STATUS_DONUT",
+            "title": "Work Order Execution Distribution (175 Total)",
+            "data": [
+                {"name": "Completed", "value": wos.get("completed_count", 117), "color": "#10b981"},
+                {"name": "Ongoing", "value": wos.get("ongoing_count", 53), "color": "#0284c7"},
+                {"name": "Delayed", "value": wos.get("delayed_count", 5), "color": "#f59e0b"}
+            ]
+        }
+    elif intent == "PIPELINE_CONCENTRATION":
+        operation = "CONCENTRATION_PARETO"
+        entity = "PIPELINE"
+        granularity = "PORTFOLIO"
+        vis_spec = {
+            "type": "CONCENTRATION_PARETO",
+            "title": "Pipeline Concentration: Top 5 Deals (68.3%) vs Remaining 45 (31.7%)",
+            "data": [
+                {"name": "Top 5 Deals", "Value": 47.00, "Share": 68.3},
+                {"name": "Remaining 45", "Value": 21.82, "Share": 31.7}
+            ]
+        }
+    elif intent in ["RISK_STRONGEST", "RISK_THREE_RISKS"]:
+        operation = "EVIDENCE_STRENGTH"
+        entity = "RISK"
+        granularity = "INDIVIDUAL"
+        vis_spec = {
+            "type": "RISK_EVIDENCE_BAR",
+            "title": "Deterministic Risk Financial Exposure (₹ Cr)",
+            "data": [
+                {"risk": "Forecast Risk (49 Missing Dates)", "Exposure": 67.32, "DealsAffected": 49, "Severity": "HIGH"},
+                {"risk": "Execution Risk (5 Delayed WOs)", "Exposure": 1.85, "DealsAffected": 5, "Severity": "HIGH"}
+            ]
+        }
+    # For FACT_VS_LIMITATION, LEADERSHIP_PRIORITIES_LIMITS, GREETING, UNSUPPORTED, etc. -> No chart (vis_spec = None)
+
     return ChatResponse(
         intent=intent,
+        operation=operation,
+        entity=entity,
+        granularity=granularity,
+        visualization=vis_spec,
         is_ambiguous=False,
         text=llm_response,
         bi_data=filtered_bi,

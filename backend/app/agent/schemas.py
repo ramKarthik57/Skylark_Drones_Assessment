@@ -5,9 +5,18 @@ class ChatRequest(BaseModel):
     message: str
     conversation_id: Optional[str] = None
 
+class VisualizationSpec(BaseModel):
+    type: str  # e.g., 'TOP_OPPORTUNITY_BAR', 'FORECAST_WATERFALL', 'SECTOR_COMPARISON', 'EXECUTION_STATUS_DONUT', 'CONCENTRATION_PARETO', 'RISK_EVIDENCE_BAR', 'NONE'
+    title: str
+    data: List[Dict[str, Any]] = []
+
 class ChatResponse(BaseModel):
     text: str
     intent: str
+    operation: Optional[str] = None
+    entity: Optional[str] = None
+    granularity: Optional[str] = None
+    visualization: Optional[VisualizationSpec] = None
     is_mock_data: bool = False
     clarification_needed: bool = False
     clarification_options: Optional[List[str]] = None
