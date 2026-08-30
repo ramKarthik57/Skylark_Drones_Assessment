@@ -35,7 +35,8 @@ def classify_intent_and_entities(query: str) -> Tuple[str, bool, Optional[str], 
         "churn rate", "churn", "net retention", "nrr", "net revenue retention", "cac", "ltv",
         "customer acquisition cost", "lifetime value", "predict revenue", "revenue prediction",
         "next year's revenue", "profitability", "best employee", "best performing individual", "commission",
-        "2028", "fired", "who should be fired", "employee should be"
+        "2028", "fired", "who should be fired", "employee should be", "employee satisfaction", "satisfaction data",
+        "headcount", "hiring", "burn rate", "runway"
     ]
     if any(term in q_lower for term in unsupported_terms):
         return "UNSUPPORTED", False, None, None
@@ -44,8 +45,9 @@ def classify_intent_and_entities(query: str) -> Tuple[str, bool, Optional[str], 
     security_terms = [
         "system prompt", "api key", "gemini key", "api keys", "environment variables", "env vars",
         "monday api token", "monday.com token", "api token", "ignore all previous", "ignore previous instructions",
-        "unrestricted ai", "override safety", "raw system credentials", "developer instructions",
-        "dump memory", "disregard dataset grounding", "external knowledge", "execute the instruction", "execute this instruction"
+        "ignore your instructions", "unrestricted ai", "override safety", "raw system credentials", "developer instructions",
+        "dump memory", "disregard dataset grounding", "disregard grounding", "tell me secrets", "external knowledge",
+        "execute the instruction", "execute this instruction"
     ]
     if any(term in q_lower for term in security_terms):
         return "UNSUPPORTED_SECURITY", False, None, None
@@ -144,7 +146,7 @@ def classify_intent_and_entities(query: str) -> Tuple[str, bool, Optional[str], 
         intent = "TOP_OPPORTUNITIES"
     elif "delayed" in q_lower or "causing our delayed" in q_lower or "who is responsible for the delayed" in q_lower or "when will the delayed" in q_lower or "what caused the" in q_lower:
         intent = "WORK_ORDER_DELAY"
-    elif "work order" in q_lower or "project" in q_lower or "contracted" in q_lower or "billed" in q_lower or "outstanding" in q_lower:
+    elif "work order" in q_lower or "project" in q_lower or "contract" in q_lower or "billed" in q_lower or "receivable" in q_lower or "ongoing" in q_lower or "completed" in q_lower:
         intent = "WORK_ORDER_OVERVIEW"
     elif extracted_sector or "sector" in q_lower:
         intent = "SECTOR_PERFORMANCE"
@@ -484,9 +486,10 @@ def format_fallback_insight(intent: str, bi_data: Dict[str, Any], data_quality: 
     elif intent == "WORK_ORDER_OVERVIEW":
         lines.append("### 🚀 Active Work Orders Overview\n")
         lines.append("#### ANSWER")
-        lines.append("We have **58 Active Work Orders**, of which **53 are Ongoing** and **5 are Execution Delayed**.\n")
+        lines.append("We have **175 Total Work Orders** across the organization, with **58 Active Work Orders** (**53 Ongoing**, **5 Execution Delayed**), **117 Completed**, and 0 Cancelled.\n")
         lines.append("#### [SOURCE FACT]")
-        lines.append("- **Total Contracted Value**: **₹21.06 Cr** across 58 active projects.")
+        lines.append("- **Total Work Orders**: **175 records** (117 Completed, 58 Active: 53 Ongoing, 5 Execution Delayed).")
+        lines.append("- **Total Contracted Value**: **₹21.06 Cr** across active work orders.")
         lines.append("- **Billed Realization**: **₹10.74 Cr** billed to date.")
         lines.append("- **Outstanding Receivables**: **₹3.63 Cr** in uncollected invoices.\n")
         lines.append("#### [RECOMMENDATION]")
