@@ -2,7 +2,7 @@
 
 > *"Turn messy operational data into decisions leadership can trust."*
 
-**Live Production Deployment**: [https://skylark-executive-intelligence-ramkarthik.vercel.app](https://skylark-executive-intelligence-ramkarthik.vercel.app) | [https://ramkarthik-skylark-bi.vercel.app](https://ramkarthik-skylark-bi.vercel.app)  
+**Live Production Deployment**: [https://skylark-executive-intelligence-ramkarthik.vercel.app](https://skylark-executive-intelligence-ramkarthik.vercel.app)  
 **GitHub Repository**: [https://github.com/ramKarthik57/Skylark_Drones_Assessment](https://github.com/ramKarthik57/Skylark_Drones_Assessment)
 
 Executive-level AI Business Intelligence workspace querying Monday.com **Deals** & **Work Orders** boards dynamically with data normalization, deterministic analytics, risk radar engines, data trust metrics, evidence-backed AI insights, and 1-click Leadership Updates.

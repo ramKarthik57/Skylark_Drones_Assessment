@@ -35,10 +35,10 @@ export const Header: React.FC<HeaderProps> = ({
             <div className="flex items-center gap-2">
               <h1 className="font-bold text-lg text-white tracking-tight">Skylark Executive Intelligence</h1>
               <span className="text-[10px] px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 font-semibold border border-cyan-500/20">
-                RAM KARTHIK EDITION
+                ENTERPRISE
               </span>
             </div>
-            <p className="text-xs text-slate-400">Turn messy operational data into decisions leadership can trust</p>
+            <p className="text-xs text-slate-400">Engineered by Ram Karthik • Turn messy operational data into decisions leadership can trust</p>
           </div>
         </div>
 
